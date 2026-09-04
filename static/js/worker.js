@@ -49,7 +49,7 @@ function acceptRadarJob(jobId) {
                     <div id="step-start-otp-${jobId}" class="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800 space-y-2">
                         <div class="text-xs font-semibold text-slate-300">1. Arrive at Customer Location & Enter Start OTP:</div>
                         <div class="flex gap-2">
-                            <input type="text" id="input-start-otp-${jobId}" placeholder="Enter 4-digit OTP (e.g. 4819)" value="4819" class="w-full px-3 py-2 text-xs rounded-lg glass-input">
+                            <input type="text" id="input-start-otp-${jobId}" maxlength="4" autocomplete="off" placeholder="Enter 4-digit Start OTP" class="w-full px-3 py-2 text-xs rounded-lg glass-input">
                             <button onclick="verifyStartOtp('${jobId}')" class="px-4 py-2 rounded-lg bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-bold shrink-0">
                                 Verify OTP
                             </button>
@@ -58,9 +58,9 @@ function acceptRadarJob(jobId) {
 
                     <!-- Step 2: Photo Proof -->
                     <div id="step-photo-proof-${jobId}" class="hidden p-3.5 rounded-xl bg-slate-900/90 border border-slate-800 space-y-2">
-                        <div class="text-xs font-semibold text-slate-300">2. Take Work Photo Proof (Before/After):</div>
-                        <button onclick="uploadWorkPhoto('${jobId}')" class="w-full py-2.5 rounded-lg bg-indigo-600/30 hover:bg-indigo-600 text-indigo-200 text-xs font-bold border border-indigo-500/40 flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-camera"></i> Capture & Upload Work Proof Photo
+                        <div class="text-xs font-semibold text-slate-300">2. Take Work Photo Proof (Real-Life Camera):</div>
+                        <button onclick="openRealCameraModal('${jobId}')" class="w-full py-2.5 rounded-lg bg-indigo-600/30 hover:bg-indigo-600 text-indigo-200 text-xs font-bold border border-indigo-500/40 flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-camera"></i> Open Live Camera & Capture Proof
                         </button>
                     </div>
 
@@ -68,7 +68,7 @@ function acceptRadarJob(jobId) {
                     <div id="step-complete-otp-${jobId}" class="hidden p-3.5 rounded-xl bg-slate-900/90 border border-slate-800 space-y-2">
                         <div class="text-xs font-semibold text-slate-300">3. Job Done! Ask Customer for Completion OTP:</div>
                         <div class="flex gap-2">
-                            <input type="text" id="input-complete-otp-${jobId}" placeholder="Enter Completion OTP (e.g. 7392)" value="7392" class="w-full px-3 py-2 text-xs rounded-lg glass-input">
+                            <input type="text" id="input-complete-otp-${jobId}" maxlength="4" autocomplete="off" placeholder="Enter Completion OTP" class="w-full px-3 py-2 text-xs rounded-lg glass-input">
                             <button onclick="verifyCompleteOtp('${jobId}')" class="px-4 py-2 rounded-lg bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-bold shrink-0 shadow-lg shadow-emerald-500/30">
                                 Settle Instant UPI
                             </button>

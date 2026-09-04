@@ -173,7 +173,81 @@
 
 </div>
 
+<!-- REAL-TIME CAMERA CAPTURE VIEW FINDER MODAL -->
+<div id="real-camera-modal" class="fixed inset-0 z-50 modal-backdrop hidden items-center justify-center p-4">
+    <div class="relative w-full max-w-md glass-panel rounded-3xl border border-emerald-500/40 p-6 space-y-4 shadow-2xl overflow-hidden">
+        
+        <div class="flex items-center justify-between pb-2 border-b border-slate-800">
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-camera text-emerald-400 text-lg"></i>
+                <h3 class="text-base font-bold font-heading text-white">Take Work Photo Proof</h3>
+            </div>
+            <button onclick="closeRealCameraModal()" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <!-- Live Camera Viewfinder or Captured Preview -->
+        <div class="relative w-full h-72 rounded-2xl bg-black border border-slate-700 overflow-hidden flex items-center justify-center">
+            
+            <!-- Live Video Stream -->
+            <video id="webcam-video-stream" autoplay playsinline class="w-full h-full object-cover"></video>
+            
+            <!-- Hidden Canvas for frame snapshot -->
+            <canvas id="webcam-snapshot-canvas" class="hidden"></canvas>
+            
+            <!-- Captured Image Preview -->
+            <img id="webcam-captured-preview" class="w-full h-full object-cover hidden" alt="Captured Proof">
+
+            <!-- Camera Grid Lines Overlay -->
+            <div id="camera-viewfinder-grid" class="absolute inset-0 pointer-events-none border-2 border-emerald-500/40 m-2 rounded-xl flex items-center justify-center">
+                <div class="w-8 h-8 border-t-2 border-l-2 border-emerald-400 absolute top-2 left-2"></div>
+                <div class="w-8 h-8 border-t-2 border-r-2 border-emerald-400 absolute top-2 right-2"></div>
+                <div class="w-8 h-8 border-b-2 border-l-2 border-emerald-400 absolute bottom-2 left-2"></div>
+                <div class="w-8 h-8 border-b-2 border-r-2 border-emerald-400 absolute bottom-2 right-2"></div>
+                <span class="text-[10px] font-mono text-emerald-300 bg-slate-950/70 px-2 py-0.5 rounded backdrop-blur-sm">
+                    LIVE CAMERA STREAM
+                </span>
+            </div>
+        </div>
+
+        <!-- Camera Controls -->
+        <div class="space-y-3">
+            <!-- Shutter Action (when live stream is running) -->
+            <div id="camera-live-controls" class="flex items-center justify-center gap-4 pt-1">
+                <button onclick="snapPhotoFromWebcam()" class="w-16 h-16 rounded-full bg-gradient-to-tr from-emerald-500 to-teal-400 border-4 border-white shadow-xl shadow-emerald-500/40 hover:scale-105 active:scale-95 transition-transform flex items-center justify-center text-slate-950 text-2xl font-bold" title="Snap Photo">
+                    <i class="fa-solid fa-camera"></i>
+                </button>
+            </div>
+
+            <!-- Confirm / Retake Controls (after photo is snapped) -->
+            <div id="camera-preview-controls" class="grid grid-cols-2 gap-3 hidden">
+                <button onclick="retakePhoto()" class="py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold transition">
+                    <i class="fa-solid fa-rotate-left mr-1.5"></i> Retake Photo
+                </button>
+                <button onclick="confirmAndUploadSnappedPhoto()" class="py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-bold shadow-lg shadow-emerald-500/30 transition">
+                    <i class="fa-solid fa-circle-check mr-1.5"></i> Confirm & Upload
+                </button>
+            </div>
+
+            <!-- Fallback File Upload Input -->
+            <div class="pt-2 border-t border-slate-800 flex items-center justify-between text-xs">
+                <span class="text-slate-400">Or choose from gallery:</span>
+                <label class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold cursor-pointer transition border border-slate-700">
+                    <i class="fa-solid fa-folder-open mr-1 text-emerald-400"></i> Browse Device
+                    <input type="file" accept="image/*" capture="environment" onchange="handleDevicePhotoSelected(event)" class="hidden">
+                </label>
+            </div>
+        </div>
+
+    </div>
+</div>
+
 <script>
+let currentCapturingJobId = null;
+let mediaStream = null;
+let snappedImageDataUrl = null;
+
 // Real-time Worker Radar Controller
 function renderWorkerRadar() {
     const container = document.getElementById('radar-gigs-container');
@@ -201,7 +275,7 @@ function renderWorkerRadar() {
     container.innerHTML = activeJobs.map(job => {
         if (job.status === 'OPEN') {
             return `
-                <div id="radar-job-${job.id}" class="glass-panel-glow rounded-3xl p-6 border border-emerald-500/40 space-y-4 animate-pulse-slow">
+                <div id="radar-job-${job.id}" class="glass-panel-glow rounded-3xl p-6 border border-emerald-500/40 space-y-4">
                     <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
                         <div>
                             <div class="flex items-center gap-2">
@@ -253,12 +327,12 @@ function renderWorkerRadar() {
                     <!-- 3-Step Execution Flow -->
                     <div class="space-y-4 pt-2">
                         
-                        <!-- Step 1: Start OTP -->
+                        <!-- Step 1: Start OTP (Clean placeholder with NO watermark) -->
                         ${job.status === 'ACCEPTED' ? `
                             <div class="p-4 rounded-2xl bg-indigo-950/60 border border-indigo-500/40 space-y-3">
                                 <div class="text-xs font-bold text-indigo-200">1. Arrive at Customer Location & Enter Start OTP:</div>
                                 <div class="flex gap-2">
-                                    <input type="text" id="worker-input-start-otp-${job.id}" placeholder="Enter 4-digit code (e.g. ${job.startOtp})" class="w-full px-4 py-2.5 text-xs rounded-xl glass-input">
+                                    <input type="text" id="worker-input-start-otp-${job.id}" maxlength="4" autocomplete="off" placeholder="Enter 4-digit Start OTP" class="w-full px-4 py-2.5 text-xs rounded-xl glass-input">
                                     <button onclick="handleWorkerStartOtp('${job.id}')" class="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold shrink-0">
                                         Verify OTP
                                     </button>
@@ -271,21 +345,28 @@ function renderWorkerRadar() {
                             </div>
                         `}
 
-                        <!-- Step 2: Photo Proof & End OTP (Unlocked when work in progress) -->
+                        <!-- Step 2: Live Camera Photo Proof & End OTP (Unlocked when work in progress) -->
                         ${job.status === 'IN_PROGRESS' ? `
                             <div class="p-4 rounded-2xl bg-slate-900/90 border border-emerald-500/40 space-y-4">
                                 <div class="space-y-2">
-                                    <div class="text-xs font-bold text-white">2. Upload Work Photo Proof (Before / After):</div>
-                                    <button onclick="triggerPhotoUpload('${job.id}')" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold border border-slate-700 flex items-center justify-center gap-2">
-                                        <i class="fa-solid fa-camera text-emerald-400"></i> Attach / Capture Work Proof Photo
+                                    <div class="text-xs font-bold text-white">2. Work Photo Proof (Real-Life Camera):</div>
+                                    <button onclick="openRealCameraModal('${job.id}')" class="w-full py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-500 hover:to-indigo-600 text-white text-xs font-bold shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2 transition">
+                                        <i class="fa-solid fa-camera text-base"></i> Open Live Camera & Snap Proof
                                     </button>
-                                    <div id="photo-preview-${job.id}" class="text-[11px] text-emerald-400 hidden"><i class="fa-solid fa-check mr-1"></i> Work Photo Proof Uploaded & Hash-Locked!</div>
+                                    
+                                    <div id="photo-preview-${job.id}" class="${job.workPhotoProof ? '' : 'hidden'} p-3 rounded-xl bg-emerald-950/50 border border-emerald-500/40 flex items-center gap-3">
+                                        <img id="photo-img-tag-${job.id}" src="${job.workPhotoProof || ''}" alt="Work Proof" class="w-14 h-14 rounded-lg object-cover border border-emerald-400">
+                                        <div class="text-xs">
+                                            <div class="font-bold text-emerald-300"><i class="fa-solid fa-circle-check mr-1"></i> Photo Proof Hash-Locked!</div>
+                                            <div class="text-[10px] text-slate-400">Recorded on Co-op Audit Trail</div>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="space-y-2 pt-2 border-t border-slate-800">
                                     <div class="text-xs font-bold text-white">3. Job Done! Enter Customer Completion OTP:</div>
                                     <div class="flex gap-2">
-                                        <input type="text" id="worker-input-complete-otp-${job.id}" placeholder="Enter Customer OTP (e.g. ${job.completeOtp})" class="w-full px-4 py-2.5 text-xs rounded-xl glass-input">
+                                        <input type="text" id="worker-input-complete-otp-${job.id}" maxlength="4" autocomplete="off" placeholder="Enter 4-digit Completion OTP" class="w-full px-4 py-2.5 text-xs rounded-xl glass-input">
                                         <button onclick="handleWorkerCompleteOtp('${job.id}')" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-xs font-bold shrink-0 shadow-lg shadow-emerald-600/30">
                                             Settle Instant UPI
                                         </button>
@@ -316,7 +397,10 @@ function acceptLiveJob(jobId) {
 
 function handleWorkerStartOtp(jobId) {
     const input = document.getElementById(`worker-input-start-otp-${jobId}`);
-    if (!input) return;
+    if (!input || !input.value.trim()) {
+        Toast.show("Please enter the 4-digit Start OTP from the customer", "error");
+        return;
+    }
 
     const res = CoopSync.verifyStartOtp(jobId, input.value);
     if (res.success) {
@@ -328,17 +412,141 @@ function handleWorkerStartOtp(jobId) {
     }
 }
 
-function triggerPhotoUpload(jobId) {
-    CoopSync.uploadWorkPhotoProof(jobId, "https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=400&auto=format&fit=crop&q=80");
-    const preview = document.getElementById(`photo-preview-${jobId}`);
-    if (preview) preview.classList.remove('hidden');
-    Toast.show("📸 Work photo captured and hash-locked to Co-op audit trail!", "info");
-    SoundFX.pop();
+// -------------------------------------------------------------
+// Real-Life Camera Viewfinder Controller
+// -------------------------------------------------------------
+function openRealCameraModal(jobId) {
+    currentCapturingJobId = jobId;
+    const modal = document.getElementById('real-camera-modal');
+    const video = document.getElementById('webcam-video-stream');
+    const preview = document.getElementById('webcam-captured-preview');
+    const grid = document.getElementById('camera-viewfinder-grid');
+    const liveControls = document.getElementById('camera-live-controls');
+    const previewControls = document.getElementById('camera-preview-controls');
+
+    if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+    }
+
+    if (video) video.classList.remove('hidden');
+    if (preview) preview.classList.add('hidden');
+    if (grid) grid.classList.remove('hidden');
+    if (liveControls) liveControls.classList.remove('hidden');
+    if (previewControls) previewControls.classList.add('hidden');
+
+    // Request actual camera stream from browser / device
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({
+            video: { facingMode: 'environment', width: { ideal: 1280 }, height: { ideal: 720 } }
+        })
+        .then(stream => {
+            mediaStream = stream;
+            if (video) {
+                video.srcObject = stream;
+                video.play();
+            }
+            Toast.show("📷 Real-life Camera connected successfully!", "info");
+        })
+        .catch(err => {
+            console.warn("Camera access permission denied or unavailable:", err);
+            Toast.show("📷 Camera permission needed, or browse from device gallery below.", "info");
+        });
+    } else {
+        Toast.show("Camera API not supported on this browser, please select photo from gallery.", "info");
+    }
+}
+
+function snapPhotoFromWebcam() {
+    const video = document.getElementById('webcam-video-stream');
+    const canvas = document.getElementById('webcam-snapshot-canvas');
+    const preview = document.getElementById('webcam-captured-preview');
+    const grid = document.getElementById('camera-viewfinder-grid');
+    const liveControls = document.getElementById('camera-live-controls');
+    const previewControls = document.getElementById('camera-preview-controls');
+
+    if (video && canvas) {
+        canvas.width = video.videoWidth || 640;
+        canvas.height = video.videoHeight || 480;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        
+        snappedImageDataUrl = canvas.toDataURL('image/jpeg', 0.85);
+
+        // Switch to preview mode
+        if (preview) {
+            preview.src = snappedImageDataUrl;
+            preview.classList.remove('hidden');
+        }
+        if (video) video.classList.add('hidden');
+        if (grid) grid.classList.add('hidden');
+        if (liveControls) liveControls.classList.add('hidden');
+        if (previewControls) previewControls.classList.remove('hidden');
+
+        SoundFX.pop();
+    }
+}
+
+function retakePhoto() {
+    const video = document.getElementById('webcam-video-stream');
+    const preview = document.getElementById('webcam-captured-preview');
+    const grid = document.getElementById('camera-viewfinder-grid');
+    const liveControls = document.getElementById('camera-live-controls');
+    const previewControls = document.getElementById('camera-preview-controls');
+
+    if (video) video.classList.remove('hidden');
+    if (preview) preview.classList.add('hidden');
+    if (grid) grid.classList.remove('hidden');
+    if (liveControls) liveControls.classList.remove('hidden');
+    if (previewControls) previewControls.classList.add('hidden');
+}
+
+function confirmAndUploadSnappedPhoto() {
+    if (currentCapturingJobId && snappedImageDataUrl) {
+        CoopSync.uploadWorkPhotoProof(currentCapturingJobId, snappedImageDataUrl);
+        renderWorkerRadar();
+        Toast.show("📸 Real-life photo proof confirmed and hash-locked!", "success");
+        SoundFX.success();
+    }
+    closeRealCameraModal();
+}
+
+function handleDevicePhotoSelected(event) {
+    const file = event.target.files[0];
+    if (file && currentCapturingJobId) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            snappedImageDataUrl = e.target.result;
+            CoopSync.uploadWorkPhotoProof(currentCapturingJobId, snappedImageDataUrl);
+            renderWorkerRadar();
+            Toast.show("📸 Device photo proof uploaded & hash-locked to Co-op Ledger!", "success");
+            SoundFX.success();
+            closeRealCameraModal();
+        };
+        reader.readAsDataURL(file);
+    }
+}
+
+function closeRealCameraModal() {
+    const modal = document.getElementById('real-camera-modal');
+    if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+    }
+
+    // Stop webcam tracks
+    if (mediaStream) {
+        mediaStream.getTracks().forEach(track => track.stop());
+        mediaStream = null;
+    }
 }
 
 function handleWorkerCompleteOtp(jobId) {
     const input = document.getElementById(`worker-input-complete-otp-${jobId}`);
-    if (!input) return;
+    if (!input || !input.value.trim()) {
+        Toast.show("Please enter the 4-digit Completion OTP given by the customer", "error");
+        return;
+    }
 
     const res = CoopSync.verifyCompleteOtpAndSettle(jobId, input.value);
     if (res.success) {
