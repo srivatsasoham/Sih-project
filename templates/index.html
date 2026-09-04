@@ -1,17 +1,17 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="space-y-20 pb-16">
+<div class="space-y-24 pb-20">
 
-    <!-- HERO SECTION -->
-    <section class="relative pt-12 pb-8 sm:pt-20 sm:pb-16 overflow-hidden">
+    <!-- HERO SECTION & ROLE ENTRY GATEWAY -->
+    <section class="relative pt-10 pb-8 sm:pt-16 sm:pb-14 overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center space-y-6 max-w-4xl mx-auto">
                 
                 <!-- Topic Pill -->
-                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900/90 border border-emerald-500/30 text-emerald-400 text-xs font-semibold shadow-lg shadow-emerald-500/10">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900/90 border border-emerald-500/40 text-emerald-400 text-xs font-semibold shadow-lg shadow-emerald-500/10">
                     <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-                    <span>Smart India Hackathon: Cooperative Gig Platform</span>
+                    <span>Smart India Hackathon 2026 • PS ID: 26089 • Team SIRA</span>
                 </div>
 
                 <!-- Main Hero Headline -->
@@ -22,40 +22,74 @@
                 </h1>
 
                 <!-- Subtitle -->
-                <p class="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed" data-i18n="hero_sub">
-                    India's first 100% worker-owned cooperative for household & community services. 97% of your fee goes directly to your verified pro. 3% feeds the worker healthcare & dividend safety net.
+                <p class="text-sm sm:text-base text-slate-300 max-w-3xl mx-auto leading-relaxed" data-i18n="hero_sub">
+                    <b>SahiDeal (पारस्परिक सहकारी)</b> is India's first worker-owned marketplace for household & community services. <b>92% direct worker take-home</b>, a simple <b>8% co-op fee</b> that funds health & dividends, and zero corporate middleman extraction.
                 </p>
 
-                <!-- Search & Voice Query Bar -->
-                <div class="max-w-2xl mx-auto pt-2">
-                    <div class="relative flex items-center p-2 rounded-2xl glass-panel-glow shadow-2xl">
-                        <i class="fa-solid fa-magnifying-glass text-slate-400 ml-4 mr-2"></i>
-                        <input type="text" id="service-search" oninput="filterServices()" placeholder="Search services (e.g., Electrical, AC, Leak, Cleaning, Elder Care)..." class="w-full bg-transparent text-white placeholder-slate-400 text-sm focus:outline-none py-2">
-                        
-                        <button onclick="startVoiceSearch()" title="Search with Voice" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-emerald-400 text-xs flex items-center gap-1.5 transition">
-                            <i class="fa-solid fa-microphone text-emerald-400"></i>
-                            <span class="hidden sm:inline">Voice</span>
-                        </button>
+                <!-- DUAL ROLE ENTRY GATEWAY CARDS (User's primary requirement!) -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5 pt-4 text-left max-w-3xl mx-auto">
+                    
+                    <!-- Customer Portal Entry Card -->
+                    <div onclick="RoleGateway.selectRole('customer')" class="glass-panel-role p-6 rounded-3xl cursor-pointer group border border-emerald-500/30 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl group-hover:bg-emerald-500/20 transition-all"></div>
+                        <div class="flex items-center gap-4 mb-3">
+                            <div class="w-12 h-12 rounded-2xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-user-check"></i>
+                            </div>
+                            <div>
+                                <span class="text-[10px] font-mono font-bold text-emerald-400 uppercase tracking-wider">Residents & Society</span>
+                                <h3 class="text-lg font-bold text-white group-hover:text-emerald-300 transition-colors">Enter as Customer</h3>
+                            </div>
+                        </div>
+                        <p class="text-xs text-slate-300 leading-relaxed mb-4">
+                            Book trusted local pros, 7-checkpoint escrow protection, women-safety filter, and RWA group buying discounts.
+                        </p>
+                        <div class="flex items-center justify-between text-xs font-semibold text-emerald-400 pt-2 border-t border-slate-800">
+                            <span>Browse Verified Services</span>
+                            <i class="fa-solid fa-arrow-right group-hover:translate-x-1.5 transition-transform"></i>
+                        </div>
                     </div>
+
+                    <!-- Worker-Owner Portal Entry Card -->
+                    <div onclick="RoleGateway.selectRole('worker')" class="glass-panel-role p-6 rounded-3xl cursor-pointer group border border-amber-500/30 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl group-hover:bg-amber-500/20 transition-all"></div>
+                        <div class="flex items-center gap-4 mb-3">
+                            <div class="w-12 h-12 rounded-2xl bg-amber-500/20 border border-amber-500/40 text-amber-400 flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-screwdriver-wrench"></i>
+                            </div>
+                            <div>
+                                <span class="text-[10px] font-mono font-bold text-amber-400 uppercase tracking-wider">Trades & Specialists</span>
+                                <h3 class="text-lg font-bold text-white group-hover:text-amber-300 transition-colors">Enter as Worker-Owner</h3>
+                            </div>
+                        </div>
+                        <p class="text-xs text-slate-300 leading-relaxed mb-4">
+                            Keep 92% direct income + quarterly dividends, receive &lt;3km radar gigs, get health cover, and vote in co-op governance.
+                        </p>
+                        <div class="flex items-center justify-between text-xs font-semibold text-amber-400 pt-2 border-t border-slate-800">
+                            <span>Open Worker Radar & Wallet</span>
+                            <i class="fa-solid fa-arrow-right group-hover:translate-x-1.5 transition-transform"></i>
+                        </div>
+                    </div>
+
                 </div>
 
                 <!-- Live Metrics Ticker Badges -->
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-3 pt-6 max-w-4xl mx-auto">
                     <div class="p-4 rounded-2xl glass-panel border border-white/5 text-center">
-                        <div class="text-2xl font-black text-emerald-400 font-heading">97%</div>
+                        <div class="text-2xl font-black text-emerald-400 font-heading">92%</div>
                         <div class="text-xs text-slate-400 mt-0.5">Worker Direct Take-Home</div>
                     </div>
                     <div class="p-4 rounded-2xl glass-panel border border-white/5 text-center">
-                        <div class="text-2xl font-black text-cyan-400 font-heading">₹24.8L+</div>
-                        <div class="text-xs text-slate-400 mt-0.5">Paid Directly to Pros</div>
+                        <div class="text-2xl font-black text-cyan-400 font-heading">8%</div>
+                        <div class="text-xs text-slate-400 mt-0.5">Co-op Welfare / Dividend Fee</div>
                     </div>
                     <div class="p-4 rounded-2xl glass-panel border border-white/5 text-center">
                         <div class="text-2xl font-black text-indigo-400 font-heading">4,200+</div>
-                        <div class="text-xs text-slate-400 mt-0.5">Co-op Member Pros</div>
+                        <div class="text-xs text-slate-400 mt-0.5">PMKVY & ITI Vetted Pros</div>
                     </div>
                     <div class="p-4 rounded-2xl glass-panel border border-white/5 text-center">
                         <div class="text-2xl font-black text-amber-400 font-heading">0%</div>
-                        <div class="text-xs text-slate-400 mt-0.5">Corporate Middleman Cut</div>
+                        <div class="text-xs text-slate-400 mt-0.5">Corporate Middleman Surcharge</div>
                     </div>
                 </div>
 
@@ -64,25 +98,410 @@
     </section>
 
 
-    <!-- FAIR ECONOMY INTERACTIVE COMPARISON CALCULATOR -->
+    <!-- SLIDE 3: ONE BOOKING. SEVEN TRUST CHECKPOINTS -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="glass-panel-glow rounded-3xl p-6 sm:p-10 border border-emerald-500/30 space-y-8">
+            <div class="text-center space-y-2 max-w-2xl mx-auto">
+                <span class="text-xs font-mono font-bold uppercase tracking-wider text-emerald-400 bg-emerald-950/60 px-3 py-1 rounded-full border border-emerald-500/30">
+                    <i class="fa-solid fa-shield-halved mr-1"></i> Slide 03 • Tech Stack & Workflow
+                </span>
+                <h2 class="text-2xl sm:text-4xl font-extrabold font-heading text-white">One Booking. Seven Trust Checkpoints.</h2>
+                <p class="text-xs sm:text-sm text-slate-300">
+                    The citizen sees a simple service journey; the platform handles matching, escrow, proof and cooperative settlement.
+                </p>
+            </div>
+
+            <!-- 7 Steps Interactive Grid -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3 pt-4">
+                
+                <!-- 01 BOOK -->
+                <div id="checkpoint-card-1" onclick="activateCheckpointStep(1)" class="checkpoint-step-card p-4 rounded-2xl bg-emerald-950/40 border border-emerald-500 text-center space-y-2 cursor-pointer transition-all shadow-md">
+                    <div class="text-xs font-black font-mono text-emerald-400">01</div>
+                    <div class="w-10 h-10 mx-auto rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-mobile-screen-button"></i>
+                    </div>
+                    <div class="font-bold text-xs text-white">BOOK</div>
+                    <p class="text-[10px] text-slate-300">App / IVR Voice / SMS</p>
+                </div>
+
+                <!-- 02 MATCH -->
+                <div id="checkpoint-card-2" onclick="activateCheckpointStep(2)" class="checkpoint-step-card p-4 rounded-2xl bg-slate-900/70 border border-white/10 text-center space-y-2 cursor-pointer transition-all">
+                    <div class="text-xs font-black font-mono text-cyan-400">02</div>
+                    <div class="w-10 h-10 mx-auto rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-route"></i>
+                    </div>
+                    <div class="font-bold text-xs text-white">MATCH</div>
+                    <p class="text-[10px] text-slate-300">Skill + GIS &lt;3km + Rating</p>
+                </div>
+
+                <!-- 03 ESCROW -->
+                <div id="checkpoint-card-3" onclick="activateCheckpointStep(3)" class="checkpoint-step-card p-4 rounded-2xl bg-slate-900/70 border border-white/10 text-center space-y-2 cursor-pointer transition-all">
+                    <div class="text-xs font-black font-mono text-indigo-400">03</div>
+                    <div class="w-10 h-10 mx-auto rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-lock"></i>
+                    </div>
+                    <div class="font-bold text-xs text-white">ESCROW</div>
+                    <p class="text-[10px] text-slate-300">Held Until Completion</p>
+                </div>
+
+                <!-- 04 TRACK -->
+                <div id="checkpoint-card-4" onclick="activateCheckpointStep(4)" class="checkpoint-step-card p-4 rounded-2xl bg-slate-900/70 border border-white/10 text-center space-y-2 cursor-pointer transition-all">
+                    <div class="text-xs font-black font-mono text-amber-400">04</div>
+                    <div class="w-10 h-10 mx-auto rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-satellite-dish"></i>
+                    </div>
+                    <div class="font-bold text-xs text-white">TRACK</div>
+                    <p class="text-[10px] text-slate-300">Live GPS Radar</p>
+                </div>
+
+                <!-- 05 VERIFY -->
+                <div id="checkpoint-card-5" onclick="activateCheckpointStep(5)" class="checkpoint-step-card p-4 rounded-2xl bg-slate-900/70 border border-white/10 text-center space-y-2 cursor-pointer transition-all">
+                    <div class="text-xs font-black font-mono text-pink-400">05</div>
+                    <div class="w-10 h-10 mx-auto rounded-xl bg-pink-500/20 text-pink-400 flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-camera-retro"></i>
+                    </div>
+                    <div class="font-bold text-xs text-white">VERIFY</div>
+                    <p class="text-[10px] text-slate-300">Photo Proof + Start/End OTP</p>
+                </div>
+
+                <!-- 06 SETTLE -->
+                <div id="checkpoint-card-6" onclick="activateCheckpointStep(6)" class="checkpoint-step-card p-4 rounded-2xl bg-slate-900/70 border border-white/10 text-center space-y-2 cursor-pointer transition-all">
+                    <div class="text-xs font-black font-mono text-emerald-400">06</div>
+                    <div class="w-10 h-10 mx-auto rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-money-bill-transfer"></i>
+                    </div>
+                    <div class="font-bold text-xs text-white">SETTLE</div>
+                    <p class="text-[10px] text-slate-300">92% Pay + 8% Dividend</p>
+                </div>
+
+                <!-- 07 RATE -->
+                <div id="checkpoint-card-7" onclick="activateCheckpointStep(7)" class="checkpoint-step-card p-4 rounded-2xl bg-slate-900/70 border border-white/10 text-center space-y-2 cursor-pointer transition-all">
+                    <div class="text-xs font-black font-mono text-yellow-400">07</div>
+                    <div class="w-10 h-10 mx-auto rounded-xl bg-yellow-500/20 text-yellow-400 flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <div class="font-bold text-xs text-white">RATE</div>
+                    <p class="text-[10px] text-slate-300">Trust Score / Vouch</p>
+                </div>
+
+            </div>
+
+            <!-- Core Platform Tech Stack Tags -->
+            <div class="pt-6 border-t border-slate-800 flex flex-wrap items-center justify-center gap-2 text-xs">
+                <span class="text-slate-400 font-medium mr-2">Core Tech Stack:</span>
+                <span class="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-700 text-slate-300">📱 React Native / PWA</span>
+                <span class="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-700 text-slate-300">⚙️ Node.js + Flask Microservices</span>
+                <span class="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-700 text-slate-300">🗺️ PostgreSQL + PostGIS</span>
+                <span class="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-700 text-slate-300">⚡ Socket.io Realtime Sync</span>
+                <span class="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-700 text-slate-300">💳 Razorpay Escrow</span>
+                <span class="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-700 text-slate-300">🆔 Aadhaar eKYC</span>
+                <span class="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-700 text-slate-300">📞 Twilio IVR + SMS</span>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- SERVICE CATALOG (CONSUMER HUB) -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+        
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div>
+                <span class="text-xs font-mono font-bold uppercase tracking-wider text-emerald-400">Verified Neighborhood Catalog</span>
+                <h2 class="text-3xl sm:text-4xl font-black font-heading text-white">Cooperative Services Directory</h2>
+                <p class="text-xs sm:text-sm text-slate-300 mt-1">
+                    Direct booking with background-vetted, PMKVY RPL certified community craftspeople.
+                </p>
+            </div>
+
+            <!-- Search, Voice Search & Women Safety Toggle Controls -->
+            <div class="flex flex-wrap items-center gap-3">
+                
+                <!-- Women Safety Toggle Filter -->
+                <label class="flex items-center gap-2 px-3.5 py-2.5 rounded-xl bg-pink-950/40 border border-pink-500/40 text-pink-300 text-xs font-bold cursor-pointer hover:bg-pink-950/60 transition shadow-sm">
+                    <input type="checkbox" id="filter-women-only" onchange="toggleWomenOnlyFilter()" class="w-4 h-4 accent-pink-500 rounded cursor-pointer">
+                    <i class="fa-solid fa-person-dress text-pink-400"></i>
+                    <span>Women Provider Only</span>
+                </label>
+
+                <!-- Search Input -->
+                <div class="relative flex items-center bg-slate-900/90 rounded-xl border border-slate-700 px-3 py-1.5 focus-within:border-emerald-500">
+                    <i class="fa-solid fa-magnifying-glass text-slate-400 mr-2 text-xs"></i>
+                    <input type="text" id="service-search" oninput="filterServices()" placeholder="Search trade or task..." class="bg-transparent text-white text-xs placeholder-slate-400 focus:outline-none w-36 sm:w-48">
+                    <button onclick="startVoiceSearch()" title="Voice Search" class="text-slate-400 hover:text-emerald-400 ml-1 p-1">
+                        <i class="fa-solid fa-microphone text-xs"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Category Pills -->
+        <div class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
+            {% for cat in categories %}
+            <button onclick="selectCategoryFilter('{{ cat.id }}', this)" data-category="{{ cat.id }}" class="category-filter-btn px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all {% if cat.id == 'all' %}active bg-emerald-500 text-white shadow-lg shadow-emerald-500/20{% else %}text-slate-300 bg-slate-900/60 hover:bg-white/5 border border-white/5{% endif %}">
+                <i class="fa-solid {{ cat.icon }} mr-1.5"></i> {{ cat.name }}
+            </button>
+            {% endfor %}
+        </div>
+
+        <!-- Service Cards Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="services-grid">
+            {% for s in services %}
+            <div class="service-catalog-card glass-panel rounded-3xl p-6 flex flex-col justify-between space-y-5 border border-white/5 hover:border-emerald-500/40 transition-all group"
+                 data-title="{{ s.title }}"
+                 data-desc="{{ s.description }}"
+                 data-category="{{ s.category }}"
+                 data-women-pro="{{ 'true' if s.women_pro_available else 'false' }}">
+                
+                <div class="space-y-4">
+                    <!-- Card Top Header -->
+                    <div class="flex items-start justify-between gap-3">
+                        <div class="w-12 h-12 rounded-2xl bg-slate-800/90 border border-slate-700 text-emerald-400 flex items-center justify-center text-xl group-hover:bg-emerald-500 group-hover:text-white transition-all shadow-md">
+                            <i class="fa-solid {{ s.icon }}"></i>
+                        </div>
+                        <div class="flex flex-col items-end gap-1">
+                            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                                <i class="fa-solid fa-star text-amber-400 mr-1"></i> {{ s.rating }} ({{ s.reviews_count }})
+                            </span>
+                            {% if s.women_pro_available %}
+                            <span class="px-2 py-0.5 rounded-full text-[9px] font-bold bg-pink-500/20 text-pink-300 border border-pink-500/30 flex items-center gap-1">
+                                <i class="fa-solid fa-person-dress text-[10px]"></i> Women Pro Ready
+                            </span>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Title & Certification -->
+                    <div>
+                        <h3 class="text-base font-bold text-white group-hover:text-emerald-300 transition-colors">{{ s.title }}</h3>
+                        <div class="text-[10px] font-mono text-slate-400 mt-1 flex items-center gap-1.5">
+                            <i class="fa-solid fa-certificate text-emerald-400"></i> {{ s.cert_tag }}
+                        </div>
+                    </div>
+
+                    <p class="text-xs text-slate-300 leading-relaxed line-clamp-2">{{ s.description }}</p>
+
+                    <!-- Features Checklist -->
+                    <ul class="space-y-1.5 text-[11px] text-slate-400">
+                        {% for feat in s.features[:2] %}
+                        <li class="flex items-center gap-2">
+                            <i class="fa-solid fa-check text-emerald-400 text-[10px]"></i>
+                            <span>{{ feat }}</span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <!-- Bottom Pricing & Booking CTA -->
+                <div class="pt-4 border-t border-slate-800/80 space-y-3">
+                    <div class="flex items-center justify-between text-xs">
+                        <div>
+                            <div class="text-xl font-black text-white font-heading">₹{{ s.price }}</div>
+                            <div class="text-[10px] text-slate-400 line-through">₹{{ s.market_price }} Corporate App</div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-[11px] font-bold text-emerald-400">₹{{ s.worker_share }} to Worker</div>
+                            <div class="text-[10px] text-cyan-400">+₹{{ s.welfare_share }} Co-op Pool</div>
+                        </div>
+                    </div>
+
+                    <button onclick="openBookingModal('{{ s.id }}')" class="w-full py-3 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold text-xs shadow-lg shadow-emerald-600/30 hover:shadow-emerald-600/50 hover:scale-[1.01] active:scale-95 transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-calendar-check"></i> Book with 7-Checkpoint Escrow
+                    </button>
+                </div>
+
+            </div>
+            {% endfor %}
+        </div>
+
+    </section>
+
+
+    <!-- SLIDE 2: BUILT FOR REAL-WORLD SERVICE FAILURES (INTERACTIVE RESILIENCE SUITE) -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="glass-panel-glow rounded-3xl p-6 sm:p-10 border border-emerald-500/30 space-y-8">
+            
+            <div class="text-center space-y-2 max-w-3xl mx-auto">
+                <span class="text-xs font-mono font-bold uppercase tracking-wider text-amber-400 bg-amber-950/60 px-3 py-1 rounded-full border border-amber-500/30">
+                    <i class="fa-solid fa-triangle-exclamation mr-1"></i> Slide 02 • Built for Real-World Service Failures
+                </span>
+                <h2 class="text-2xl sm:text-4xl font-extrabold font-heading text-white">Edge-Case Resilience Matrix</h2>
+                <p class="text-xs sm:text-sm text-slate-300">
+                    Traditional platforms break when network fails, workers no-show, or disputes happen. SahiDeal solves real-world failures natively.
+                </p>
+            </div>
+
+            <!-- 6 Failure Handling Grid Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                
+                <!-- 1. No-Show Worker Simulator -->
+                <div class="glass-panel rounded-3xl p-6 space-y-4 border border-rose-500/30">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-rose-500/20 text-rose-400 flex items-center justify-center text-lg">
+                            <i class="fa-solid fa-user-xmark"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-sm font-bold text-white">No-Show Worker</h3>
+                            <p class="text-[10px] text-rose-300">Auto-Reassign + Trust Penalty</p>
+                        </div>
+                    </div>
+                    <p class="text-xs text-slate-300">
+                        If a worker fails to confirm arrival within 15 mins, platform issues automated trust penalty and re-routes to nearest pro within 1.2km.
+                    </p>
+                    <button id="btn-test-noshow" onclick="ResilienceEngine.simulateNoShow()" class="w-full py-2.5 rounded-xl bg-rose-600/30 hover:bg-rose-600 text-rose-200 text-xs font-bold border border-rose-500/40 transition">
+                        <i class="fa-solid fa-play mr-1.5"></i> Test No-Show Auto-Reassign
+                    </button>
+                    <div id="noshow-result-box" class="hidden"></div>
+                </div>
+
+                <!-- 2. Low Connectivity IVR / SMS Simulator -->
+                <div class="glass-panel rounded-3xl p-6 space-y-4 border border-cyan-500/30">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-lg">
+                            <i class="fa-solid fa-tower-cell"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-sm font-bold text-white">Low Connectivity</h3>
+                            <p class="text-[10px] text-cyan-300">Twilio IVR & SMS Fallback</p>
+                        </div>
+                    </div>
+                    <p class="text-xs text-slate-300">
+                        Works 100% offline for senior citizens and low-network areas via automated local language voice calls and SMS OTPs.
+                    </p>
+                    <div class="flex gap-2">
+                        <select id="ivr-lang-select" class="px-3 py-2 rounded-lg glass-input text-xs">
+                            <option value="hi" class="bg-slate-900">हिंदी (Hindi)</option>
+                            <option value="en" class="bg-slate-900">English</option>
+                            <option value="kn" class="bg-slate-900">ಕನ್ನಡ (Kannada)</option>
+                            <option value="ta" class="bg-slate-900">தமிழ் (Tamil)</option>
+                        </select>
+                        <button id="btn-trigger-ivr" onclick="ResilienceEngine.simulateIVR()" class="flex-1 py-2 rounded-xl bg-cyan-600/30 hover:bg-cyan-600 text-cyan-200 text-xs font-bold border border-cyan-500/40 transition">
+                            <i class="fa-solid fa-phone-volume mr-1.5"></i> Place Voice Call
+                        </button>
+                    </div>
+                    <div id="ivr-audio-visualizer" class="hidden text-center py-1">
+                        <span class="audio-bar"></span>
+                        <span class="audio-bar"></span>
+                        <span class="audio-bar"></span>
+                        <span class="audio-bar"></span>
+                        <span class="audio-bar"></span>
+                    </div>
+                    <div id="ivr-simulation-output" class="hidden"></div>
+                </div>
+
+                <!-- 3. Service Dispute Escrow & Citizen Verification -->
+                <div class="glass-panel rounded-3xl p-6 space-y-4 border border-indigo-500/30">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center text-lg">
+                            <i class="fa-solid fa-scale-balanced"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-sm font-bold text-white">Service Dispute</h3>
+                            <p class="text-[10px] text-indigo-300">Escrow + Citizen Verification</p>
+                        </div>
+                    </div>
+                    <p class="text-xs text-slate-300">
+                        Escrow held safely in neutral lock. 3 random peer co-op members verify before/after photos and vote on resolution.
+                    </p>
+                    <div class="p-3 rounded-xl bg-slate-900/90 border border-slate-800 text-xs space-y-2">
+                        <div class="flex justify-between text-[11px] text-slate-300">
+                            <span>Dispute: #DISP-401 (Tile Grouting)</span>
+                            <span class="text-amber-400">₹1,200 Held</span>
+                        </div>
+                        <div class="flex gap-2 pt-1">
+                            <button onclick="ResilienceEngine.voteDispute('DISP-401', 'resolve')" class="flex-1 py-1.5 rounded-lg bg-emerald-600/30 hover:bg-emerald-600 text-emerald-300 text-[11px] font-bold border border-emerald-500/40">
+                                Pass Work (<span id="dispute-resolve-count-DISP-401">24</span>)
+                            </button>
+                            <button onclick="ResilienceEngine.voteDispute('DISP-401', 'refund')" class="flex-1 py-1.5 rounded-lg bg-rose-600/30 hover:bg-rose-600 text-rose-300 text-[11px] font-bold border border-rose-500/40">
+                                Refund (<span id="dispute-refund-count-DISP-401">3</span>)
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. First-Time Worker Vouching -->
+                <div class="glass-panel rounded-3xl p-6 space-y-4 border border-emerald-500/30">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-lg">
+                            <i class="fa-solid fa-user-graduate"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-sm font-bold text-white">First-Time Worker</h3>
+                            <p class="text-[10px] text-emerald-300">PMKVY Skill + Community Vouch</p>
+                        </div>
+                    </div>
+                    <p class="text-xs text-slate-300">
+                        New workers onboarding via ITIs & SHGs are paired with senior stewards and need 5 neighborhood vouches to earn Class-A shares.
+                    </p>
+                    <button onclick="ResilienceEngine.vouchForWorker('pro-101')" class="w-full py-2.5 rounded-xl bg-emerald-600/30 hover:bg-emerald-600 text-emerald-200 text-xs font-bold border border-emerald-500/40 transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-thumbs-up"></i> Community Vouch (<span id="vouch-count-pro-101">84</span> vouches)
+                    </button>
+                </div>
+
+                <!-- 5. Women Safety Protocol -->
+                <div class="glass-panel rounded-3xl p-6 space-y-4 border border-pink-500/30">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-pink-500/20 text-pink-400 flex items-center justify-center text-lg">
+                            <i class="fa-solid fa-person-dress"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-sm font-bold text-white">Women Safety</h3>
+                            <p class="text-[10px] text-pink-300">Women-Provider Filter & SOS</p>
+                        </div>
+                    </div>
+                    <p class="text-xs text-slate-300">
+                        Female citizens can filter exclusively for verified women-led SHG professionals with full Aadhaar eKYC and 15-min emergency SOS.
+                    </p>
+                    <div class="p-3 rounded-xl bg-pink-950/50 border border-pink-500/30 text-xs text-pink-200 flex items-center justify-between">
+                        <span><i class="fa-solid fa-shield-heart mr-1.5 text-pink-400"></i> SHG Women Guild Certified</span>
+                        <span class="text-emerald-400 font-bold">100% Vetted</span>
+                    </div>
+                </div>
+
+                <!-- 6. Review Fraud Prevention -->
+                <div class="glass-panel rounded-3xl p-6 space-y-4 border border-yellow-500/30">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-yellow-500/20 text-yellow-400 flex items-center justify-center text-lg">
+                            <i class="fa-solid fa-fingerprint"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-sm font-bold text-white">Review Fraud</h3>
+                            <p class="text-[10px] text-yellow-300">Verified Completion Signals</p>
+                        </div>
+                    </div>
+                    <p class="text-xs text-slate-300">
+                        Zero fake ratings: Reviews are cryptographically unlocked ONLY after verified start OTP, photo proof hash, and customer completion OTP.
+                    </p>
+                    <div class="p-3 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-300 flex items-center justify-between">
+                        <span>Tamper-Proof Audit Trail:</span>
+                        <span class="text-emerald-400 font-mono font-bold">HASH LOCKED</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- SLIDE 5: FAIR EARNINGS PLATFORM COOPERATIVISM CALCULATOR -->
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="glass-panel-glow rounded-3xl p-6 sm:p-10 border border-emerald-500/30">
             <div class="max-w-3xl mx-auto text-center space-y-3 mb-8">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-emerald-500/20 text-emerald-400 text-xs font-bold">
-                    <i class="fa-solid fa-calculator"></i> Fair Share Transparency
-                </div>
+                <span class="text-xs font-mono font-bold uppercase tracking-wider text-emerald-400 bg-emerald-950/60 px-3 py-1 rounded-full border border-emerald-500/30">
+                    <i class="fa-solid fa-calculator mr-1"></i> Slide 05 • Platform Economics
+                </span>
                 <h2 class="text-2xl sm:text-4xl font-extrabold font-heading text-white" data-i18n="calc_title">
                     The Platform Cooperativism Advantage
                 </h2>
                 <p class="text-xs sm:text-sm text-slate-300" data-i18n="calc_sub">
-                    Drag the slider to test any service booking amount and compare how much more income stays in worker pockets.
+                    Test any service booking amount and compare how much more income stays in worker pockets with SahiDeal's 8% take-rate vs traditional 28% corporate fees.
                 </p>
             </div>
 
             <!-- Slider Control -->
             <div class="max-w-xl mx-auto space-y-4 mb-10">
                 <div class="flex items-center justify-between text-sm">
-                    <span class="text-slate-400">Service Booking Bill:</span>
+                    <span class="text-slate-400 font-medium">Service Booking Bill:</span>
                     <span id="calc-amount-label" class="text-2xl font-black text-emerald-400 font-heading">₹1,500</span>
                 </div>
                 <input type="range" min="300" max="6000" step="100" value="1500" oninput="updateFairCalculator(this.value)" class="w-full cursor-pointer">
@@ -97,282 +516,124 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
                 
                 <!-- Traditional Corporate App Box -->
-                <div class="p-6 rounded-2xl bg-slate-900/90 border border-rose-500/30 space-y-4 relative overflow-hidden">
-                    <div class="flex items-center justify-between pb-3 border-b border-slate-800">
-                        <div>
-                            <span class="text-xs font-bold text-rose-400 uppercase tracking-wider">Traditional Gig App</span>
-                            <div class="text-lg font-bold text-white">Centralized Aggregator</div>
-                        </div>
-                        <i class="fa-solid fa-building-columns text-rose-400/50 text-2xl"></i>
-                    </div>
-
-                    <div class="space-y-3 text-xs">
-                        <div class="flex justify-between">
-                            <span class="text-slate-400">Worker Payout (~68%):</span>
-                            <span id="calc-corp-worker" class="font-bold text-slate-200">₹1,020</span>
-                        </div>
-                        <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
-                            <div id="bar-corp-worker" class="bg-rose-500 h-full rounded-full" style="width: 68%;"></div>
-                        </div>
-
-                        <div class="flex justify-between text-rose-300">
-                            <span>Extractive Commission (32%):</span>
-                            <span id="calc-corp-cut" class="font-bold">₹480</span>
-                        </div>
-                        <div class="flex justify-between text-slate-400">
-                            <span>Worker Healthcare / Reserve:</span>
-                            <span class="text-rose-400 font-semibold">₹0 (Zero Safety Net)</span>
-                        </div>
-                        <div class="flex justify-between text-slate-400">
-                            <span>Worker Governance Voice:</span>
-                            <span class="text-rose-400 font-semibold">0% (Algorithm Disciplinary)</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- SahakariGig Cooperative Box -->
-                <div class="p-6 rounded-2xl bg-emerald-950/40 border border-emerald-500/50 space-y-4 relative overflow-hidden glow-emerald">
-                    <div class="flex items-center justify-between pb-3 border-b border-emerald-500/30">
-                        <div>
-                            <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider">SahakariGig Model</span>
-                            <div class="text-lg font-bold text-white">Worker-Owned Co-op</div>
-                        </div>
-                        <i class="fa-solid fa-handshake-angle text-emerald-400 text-2xl"></i>
-                    </div>
-
-                    <div class="space-y-3 text-xs">
-                        <div class="flex justify-between">
-                            <span class="text-slate-300">Direct Worker Take-Home (97%):</span>
-                            <span id="calc-coop-worker" class="font-bold text-emerald-300">₹1,455</span>
-                        </div>
-                        <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
-                            <div id="bar-coop-worker" class="bg-emerald-400 h-full rounded-full" style="width: 97%;"></div>
-                        </div>
-
-                        <div class="flex justify-between text-indigo-300">
-                            <span>Worker Healthcare & Welfare Fund (3%):</span>
-                            <span id="calc-coop-welfare" class="font-bold text-indigo-300">₹45</span>
-                        </div>
-                        <div class="flex justify-between text-slate-300">
-                            <span>Corporate Platform Middleman Cut:</span>
-                            <span class="text-emerald-400 font-bold">₹0</span>
-                        </div>
-                        <div class="flex justify-between text-slate-300">
-                            <span>Democratic Co-op Voting:</span>
-                            <span class="text-emerald-300 font-semibold">100% Worker-Steward DAO</span>
-                        </div>
-                    </div>
-
-                    <div class="pt-2 border-t border-emerald-500/30 flex items-center justify-between text-xs">
-                        <span class="text-slate-300 font-medium">Extra income in worker pocket:</span>
-                        <span id="calc-extra-gain" class="font-black text-emerald-400 text-sm font-heading">+₹435</span>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="text-center mt-6 text-xs text-emerald-300 font-medium">
-                <i class="fa-solid fa-circle-info mr-1"></i> <span id="calc-gain-pct">+43% more income to worker</span> on every single job, creating sustainable livelihoods and community wealth.
-            </div>
-        </div>
-    </section>
-
-
-    <!-- CO-OP SERVICES CATALOG & CATEGORY FILTER -->
-    <section id="services" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-        
-        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
-            <div>
-                <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider">Vetted Craftsmen & Fair Pricing</span>
-                <h2 class="text-3xl font-black font-heading text-white mt-1">Household & Community Services</h2>
-            </div>
-            <div class="text-xs text-slate-400 max-w-sm">
-                Each service is delivered by certified Co-op Members with a transparent price warranty and 97% direct worker payout.
-            </div>
-        </div>
-
-        <!-- Category Filter Buttons -->
-        <div class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
-            {% for cat in categories %}
-            <button onclick="selectCategory('{{ cat.id }}', this)" class="cat-filter-btn px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all border {% if cat.id == 'all' %}bg-emerald-500 text-white shadow-lg shadow-emerald-500/20 border-emerald-400{% else %}bg-slate-800/80 text-slate-300 border-slate-700/60 hover:bg-slate-700{% endif %} flex items-center gap-2">
-                <i class="fa-solid {{ cat.icon }}"></i>
-                <span>{{ cat.name }}</span>
-            </button>
-            {% endfor %}
-        </div>
-
-        <!-- Services Grid -->
-        <div id="services-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {% for s in services %}
-            <div class="service-card glass-panel rounded-3xl p-6 flex flex-col justify-between hover:border-emerald-500/40 transition-all group"
-                 data-category="{{ s.category }}"
-                 data-category-name="{{ s.category_name }}"
-                 data-title="{{ s.title }}"
-                 data-desc="{{ s.description }}">
-                
-                <div class="space-y-4">
+                <div class="p-6 rounded-3xl bg-slate-900/90 border border-rose-500/30 space-y-4 relative overflow-hidden">
                     <div class="flex items-center justify-between">
-                        <span class="px-3 py-1 rounded-xl text-[11px] font-bold bg-slate-800 text-slate-300 border border-slate-700 flex items-center gap-1.5">
-                            <i class="fa-solid {{ s.icon }} text-emerald-400"></i> {{ s.category_name }}
+                        <span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-rose-500/20 text-rose-400 border border-rose-500/30">
+                            Traditional Corporate Aggregator
                         </span>
-                        <div class="flex items-center gap-1 text-xs font-bold text-amber-400">
-                            <i class="fa-solid fa-star"></i> {{ s.rating }} <span class="text-slate-400 font-normal">({{ s.reviews_count }})</span>
-                        </div>
+                        <i class="fa-solid fa-building-slash text-rose-400 text-lg"></i>
                     </div>
-
                     <div>
-                        <h3 class="text-lg font-bold font-heading text-white group-hover:text-emerald-300 transition">{{ s.title }}</h3>
-                        <p class="text-xs text-slate-400 mt-2 line-clamp-2 leading-relaxed">{{ s.description }}</p>
+                        <div class="text-3xl font-black text-white font-heading" id="calc-corp-worker">₹1,080</div>
+                        <div class="text-xs text-rose-400 mt-1" id="calc-corp-cut">₹420 (28% Middleman Cut)</div>
                     </div>
-
-                    <!-- Features bullets -->
-                    <ul class="space-y-1.5 pt-2 border-t border-slate-800/80">
-                        {% for f in s.features[:2] %}
-                        <li class="text-[11px] text-slate-300 flex items-center gap-2">
-                            <i class="fa-solid fa-check text-emerald-400 text-[10px]"></i> {{ f }}
-                        </li>
-                        {% endfor %}
+                    <ul class="space-y-2 text-xs text-slate-400 border-t border-slate-800 pt-3">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-xmark text-rose-400"></i> Zero democratic voting rights</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-xmark text-rose-400"></i> Unilateral algorithmic shadow-banning</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-xmark text-rose-400"></i> 0% Patronage dividend distribution</li>
                     </ul>
                 </div>
 
-                <div class="pt-6 mt-6 border-t border-slate-800 space-y-4">
+                <!-- SahiDeal Co-op Model Box -->
+                <div class="p-6 rounded-3xl bg-gradient-to-b from-emerald-950/60 to-slate-900/90 border border-emerald-500/50 space-y-4 relative overflow-hidden shadow-xl shadow-emerald-500/10">
                     <div class="flex items-center justify-between">
-                        <div>
-                            <div class="flex items-baseline gap-2">
-                                <span class="text-2xl font-black font-heading text-white">₹{{ s.price }}</span>
-                                <span class="text-xs line-through text-slate-400">₹{{ s.market_price }}</span>
-                            </div>
-                            <span class="text-[10px] text-emerald-400 font-semibold">Pro gets ₹{{ s.worker_share }} (97%)</span>
-                        </div>
-                        <span class="text-[11px] text-slate-400"><i class="fa-solid fa-clock mr-1 text-slate-400"></i>{{ s.duration }}</span>
+                        <span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
+                            SahiDeal Worker Cooperative (8% Fee)
+                        </span>
+                        <i class="fa-solid fa-handshake-angle text-emerald-400 text-lg"></i>
                     </div>
-
-                    <button onclick='openBookingModal({{ s | tojson | safe }})' class="w-full py-3 rounded-xl bg-slate-800 hover:bg-emerald-500 hover:text-white text-emerald-300 border border-slate-700 hover:border-emerald-400 font-bold text-xs tracking-wide transition-all shadow-md flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-calendar-check"></i> Book Cooperative Pro
-                    </button>
+                    <div>
+                        <div class="text-3xl font-black text-emerald-400 font-heading" id="calc-coop-worker">₹1,380</div>
+                        <div class="text-xs text-cyan-400 mt-1" id="calc-coop-reserve">₹120 (8% Co-op Reserve & Dividend)</div>
+                    </div>
+                    <ul class="space-y-2 text-xs text-slate-300 border-t border-slate-800 pt-3">
+                        <li class="flex items-center gap-2 font-bold text-white"><i class="fa-solid fa-check text-emerald-400"></i> <span id="calc-extra-gain">+₹300 Extra in Worker Pocket</span> <span id="calc-gain-pct" class="text-emerald-400 text-[11px]">(+28% higher take-home)</span></li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> 1 Member = 1 Democratic Vote in DAO</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> 100% Platform surplus returned as dividends</li>
+                    </ul>
                 </div>
 
             </div>
-            {% endfor %}
-        </div>
 
-        <div id="no-services-found" class="hidden text-center py-16 glass-panel rounded-3xl">
-            <i class="fa-solid fa-magnifying-glass text-4xl text-slate-600 mb-3"></i>
-            <p class="text-base text-slate-300 font-semibold">No services matched your query.</p>
-            <p class="text-xs text-slate-400 mt-1">Try keywords like "AC", "Leak", "Electrical", or "Elder".</p>
         </div>
-
     </section>
 
 
-    <!-- VERIFIED WORKER-OWNER SPOTLIGHT -->
+    <!-- VERIFIED NEIGHBORHOOD PROS SHOWCASE -->
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <div>
-                <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider">Democratic Ownership</span>
-                <h2 class="text-3xl font-black font-heading text-white mt-1">Meet Your Cooperative Craftsmen</h2>
+                <span class="text-xs font-mono font-bold uppercase tracking-wider text-emerald-400">Democratic Worker-Owners</span>
+                <h2 class="text-3xl sm:text-4xl font-black font-heading text-white">Meet Your Neighborhood Pros</h2>
+                <p class="text-xs sm:text-sm text-slate-300 mt-1">100% Aadhaar eKYC, PMKVY certified, and community vouched.</p>
             </div>
-            <a href="{{ url_for('worker_dashboard') }}" class="text-xs text-emerald-400 font-bold hover:underline flex items-center gap-1">
-                Explore Worker-Owner Portal <i class="fa-solid fa-arrow-right"></i>
+            <a href="{{ url_for('worker_dashboard') }}" class="text-xs font-bold text-emerald-400 hover:text-emerald-300 flex items-center gap-1.5">
+                Join as Co-op Member Pro <i class="fa-solid fa-arrow-right"></i>
             </a>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {% for w in workers %}
-            <div class="glass-panel rounded-3xl p-5 space-y-4 hover:border-emerald-500/40 transition">
-                <div class="relative">
-                    <img src="{{ w.avatar }}" alt="{{ w.name }}" class="w-full h-44 object-cover rounded-2xl">
-                    <span class="absolute top-3 left-3 px-2.5 py-1 rounded-lg text-[10px] font-bold bg-coop-dark/80 text-emerald-300 border border-emerald-500/30 backdrop-blur-md">
-                        <i class="fa-solid fa-award mr-1 text-emerald-400"></i> {{ w.badge }}
-                    </span>
-                    <span class="absolute bottom-3 right-3 px-2 py-0.5 rounded-md text-[10px] font-bold bg-slate-900/90 text-amber-300 border border-amber-400/30">
-                        <i class="fa-solid fa-star mr-1"></i>{{ w.rating }}
+            {% for worker in workers[:4] %}
+            <div class="glass-panel rounded-3xl p-6 space-y-4 border border-white/5 hover:border-emerald-500/40 transition-all text-center">
+                <div class="relative mx-auto w-20 h-20">
+                    <img src="{{ worker.avatar }}" alt="{{ worker.name }}" class="w-full h-full rounded-2xl object-cover border-2 border-emerald-400 shadow-md">
+                    <span class="absolute -bottom-1 -right-1 px-1.5 py-0.5 rounded-md text-[9px] font-bold bg-emerald-500 text-white">
+                        {{ worker.shares_owned }} Shares
                     </span>
                 </div>
-
                 <div>
-                    <h4 class="text-base font-bold text-white">{{ w.name }}</h4>
-                    <p class="text-xs text-slate-400">{{ w.role }}</p>
+                    <h3 class="text-base font-bold text-white">{{ worker.name }}</h3>
+                    <p class="text-xs text-slate-300 mt-0.5">{{ worker.role }}</p>
+                    <div class="text-[11px] font-mono text-emerald-400 mt-1"><i class="fa-solid fa-location-dot mr-1"></i> {{ worker.location }}</div>
                 </div>
-
-                <div class="grid grid-cols-2 gap-2 text-center text-xs py-2 px-3 rounded-xl bg-slate-900/80 border border-slate-800">
-                    <div>
-                        <div class="font-black text-emerald-400">{{ w.shares_owned }}</div>
-                        <div class="text-[10px] text-slate-400">Co-op Shares</div>
-                    </div>
-                    <div>
-                        <div class="font-black text-indigo-400">₹{{ w.dividend_earned }}</div>
-                        <div class="text-[10px] text-slate-400">Dividends</div>
-                    </div>
+                <div class="pt-3 border-t border-slate-800 flex items-center justify-around text-xs text-slate-400">
+                    <span><i class="fa-solid fa-star text-amber-400 mr-1"></i> <b class="text-white">{{ worker.rating }}</b></span>
+                    <span>•</span>
+                    <span><i class="fa-solid fa-thumbs-up text-emerald-400 mr-1"></i> {{ worker.vouched_by }} Vouches</span>
                 </div>
-
-                <div class="flex items-center justify-between text-[11px] text-slate-400 pt-1">
-                    <span><i class="fa-solid fa-location-dot text-emerald-400 mr-1"></i>{{ w.location }}</span>
-                    <span class="text-emerald-400 font-semibold">{{ w.jobs_completed }}+ gigs</span>
-                </div>
+                <button onclick="openBookingModal('elec-01')" class="w-full py-2 rounded-xl bg-slate-800 hover:bg-emerald-500 text-slate-200 hover:text-white text-xs font-semibold transition shadow-sm">
+                    Book This Pro
+                </button>
             </div>
             {% endfor %}
         </div>
     </section>
 
 
-    <!-- ACTIVE COMMUNITY RWA BULK DRIVES -->
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-        <div class="p-8 sm:p-12 rounded-3xl bg-gradient-to-br from-indigo-950/50 via-slate-900 to-slate-950 border border-indigo-500/30 relative overflow-hidden">
-            <div class="max-w-2xl space-y-3 mb-8">
-                <span class="px-3 py-1 rounded-full text-xs font-bold bg-indigo-500/20 text-indigo-400 border border-indigo-500/30">
-                    <i class="fa-solid fa-people-roof mr-1"></i> Resident Welfare Association (RWA) Group Buying
+    <!-- SLIDE 6: RESEARCH & CITATIONS DRAWER -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="glass-panel rounded-3xl p-6 sm:p-8 border border-white/10 space-y-6">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-book-bookmark"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-base font-bold text-white">Research Backing & Statutory Framework</h3>
+                        <p class="text-xs text-slate-400">Slide 06 • Research and References</p>
+                    </div>
+                </div>
+                <span class="text-[10px] font-mono text-emerald-400 bg-emerald-950/60 px-2.5 py-1 rounded-lg border border-emerald-500/30">
+                    ILO & PMKVY Aligned
                 </span>
-                <h3 class="text-2xl sm:text-4xl font-extrabold font-heading text-white">
-                    Bulk Community Services with Collective Savings
-                </h3>
-                <p class="text-xs sm:text-sm text-slate-300">
-                    Join your apartment society or neighborhood collective maintenance drives. Up to 30% group discounts while providing guaranteed full-day volume work to cooperative pods.
-                </p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {% for camp in campaigns %}
-                <div class="glass-panel rounded-2xl p-5 space-y-4">
-                    <div class="flex items-center justify-between">
-                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-300">
-                            {{ camp.discount_percent }}% Society Discount
-                        </span>
-                        <span class="text-xs text-indigo-300 font-semibold">{{ camp.days_left }} days left</span>
-                    </div>
-
-                    <div>
-                        <h4 class="text-sm font-bold text-white">{{ camp.service_title }}</h4>
-                        <p class="text-[11px] text-slate-400 mt-1"><i class="fa-solid fa-building mr-1"></i>{{ camp.society_name }}</p>
-                    </div>
-
-                    <!-- Progress -->
-                    <div class="space-y-1.5">
-                        <div class="flex justify-between text-xs text-slate-300">
-                            <span>Pledges: <b class="text-white">{{ camp.current_pledges }}</b> / {{ camp.target_pledges }} homes</span>
-                            <span class="font-bold text-emerald-400">₹{{ camp.group_price_per_unit }}</span>
-                        </div>
-                        <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
-                            <div class="bg-gradient-to-r from-emerald-400 to-indigo-500 h-full rounded-full" style="width: {{ (camp.current_pledges / camp.target_pledges) * 100 }}%;"></div>
-                        </div>
-                    </div>
-
-                    <a href="{{ url_for('community') }}" class="block w-full py-2 rounded-xl bg-indigo-600/30 hover:bg-indigo-600 text-indigo-200 hover:text-white border border-indigo-500/40 text-center font-bold text-xs transition">
-                        Join Society Drive
-                    </a>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-1.5">
+                    <div class="font-bold text-white">ILO Report (2021)</div>
+                    <p class="text-slate-400 text-[11px]">The Role of Digital Labour Platforms in Transforming Work: Gig precarity & cooperative alternatives.</p>
                 </div>
-                {% endfor %}
+                <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-1.5">
+                    <div class="font-bold text-white">Trebor Scholz (2016)</div>
+                    <p class="text-slate-400 text-[11px]">Platform Cooperativism: Challenging the Corporate Sharing Economy via Worker-Owned digital ecosystems.</p>
+                </div>
+                <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-1.5">
+                    <div class="font-bold text-white">Ministry of Skill Development</div>
+                    <p class="text-slate-400 text-[11px]">PMKVY Recognition of Prior Learning (RPL) certification integration for informal gig workforce formalization.</p>
+                </div>
             </div>
         </div>
     </section>
 
 </div>
-{% endblock %}
-
-{% block scripts %}
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        updateFairCalculator(1500);
-    });
-</script>
 {% endblock %}

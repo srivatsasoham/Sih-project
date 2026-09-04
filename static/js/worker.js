@@ -1,191 +1,171 @@
 /**
- * SahakariGig - Worker-Owner Dashboard Module
- * Handles Live Radar Map, Instant Payouts, Job Dispatch Actions & Welfare Claims
+ * SahiDeal - Worker-Owner Portal Engine
+ * Powers Radar GIS dispatches, 5-step job execution, Instant UPI Payouts, and Welfare Claims
  */
 
-let workerMap = null;
-let isOnline = true;
-let currentWalletBalance = 4850;
-
-function initWorkerRadarMap() {
-    const mapEl = document.getElementById('worker-radar-map');
-    if (!mapEl || typeof L === 'undefined') return;
-
-    // Center on Bangalore (e.g., Indiranagar / Koramangala)
-    const workerLat = 12.9716;
-    const workerLng = 77.6412;
-
-    workerMap = L.map('worker-radar-map', {
-        zoomControl: false,
-        attributionControl: false
-    }).setView([workerLat, workerLng], 14);
-
-    // Dark tile layer
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-        maxZoom: 19
-    }).addTo(workerMap);
-
-    // Custom Worker Marker
-    const workerIcon = L.divIcon({
-        className: 'custom-worker-pin',
-        html: `
-            <div class="relative flex items-center justify-center w-8 h-8 rounded-full bg-emerald-500 text-white shadow-lg shadow-emerald-500/50">
-                <i class="fa-solid fa-user-gear text-sm"></i>
-                <div class="absolute inset-0 rounded-full bg-emerald-400 ping-circle opacity-75"></div>
-            </div>
-        `,
-        iconSize: [32, 32],
-        iconAnchor: [16, 16]
-    });
-
-    L.marker([workerLat, workerLng], { icon: workerIcon })
-        .addTo(workerMap)
-        .bindPopup("<b>You (Ramesh K.)</b><br>Co-op Pro • Online")
-        .openPopup();
-
-    // Add 2 nearby Job Pins
-    const jobIcon = L.divIcon({
-        className: 'custom-job-pin',
-        html: `
-            <div class="relative flex items-center justify-center w-7 h-7 rounded-full bg-indigo-500 text-white shadow-lg shadow-indigo-500/50 animate-bounce">
-                <i class="fa-solid fa-bolt text-xs"></i>
-            </div>
-        `,
-        iconSize: [28, 28],
-        iconAnchor: [14, 14]
-    });
-
-    L.marker([12.9765, 12.9765 ? 77.6490 : 77.6490], { icon: jobIcon })
-        .addTo(workerMap)
-        .bindPopup("<b>Emergency Short Circuit</b><br>₹678 Take-home • 1.2km");
-
-    L.marker([12.9640, 77.6350], { icon: jobIcon })
-        .addTo(workerMap)
-        .bindPopup("<b>Inverter Load Balancing</b><br>₹850 Take-home • 2.4km");
-}
+let workerOnline = true;
 
 function toggleWorkerStatus() {
-    isOnline = !isOnline;
-    const btn = document.getElementById('btn-status-toggle');
+    workerOnline = !workerOnline;
     const badge = document.getElementById('status-live-badge');
-    const radar = document.getElementById('radar-animation');
+    const btn = document.getElementById('btn-status-toggle');
 
-    if (isOnline) {
-        btn.innerText = 'Go Offline';
-        btn.className = 'px-4 py-2 rounded-xl text-xs font-semibold bg-rose-500/20 text-rose-300 border border-rose-500/40 hover:bg-rose-500/30';
-        badge.innerText = 'Online & Receiving Dispatches';
-        badge.className = 'px-3 py-1 rounded-full text-xs font-medium bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 flex items-center gap-2';
-        if (radar) radar.style.display = 'block';
-        Toast.show("🟢 You are Online. Live Co-op Radar active.", "success");
+    if (workerOnline) {
+        if (badge) {
+            badge.className = 'px-3 py-1.5 rounded-full text-xs font-medium bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 flex items-center gap-2';
+            badge.innerHTML = '<span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span> Online & Receiving Dispatches';
+        }
+        if (btn) {
+            btn.textContent = 'Go Offline';
+            btn.className = 'px-4 py-2 rounded-xl text-xs font-semibold bg-rose-500/20 text-rose-300 border border-rose-500/40 hover:bg-rose-500/30 transition';
+        }
+        Toast.show("📡 You are now ONLINE on the <3km Co-op Radar!", "success");
     } else {
-        btn.innerText = 'Go Online';
-        btn.className = 'px-4 py-2 rounded-xl text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500/30';
-        badge.innerText = 'Offline (Resting)';
-        badge.className = 'px-3 py-1 rounded-full text-xs font-medium bg-slate-700/50 text-slate-400 border border-slate-600 flex items-center gap-2';
-        if (radar) radar.style.display = 'none';
-        Toast.show("⚪ Offline. No incoming dispatches.", "info");
+        if (badge) {
+            badge.className = 'px-3 py-1.5 rounded-full text-xs font-medium bg-slate-800 text-slate-400 border border-slate-700 flex items-center gap-2';
+            badge.innerHTML = '<span class="w-2 h-2 rounded-full bg-slate-500"></span> Offline';
+        }
+        if (btn) {
+            btn.textContent = 'Go Online';
+            btn.className = 'px-4 py-2 rounded-xl text-xs font-semibold bg-emerald-500 text-white hover:bg-emerald-600 transition shadow-lg shadow-emerald-500/20';
+        }
+        Toast.show("You are now OFFLINE. Radar dispatches paused.", "info");
     }
 }
 
-function acceptRadarJob(jobId, payoutAmount) {
-    SoundFX.cash();
-    const jobCard = document.getElementById(`job-card-${jobId}`);
-    if (jobCard) {
-        jobCard.innerHTML = `
-            <div class="p-4 rounded-xl bg-emerald-950/60 border border-emerald-500/40 text-center animate-fade-in">
-                <i class="fa-solid fa-circle-check text-2xl text-emerald-400 mb-2"></i>
-                <div class="text-sm font-bold text-emerald-300">Job Accepted & Dispatched!</div>
-                <div class="text-xs text-slate-300 mt-1">Customer Vikram Sethi notified. Payout ₹${payoutAmount} locked in Co-op Escrow.</div>
-                <button onclick="completeSimulatedJob('${jobId}', ${payoutAmount})" class="mt-3 px-4 py-2 rounded-lg bg-emerald-500 text-white text-xs font-bold hover:bg-emerald-600">
-                    <i class="fa-solid fa-flag-checkered mr-1"></i> Mark as Completed
-                </button>
+function acceptRadarJob(jobId) {
+    const card = document.getElementById(`job-card-${jobId}`);
+    if (card) {
+        card.innerHTML = `
+            <div class="p-4 rounded-2xl bg-emerald-950/70 border border-emerald-500/40 space-y-4">
+                <div class="flex items-center justify-between text-xs font-bold text-emerald-300">
+                    <span><i class="fa-solid fa-circle-check mr-1.5"></i> GIG ACCEPTED • GIS ROUTE ACTIVE</span>
+                    <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400">1.2 km away</span>
+                </div>
+
+                <!-- 5-Step Execution Workflow -->
+                <div class="space-y-3 pt-2" id="exec-flow-${jobId}">
+                    <!-- Step 1: Start OTP -->
+                    <div id="step-start-otp-${jobId}" class="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800 space-y-2">
+                        <div class="text-xs font-semibold text-slate-300">1. Arrive at Customer Location & Enter Start OTP:</div>
+                        <div class="flex gap-2">
+                            <input type="text" id="input-start-otp-${jobId}" placeholder="Enter 4-digit OTP (e.g. 4819)" value="4819" class="w-full px-3 py-2 text-xs rounded-lg glass-input">
+                            <button onclick="verifyStartOtp('${jobId}')" class="px-4 py-2 rounded-lg bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-bold shrink-0">
+                                Verify OTP
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Photo Proof -->
+                    <div id="step-photo-proof-${jobId}" class="hidden p-3.5 rounded-xl bg-slate-900/90 border border-slate-800 space-y-2">
+                        <div class="text-xs font-semibold text-slate-300">2. Take Work Photo Proof (Before/After):</div>
+                        <button onclick="uploadWorkPhoto('${jobId}')" class="w-full py-2.5 rounded-lg bg-indigo-600/30 hover:bg-indigo-600 text-indigo-200 text-xs font-bold border border-indigo-500/40 flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-camera"></i> Capture & Upload Work Proof Photo
+                        </button>
+                    </div>
+
+                    <!-- Step 3: Complete OTP & Instant UPI Disbursal -->
+                    <div id="step-complete-otp-${jobId}" class="hidden p-3.5 rounded-xl bg-slate-900/90 border border-slate-800 space-y-2">
+                        <div class="text-xs font-semibold text-slate-300">3. Job Done! Ask Customer for Completion OTP:</div>
+                        <div class="flex gap-2">
+                            <input type="text" id="input-complete-otp-${jobId}" placeholder="Enter Completion OTP (e.g. 7392)" value="7392" class="w-full px-3 py-2 text-xs rounded-lg glass-input">
+                            <button onclick="verifyCompleteOtp('${jobId}')" class="px-4 py-2 rounded-lg bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-bold shrink-0 shadow-lg shadow-emerald-500/30">
+                                Settle Instant UPI
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         `;
     }
-    Toast.show(`⚡ Job ${jobId} Accepted! Route navigating via Co-op Map.`, "success");
+    Toast.show(`⚡ Gig ${jobId} Accepted! Customer notified. Directions active.`, 'success');
+    SoundFX.pop();
 }
 
-function completeSimulatedJob(jobId, payoutAmount) {
+function verifyStartOtp(jobId) {
+    const step1 = document.getElementById(`step-start-otp-${jobId}`);
+    const step2 = document.getElementById(`step-photo-proof-${jobId}`);
+    if (step1) step1.innerHTML = `<div class="text-xs font-bold text-emerald-400"><i class="fa-solid fa-circle-check mr-1.5"></i> Start OTP 4819 Verified! Job in progress.</div>`;
+    if (step2) step2.classList.remove('hidden');
+    Toast.show("✅ Start OTP Verified! Work timer started.", "success");
+    SoundFX.success();
+}
+
+function uploadWorkPhoto(jobId) {
+    const step2 = document.getElementById(`step-photo-proof-${jobId}`);
+    const step3 = document.getElementById(`step-complete-otp-${jobId}`);
+    if (step2) step2.innerHTML = `
+        <div class="text-xs font-bold text-indigo-300 flex items-center justify-between">
+            <span><i class="fa-solid fa-image mr-1.5"></i> Work Photo Proof Uploaded & Hash-Locked</span>
+            <span class="text-[10px] px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-400">AUDIT READY</span>
+        </div>
+    `;
+    if (step3) step3.classList.remove('hidden');
+    Toast.show("📸 Work photo uploaded to permanent Co-op audit trail!", "info");
+    SoundFX.pop();
+}
+
+function verifyCompleteOtp(jobId) {
+    const card = document.getElementById(`job-card-${jobId}`);
+    const balEl = document.getElementById('worker-wallet-bal');
+
+    if (balEl) {
+        let current = parseInt(balEl.textContent.replace(/[^\d]/g, '')) || 4850;
+        balEl.textContent = `₹${(current + 643).toLocaleString('en-IN')}`;
+    }
+
+    if (card) {
+        card.innerHTML = `
+            <div class="p-5 rounded-2xl bg-gradient-to-r from-emerald-950/80 to-teal-950/80 border border-emerald-500/50 space-y-3">
+                <div class="flex items-center justify-between">
+                    <span class="text-xs font-black text-emerald-400 font-heading"><i class="fa-solid fa-money-bill-transfer mr-1.5"></i> INSTANT UPI PAYOUT DISBURSED</span>
+                    <span class="text-lg font-black text-white font-heading">+₹643</span>
+                </div>
+                <div class="p-3 rounded-xl bg-slate-900/90 border border-slate-800 text-xs space-y-1.5">
+                    <div class="flex justify-between text-slate-300">
+                        <span>Direct Worker Payout (92%):</span>
+                        <span class="font-bold text-white">₹643</span>
+                    </div>
+                    <div class="flex justify-between text-emerald-400">
+                        <span>Cooperative Dividend & Welfare Pool (8%):</span>
+                        <span class="font-bold">+₹56</span>
+                    </div>
+                    <div class="flex justify-between text-slate-400 text-[11px] pt-1 border-t border-slate-800">
+                        <span>Corporate Aggregator Middleman Cut:</span>
+                        <span class="text-rose-400 line-through">₹0 (Saved ₹195)</span>
+                    </div>
+                </div>
+                <div class="text-[11px] text-emerald-300 text-center font-medium">
+                    ⭐ +1 Patronage Share credit added to your voting balance.
+                </div>
+            </div>
+        `;
+    }
+
+    Toast.show("🎉 Instant ₹643 UPI Payout Transferred to your Bank Account!", "success", 6000);
     SoundFX.cash();
-    currentWalletBalance += payoutAmount;
-    
-    // Update balance
-    const walletEl = document.getElementById('worker-wallet-bal');
-    if (walletEl) walletEl.innerText = `₹${currentWalletBalance.toLocaleString('en-IN')}`;
+}
 
-    const jobCard = document.getElementById(`job-card-${jobId}`);
-    if (jobCard) {
-        jobCard.remove();
+function declineRadarJob(jobId) {
+    const card = document.getElementById(`job-card-${jobId}`);
+    if (card) {
+        card.style.opacity = 0;
+        setTimeout(() => card.remove(), 300);
     }
-
-    if (typeof confetti === 'function') {
-        confetti({ particleCount: 70, spread: 60 });
-    }
-    Toast.show(`💰 ₹${payoutAmount} added to your Co-op Wallet! (Zero middleman fee)`, "success");
+    Toast.show("Gig skipped. Co-op Radar will auto-route to next pro.", "info");
 }
 
 function openWithdrawModal() {
-    SoundFX.pop();
-    const modal = document.getElementById('withdraw-modal');
-    if (modal) {
-        document.getElementById('withdraw-amount').value = currentWalletBalance;
-        modal.classList.remove('hidden');
-        modal.classList.add('flex');
-    }
-}
-
-function closeWithdrawModal() {
-    const modal = document.getElementById('withdraw-modal');
-    if (modal) {
-        modal.classList.add('hidden');
-        modal.classList.remove('flex');
-    }
-}
-
-function processWithdrawal() {
-    const amt = parseFloat(document.getElementById('withdraw-amount').value) || 0;
-    const upi = document.getElementById('withdraw-upi').value || 'ramesh@upi';
-
-    if (amt <= 0 || amt > currentWalletBalance) {
-        Toast.show("Invalid withdrawal amount.", "error");
-        return;
-    }
-
-    currentWalletBalance -= amt;
-    const walletEl = document.getElementById('worker-wallet-bal');
-    if (walletEl) walletEl.innerText = `₹${currentWalletBalance.toLocaleString('en-IN')}`;
-
-    closeWithdrawModal();
+    Toast.show("⚡ Instant UPI Disbursal Triggered! ₹4,850 credited to your registered UPI ID (ramesh@okhdfcbank).", "success");
     SoundFX.cash();
-    Toast.show(`🚀 Instant Payout of ₹${amt} transferred to ${upi} via UPI Instant Disbursal!`, "success", 5000);
 }
 
-// Healthcare Welfare Claim
 function openWelfareClaimModal() {
+    Toast.show("🛡️ Ayushman Co-op Welfare Claim Submitted! Case reference: WLF-2026-904. Council will verify within 4 hours.", "info");
     SoundFX.pop();
-    const modal = document.getElementById('welfare-claim-modal');
-    if (modal) {
-        modal.classList.remove('hidden');
-        modal.classList.add('flex');
-    }
 }
 
-function closeWelfareClaimModal() {
-    const modal = document.getElementById('welfare-claim-modal');
-    if (modal) {
-        modal.classList.add('hidden');
-        modal.classList.remove('flex');
-    }
+function requestToolLoan() {
+    Toast.show("🛠️ Zero-Interest Tool Replacement Loan of ₹8,000 approved from Co-op Tool Bank Depot!", "success");
+    SoundFX.cash();
 }
-
-function submitWelfareClaim() {
-    const claimType = document.getElementById('claim-type').value;
-    const claimAmt = document.getElementById('claim-amount').value;
-    closeWelfareClaimModal();
-    SoundFX.success();
-    Toast.show(`🛡️ Claim for ${claimType} (₹${claimAmt}) submitted to Co-op Peer Welfare Committee. Approved within 4 hrs!`, "success", 6000);
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    initWorkerRadarMap();
-});

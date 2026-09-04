@@ -1,185 +1,199 @@
 {% extends "base.html" %}
 
-{% block title %}Cooperative Council & DAO Governance - SahakariGig{% endblock %}
+{% block title %}Cooperative Council & Governance - SahiDeal Ecosystem | SIH 2026{% endblock %}
 
 {% block content %}
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
 
-    <!-- GOVERNANCE BANNER -->
-    <div class="glass-panel-glow rounded-3xl p-6 sm:p-10 border border-emerald-500/30">
-        <div class="max-w-3xl space-y-3">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold">
-                <i class="fa-solid fa-landmark-dome"></i> Democratic Platform Cooperativism
+    <!-- GOVERNANCE HEADER -->
+    <div class="glass-panel-glow rounded-3xl p-6 sm:p-10 border border-emerald-500/30 text-center space-y-3">
+        <span class="text-xs font-mono font-bold uppercase tracking-wider text-emerald-400 bg-emerald-950/60 px-3 py-1 rounded-full border border-emerald-500/30">
+            <i class="fa-solid fa-users-gear mr-1"></i> Democratic Platform Cooperativism
+        </span>
+        <h1 class="text-3xl sm:text-5xl font-black font-heading text-white">Co-op Council & Open Ledger</h1>
+        <p class="text-xs sm:text-sm text-slate-300 max-w-2xl mx-auto">
+            1 Member = 1 Vote. Every worker and citizen member exercises democratic ownership over platform fees, healthcare allocations, and dispute policies.
+        </p>
+    </div>
+
+
+    <!-- TRANSPARENT TREASURY LEDGER METRICS -->
+    <div class="space-y-6">
+        <div class="flex items-center justify-between">
+            <div>
+                <h2 class="text-xl font-bold font-heading text-white flex items-center gap-2">
+                    <i class="fa-solid fa-book-open text-emerald-400"></i> Transparent Co-op Treasury Ledger
+                </h2>
+                <p class="text-xs text-slate-400">Real-time cryptographic audit trail of all platform revenue & distributions</p>
             </div>
-            <h1 class="text-3xl sm:text-5xl font-black font-heading text-white">
-                Co-op Council & Public Treasury
-            </h1>
-            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                In SahakariGig, gig workers are not passive algorithm subjects—they are Class-A voting shareholders. Every major platform policy, commission rate, and surplus allocation is decided democratically.
-            </p>
+            <span class="px-2.5 py-1 rounded-full text-xs font-mono font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+                AUDITED • 100% PUBLIC
+            </span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            
+            <div class="glass-panel rounded-3xl p-6 space-y-2 border border-white/5">
+                <div class="text-xs text-slate-400">Total Platform GMV</div>
+                <div class="text-2xl font-black text-white font-heading">₹{{ treasury.total_revenue }}</div>
+                <div class="text-[11px] text-emerald-400 font-semibold"><i class="fa-solid fa-arrow-trend-up mr-1"></i> +17% YoY Growth</div>
+            </div>
+
+            <div class="glass-panel rounded-3xl p-6 space-y-2 border border-emerald-500/30">
+                <div class="text-xs text-slate-400">Direct Worker Payouts (92%)</div>
+                <div class="text-2xl font-black text-emerald-400 font-heading">₹{{ treasury.worker_disbursed }}</div>
+                <div class="text-[11px] text-slate-400">Zero corporate middleman cut</div>
+            </div>
+
+            <div class="glass-panel rounded-3xl p-6 space-y-2 border border-cyan-500/30">
+                <div class="text-xs text-slate-400">Co-op Reserve Pool (8%)</div>
+                <div class="text-2xl font-black text-cyan-400 font-heading">₹{{ treasury.coop_reserve_pool }}</div>
+                <div class="text-[11px] text-cyan-300">Powers health & quarterly dividends</div>
+            </div>
+
+            <div class="glass-panel rounded-3xl p-6 space-y-2 border border-amber-500/30">
+                <div class="text-xs text-slate-400">Patronage Dividend Reserve</div>
+                <div class="text-2xl font-black text-amber-400 font-heading">₹{{ treasury.dividend_payout_fund }}</div>
+                <div class="text-[11px] text-amber-300">Q3 Disbursal in 14 days</div>
+            </div>
+
         </div>
     </div>
 
 
-    <!-- PUBLIC TREASURY & WELFARE FUND LEDGER -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        
-        <!-- Left: Treasury Chart & Stats (5 cols) -->
-        <div class="lg:col-span-5 space-y-6">
-            <div class="glass-panel rounded-3xl p-6 space-y-6">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <h3 class="text-lg font-bold font-heading text-white">Public Co-op Treasury</h3>
-                        <p class="text-xs text-slate-400">Audited 100% on-chain & bank reconciled</p>
-                    </div>
-                    <span class="px-2 py-1 rounded-md text-[10px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
-                        Q2 2026 Audit
-                    </span>
-                </div>
-
-                <!-- Doughnut Chart Container -->
-                <div class="relative h-64 w-full flex items-center justify-center">
-                    <canvas id="treasuryDonutChart"></canvas>
-                </div>
-
-                <div class="space-y-3 text-xs pt-2 border-t border-slate-800">
-                    <div class="flex items-center justify-between">
-                        <span class="text-slate-400">Total Gross Service Volume:</span>
-                        <span class="font-black text-white text-sm">₹{{ "{:,}".format(treasury.total_revenue) }}</span>
-                    </div>
-                    <div class="flex items-center justify-between text-emerald-400">
-                        <span>Direct Worker Disbursals (97%):</span>
-                        <span class="font-black">₹{{ "{:,}".format(treasury.worker_disbursed) }}</span>
-                    </div>
-                    <div class="flex items-center justify-between text-indigo-300">
-                        <span>Welfare, Insurance & Tool Reserve (3%):</span>
-                        <span class="font-black">₹{{ "{:,}".format(treasury.welfare_fund_pool) }}</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Right: Active Referendums & Voting Booth (7 cols) -->
-        <div class="lg:col-span-7 space-y-6">
-            <div class="glass-panel rounded-3xl p-6 space-y-6">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <h3 class="text-lg font-bold font-heading text-white">Active Co-op Member Ballots</h3>
-                        <p class="text-xs text-slate-400">Your vote shapes the future of our cooperative</p>
-                    </div>
-                    <div class="text-xs text-slate-400">
-                        Turnout: <b class="text-emerald-400">{{ treasury.voter_turnout_pct }}%</b>
-                    </div>
-                </div>
-
-                <div class="space-y-5">
-                    {% for p in proposals %}
-                    <div class="p-6 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-4 hover:border-emerald-500/30 transition">
-                        
-                        <div class="flex flex-wrap items-center justify-between gap-2">
-                            <span class="px-2.5 py-1 rounded-md text-[10px] font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
-                                {{ p.id }} • {{ p.category }}
-                            </span>
-                            {% if p.status == 'ACTIVE_VOTING' %}
-                            <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30 flex items-center gap-1.5">
-                                <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping"></span> Voting Closes in {{ p.deadline_hours }}h
-                            </span>
-                            {% else %}
-                            <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-                                <i class="fa-solid fa-check mr-1"></i> {{ p.badge }}
-                            </span>
-                            {% endif %}
-                        </div>
-
-                        <div>
-                            <h4 class="text-base font-bold text-white">{{ p.title }}</h4>
-                            <p class="text-xs text-slate-300 mt-2 leading-relaxed">{{ p.impact }}</p>
-                            <p class="text-[11px] text-slate-400 mt-1">Proposed by: <span class="text-slate-300">{{ p.proposer }}</span></p>
-                        </div>
-
-                        <!-- Live Vote Progress Bar -->
-                        <div class="space-y-1.5">
-                            <div class="flex justify-between text-xs">
-                                <span id="yes-count-{{ p.id }}" class="font-bold text-emerald-400">{{ p.yes_votes }} Yes</span>
-                                <span id="vote-pct-{{ p.id }}" class="font-semibold text-slate-300">{{ ((p.yes_votes / (p.yes_votes + p.no_votes)) * 100) | round(1) }}% Approval</span>
-                                <span id="no-count-{{ p.id }}" class="font-bold text-rose-400">{{ p.no_votes }} No</span>
-                            </div>
-                            <div class="w-full bg-slate-800 h-2.5 rounded-full overflow-hidden flex">
-                                <div id="vote-bar-{{ p.id }}" class="bg-emerald-400 h-full transition-all duration-500" style="width: {{ (p.yes_votes / (p.yes_votes + p.no_votes)) * 100 }}%;"></div>
-                                <div class="bg-rose-500 h-full flex-grow"></div>
-                            </div>
-                        </div>
-
-                        <!-- Voting Actions -->
-                        {% if p.status == 'ACTIVE_VOTING' %}
-                        <div id="vote-action-box-{{ p.id }}" class="grid grid-cols-2 gap-3 pt-2">
-                            <button id="btn-yes-{{ p.id }}" onclick="voteProposal('{{ p.id }}', 'yes')" class="py-2.5 rounded-xl bg-emerald-500/20 hover:bg-emerald-500 text-emerald-300 hover:text-white border border-emerald-500/40 text-xs font-bold transition flex items-center justify-center gap-2">
-                                <i class="fa-solid fa-thumbs-up"></i> Vote YES (Approve)
-                            </button>
-                            <button id="btn-no-{{ p.id }}" onclick="voteProposal('{{ p.id }}', 'no')" class="py-2.5 rounded-xl bg-rose-500/20 hover:bg-rose-500 text-rose-300 hover:text-white border border-rose-500/40 text-xs font-bold transition flex items-center justify-center gap-2">
-                                <i class="fa-solid fa-thumbs-down"></i> Vote NO (Reject)
-                            </button>
-                        </div>
-                        {% endif %}
-
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-
-    <!-- INTERACTIVE PATRONAGE DIVIDEND CALCULATOR -->
-    <div class="glass-panel-glow rounded-3xl p-6 sm:p-10 border border-amber-500/30">
-        <div class="max-w-3xl mx-auto text-center space-y-3 mb-8">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 text-amber-400 text-xs font-bold">
-                <i class="fa-solid fa-coins"></i> Patronage Dividend Simulator
-            </div>
-            <h2 class="text-2xl sm:text-3xl font-black font-heading text-white">
-                How Much Profit Share Will You Earn?
+    <!-- ACTIVE DEMOCRATIC PROPOSALS -->
+    <div class="space-y-6">
+        <div>
+            <h2 class="text-xl font-bold font-heading text-white flex items-center gap-2">
+                <i class="fa-solid fa-check-to-slot text-emerald-400"></i> Active Cooperative Policy Ballots
             </h2>
-            <p class="text-xs sm:text-sm text-slate-300">
-                Unlike corporate gig apps that send profits to Silicon Valley investors, SahakariGig shares surplus quarterly dividends back to active workers based on completed service volume.
-            </p>
+            <p class="text-xs text-slate-400">Cast your democratic vote on fee structures, welfare allocations, and tool depot upgrades</p>
         </div>
 
-        <div class="max-w-xl mx-auto space-y-4 mb-8">
-            <div class="flex items-center justify-between text-sm">
-                <span class="text-slate-300 font-medium">Your Monthly Completed Gigs:</span>
-                <span id="dividend-gigs-label" class="text-xl font-bold text-amber-400">45 Gigs / Month</span>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {% for p in proposals %}
+            <div id="proposal-card-{{ p.id }}" class="glass-panel rounded-3xl p-6 sm:p-8 space-y-5 border border-white/10 hover:border-emerald-500/40 transition-all flex flex-col justify-between">
+                
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="px-2.5 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                            {{ p.badge }}
+                        </span>
+                        <span class="text-xs font-mono text-slate-400">{{ p.id }}</span>
+                    </div>
+
+                    <h3 class="text-lg font-bold text-white">{{ p.title }}</h3>
+                    <p class="text-xs text-slate-300 leading-relaxed">{{ p.impact }}</p>
+
+                    <div class="text-[11px] text-slate-400">
+                        <i class="fa-solid fa-user-pen mr-1 text-emerald-400"></i> Proposed by: <b>{{ p.proposer }}</b>
+                    </div>
+                </div>
+
+                <!-- Voting Progress Bar -->
+                <div class="space-y-3 pt-4 border-t border-slate-800">
+                    <div class="flex items-center justify-between text-xs">
+                        <span class="text-emerald-400 font-bold">YES: <span id="yes-count-{{ p.id }}">{{ p.yes_votes }}</span> votes</span>
+                        <span class="text-rose-400 font-bold">NO: <span id="no-count-{{ p.id }}">{{ p.no_votes }}</span> votes</span>
+                    </div>
+                    
+                    <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden flex">
+                        {% set total_v = p.yes_votes + p.no_votes %}
+                        {% set yes_pct = (p.yes_votes / total_v * 100)|round|int if total_v > 0 else 50 %}
+                        <div id="vote-bar-{{ p.id }}" class="bg-gradient-to-r from-emerald-500 to-teal-400 h-full transition-all duration-500" style="width: {{ yes_pct }}%"></div>
+                    </div>
+
+                    <!-- Voting Action Buttons -->
+                    <div class="grid grid-cols-2 gap-3 pt-2">
+                        <button onclick="castDemocraticVote('{{ p.id }}', 'yes')" class="py-2.5 rounded-xl bg-emerald-600/30 hover:bg-emerald-600 text-emerald-200 text-xs font-bold border border-emerald-500/40 transition flex items-center justify-center gap-1.5">
+                            <i class="fa-solid fa-thumbs-up"></i> Vote YES
+                        </button>
+                        <button onclick="castDemocraticVote('{{ p.id }}', 'no')" class="py-2.5 rounded-xl bg-rose-600/30 hover:bg-rose-600 text-rose-200 text-xs font-bold border border-rose-500/40 transition flex items-center justify-center gap-1.5">
+                            <i class="fa-solid fa-thumbs-down"></i> Vote NO
+                        </button>
+                    </div>
+                </div>
+
             </div>
-            <input type="range" min="10" max="120" step="5" value="45" oninput="calculateDividend(this.value)" class="w-full cursor-pointer">
-            <div class="flex justify-between text-[11px] text-slate-400">
-                <span>10 Gigs (Part-time)</span>
-                <span>45 Gigs (Standard)</span>
-                <span>120 Gigs (Full-time Pro)</span>
-            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+    <!-- CITIZEN DISPUTE RESOLUTION TRIBUNAL -->
+    <div class="space-y-6">
+        <div>
+            <h2 class="text-xl font-bold font-heading text-white flex items-center gap-2">
+                <i class="fa-solid fa-scale-balanced text-indigo-400"></i> Citizen Dispute Resolution Tribunal
+            </h2>
+            <p class="text-xs text-slate-400">Peer verification panel resolves customer-worker disputes without corporate middleman bias</p>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 max-w-3xl mx-auto text-center">
-            <div class="p-5 rounded-2xl bg-slate-900/90 border border-slate-800">
-                <span class="text-xs text-slate-400">Estimated Quarterly Dividend</span>
-                <div id="div-quarterly" class="text-2xl font-black text-amber-400 font-heading mt-1">₹3,038</div>
-                <span class="text-[10px] text-slate-400">Paid directly to bank</span>
+        <div class="glass-panel rounded-3xl p-6 sm:p-8 border border-indigo-500/30 space-y-6">
+            {% for d in disputes %}
+            <div class="space-y-4">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-slate-800">
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-mono font-bold text-amber-400">{{ d.id }}</span>
+                            <span class="text-xs font-bold text-white">Booking Ref: {{ d.booking_id }}</span>
+                        </div>
+                        <h3 class="text-base font-bold text-white mt-0.5">{{ d.service }}</h3>
+                    </div>
+                    <div class="text-xs text-slate-300">
+                        <span class="text-slate-400">Customer:</span> <b>{{ d.customer }}</b> • <span class="text-slate-400">Worker:</span> <b>{{ d.worker }}</b>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                    <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-1">
+                        <div class="font-bold text-rose-300"><i class="fa-solid fa-circle-exclamation mr-1"></i> Customer Issue Claim:</div>
+                        <p class="text-slate-300 leading-relaxed">{{ d.issue_text }}</p>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-1">
+                        <div class="font-bold text-emerald-300"><i class="fa-solid fa-screwdriver-wrench mr-1"></i> Worker Defense & Proof:</div>
+                        <p class="text-slate-300 leading-relaxed">{{ d.worker_defense }}</p>
+                    </div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-3 border-t border-slate-800">
+                    <div class="text-xs text-slate-400">
+                        <i class="fa-solid fa-lock text-emerald-400 mr-1"></i> Escrow Locked: <b class="text-white">₹{{ d.amount }}</b>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <button onclick="ResilienceEngine.voteDispute('{{ d.id }}', 'resolve')" class="px-4 py-2 rounded-xl bg-emerald-600/30 hover:bg-emerald-600 text-emerald-200 text-xs font-bold border border-emerald-500/40 transition">
+                            <i class="fa-solid fa-circle-check mr-1"></i> Pass Work (<span id="dispute-resolve-count-{{ d.id }}">{{ d.peer_votes_resolve }}</span>)
+                        </button>
+                        <button onclick="ResilienceEngine.voteDispute('{{ d.id }}', 'refund')" class="px-4 py-2 rounded-xl bg-rose-600/30 hover:bg-rose-600 text-rose-200 text-xs font-bold border border-rose-500/40 transition">
+                            <i class="fa-solid fa-rotate-left mr-1"></i> Issue Full Refund (<span id="dispute-refund-count-{{ d.id }}">{{ d.peer_votes_refund }}</span>)
+                        </button>
+                    </div>
+                </div>
             </div>
-            <div class="p-5 rounded-2xl bg-slate-900/90 border border-slate-800">
-                <span class="text-xs text-slate-400">Estimated Annual Dividend</span>
-                <div id="div-yearly" class="text-2xl font-black text-emerald-400 font-heading mt-1">₹12,150</div>
-                <span class="text-[10px] text-slate-400">Surplus profit bonus</span>
-            </div>
-            <div class="p-5 rounded-2xl bg-slate-900/90 border border-slate-800">
-                <span class="text-xs text-slate-400">Cooperative Voting Equity</span>
-                <div id="div-shares" class="text-2xl font-black text-cyan-400 font-heading mt-1">+20 Class-A Shares</div>
-                <span class="text-[10px] text-slate-400">Democratic voting power</span>
-            </div>
+            {% endfor %}
         </div>
     </div>
 
 </div>
-{% endblock %}
 
-{% block scripts %}
-<script src="{{ url_for('static', filename='js/governance.js') }}"></script>
+<script>
+function castDemocraticVote(proposalId, choice) {
+    fetch('/api/governance/vote', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({proposal_id: proposalId, choice: choice})
+    }).then(r => r.json()).then(data => {
+        const yesEl = document.getElementById(`yes-count-${proposalId}`);
+        const noEl = document.getElementById(`no-count-${proposalId}`);
+        const barEl = document.getElementById(`vote-bar-${proposalId}`);
+
+        if (yesEl && data.yes_votes) yesEl.textContent = data.yes_votes;
+        if (noEl && data.no_votes) noEl.textContent = data.no_votes;
+        if (barEl && data.yes_pct) barEl.style.width = `${data.yes_pct}%`;
+
+        Toast.show(`🗳️ Democratic Vote '${choice.toUpperCase()}' recorded on Co-op Ledger!`, 'success');
+        SoundFX.cash();
+    });
+}
+</script>
 {% endblock %}

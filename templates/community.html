@@ -1,277 +1,116 @@
 {% extends "base.html" %}
 
-{% block title %}Community RWAs & Collective Group Buying - SahakariGig{% endblock %}
+{% block title %}RWA Bulk Buying & Society Campaigns - SahiDeal | SIH 2026{% endblock %}
 
 {% block content %}
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
 
-    <!-- COMMUNITY HERO -->
-    <div class="glass-panel-glow rounded-3xl p-6 sm:p-10 border border-indigo-500/30">
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
-            <div class="max-w-2xl space-y-3">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-400 text-xs font-bold">
-                    <i class="fa-solid fa-people-roof"></i> Collective Neighborhood Power
-                </div>
-                <h1 class="text-3xl sm:text-5xl font-black font-heading text-white">
-                    RWA Bulk Maintenance & Mutual Aid Hub
-                </h1>
-                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                    When neighborhoods bundle maintenance tasks (such as solar panel cleaning, monsoon waterproofing, or AC servicing), residents enjoy 20–30% group discounts while cooperative worker pods get stable, full-day bulk income.
-                </p>
-            </div>
-
-            <button onclick="openNewCampaignModal()" class="px-6 py-3.5 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-sm shadow-lg shadow-indigo-600/30 flex items-center gap-2 shrink-0 transition">
-                <i class="fa-solid fa-plus"></i> Launch Society Drive
-            </button>
-        </div>
+    <!-- COMMUNITY HEADER -->
+    <div class="glass-panel-glow rounded-3xl p-6 sm:p-10 border border-emerald-500/30 text-center space-y-3">
+        <span class="text-xs font-mono font-bold uppercase tracking-wider text-emerald-400 bg-emerald-950/60 px-3 py-1 rounded-full border border-emerald-500/30">
+            <i class="fa-solid fa-people-roof mr-1"></i> Society Collective Purchasing
+        </span>
+        <h1 class="text-3xl sm:text-5xl font-black font-heading text-white">RWA Community Bulk Hub</h1>
+        <p class="text-xs sm:text-sm text-slate-300 max-w-2xl mx-auto">
+            Apartment societies pool recurring maintenance jobs (Solar deep clean, Water tank UV flush, AC tune-ups) to unlock <b>20%–30% group discounts</b> while providing worker pods guaranteed full-day volume work.
+        </p>
     </div>
 
 
-    <!-- ACTIVE COMMUNITY CAMPAIGNS GRID -->
+    <!-- ACTIVE SOCIETY CAMPAIGNS GRID -->
     <div class="space-y-6">
         <div class="flex items-center justify-between">
-            <h2 class="text-2xl font-black font-heading text-white">Active Neighborhood Drives</h2>
-            <span class="text-xs text-slate-400">Bangalore Metropolitan Area</span>
+            <div>
+                <h2 class="text-xl font-bold font-heading text-white flex items-center gap-2">
+                    <i class="fa-solid fa-layer-group text-emerald-400"></i> Live Society Bulk Drives
+                </h2>
+                <p class="text-xs text-slate-400">Pledge your flat to unlock the next volume discount tier for your community</p>
+            </div>
+            <span class="px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+                3 Active Drives
+            </span>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {% for camp in campaigns %}
-            <div class="glass-panel rounded-3xl overflow-hidden flex flex-col justify-between hover:border-indigo-500/40 transition group">
-                <div>
-                    <!-- Campaign Image Banner -->
-                    <div class="relative h-48 overflow-hidden">
-                        <img src="{{ camp.image }}" alt="{{ camp.society_name }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                        <div class="absolute inset-0 bg-gradient-to-t from-coop-dark via-coop-dark/40 to-transparent"></div>
-                        <span class="absolute top-3 left-3 px-2.5 py-1 rounded-lg text-xs font-black bg-emerald-500 text-white shadow-lg">
-                            {{ camp.discount_percent }}% OFF
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {% for c in campaigns %}
+            <div id="campaign-card-{{ c.id }}" class="glass-panel rounded-3xl p-6 border border-white/10 hover:border-emerald-500/40 transition-all flex flex-col justify-between space-y-6">
+                
+                <div class="space-y-4">
+                    <div class="relative h-44 rounded-2xl overflow-hidden">
+                        <img src="{{ c.image }}" alt="{{ c.society_name }}" class="w-full h-full object-cover">
+                        <span class="absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-black bg-emerald-500 text-white shadow-lg">
+                            {{ c.discount_percent }}% OFF TIER
                         </span>
-                        <span class="absolute bottom-3 left-3 text-[11px] text-slate-300 font-medium">
-                            <i class="fa-solid fa-location-dot text-emerald-400 mr-1"></i>{{ camp.location }}
+                        <span class="absolute bottom-3 left-3 px-2.5 py-1 rounded-lg text-[10px] font-bold bg-slate-900/90 text-slate-200 backdrop-blur-md">
+                            <i class="fa-solid fa-clock mr-1 text-amber-400"></i> {{ c.days_left }} Days Left
                         </span>
                     </div>
 
-                    <div class="p-6 space-y-4">
-                        <div>
-                            <span class="text-xs font-bold text-indigo-400 uppercase tracking-wider">{{ camp.society_name }}</span>
-                            <h3 class="text-lg font-bold font-heading text-white mt-1">{{ camp.service_title }}</h3>
-                        </div>
+                    <div>
+                        <div class="text-[11px] font-mono text-emerald-400 font-bold"><i class="fa-solid fa-location-dot mr-1"></i> {{ c.location }}</div>
+                        <h3 class="text-base font-bold text-white mt-1">{{ c.service_title }}</h3>
+                        <div class="text-xs text-slate-300 mt-1">{{ c.society_name }}</div>
+                    </div>
 
-                        <!-- Pricing Table -->
-                        <div class="p-3 rounded-xl bg-slate-900/90 border border-slate-800 flex items-center justify-between text-xs">
-                            <div>
-                                <span class="text-slate-400">Society Bulk Rate:</span>
-                                <div class="text-base font-black text-emerald-400">₹{{ camp.group_price_per_unit }} <span class="text-xs line-through text-slate-500 font-normal">₹{{ camp.regular_price_per_unit }}</span></div>
-                            </div>
-                            <div class="text-right">
-                                <span class="text-slate-400">Society Collective Savings:</span>
-                                <div class="text-xs font-bold text-indigo-300">₹{{ camp.savings_total }}</div>
-                            </div>
+                    <!-- Progress Bar -->
+                    <div class="space-y-1.5">
+                        <div class="flex justify-between text-xs">
+                            <span class="text-slate-300"><b id="pledges-count-{{ c.id }}">{{ c.current_pledges }}</b> / {{ c.target_pledges }} Flats Pledged</span>
+                            {% set pct = (c.current_pledges / c.target_pledges * 100)|round|int %}
+                            <span class="text-emerald-400 font-bold" id="pledges-pct-{{ c.id }}">{{ pct }}%</span>
                         </div>
-
-                        <!-- Progress Bar & Pledges -->
-                        <div class="space-y-2">
-                            <div class="flex justify-between text-xs text-slate-300">
-                                <span>Pledges: <b id="pledges-count-{{ camp.id }}" class="text-white">{{ camp.current_pledges }}</b> / {{ camp.target_pledges }} homes</span>
-                                <span class="text-amber-300 font-bold"><i class="fa-solid fa-hourglass-half mr-1"></i>{{ camp.days_left }} days left</span>
-                            </div>
-                            <div class="w-full bg-slate-800 h-2.5 rounded-full overflow-hidden">
-                                <div id="camp-bar-{{ camp.id }}" class="bg-gradient-to-r from-emerald-400 to-indigo-500 h-full rounded-full transition-all" style="width: {{ (camp.current_pledges / camp.target_pledges) * 100 }}%;"></div>
-                            </div>
+                        <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                            <div id="pledges-bar-{{ c.id }}" class="bg-gradient-to-r from-emerald-500 to-teal-400 h-full transition-all duration-500" style="width: {{ pct }}%"></div>
                         </div>
+                    </div>
 
-                        <div class="text-[11px] text-slate-400">
-                            <i class="fa-solid fa-users-gear text-emerald-400 mr-1"></i> Assigned: <span class="text-slate-300 font-medium">{{ camp.worker_crew_assigned }}</span>
+                    <!-- Pricing Breakdown -->
+                    <div class="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800 text-xs space-y-1">
+                        <div class="flex justify-between">
+                            <span class="text-slate-400">Regular Unit Price:</span>
+                            <span class="line-through text-slate-400">₹{{ c.regular_price_per_unit }}</span>
+                        </div>
+                        <div class="flex justify-between font-bold text-white">
+                            <span>Group Discount Price:</span>
+                            <span class="text-emerald-400 text-sm font-heading">₹{{ c.group_price_per_unit }}</span>
+                        </div>
+                        <div class="flex justify-between text-[11px] text-cyan-300 pt-1 border-t border-slate-800">
+                            <span>Assigned Co-op Crew:</span>
+                            <span>{{ c.worker_crew_assigned }}</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="p-6 pt-0">
-                    <button onclick="joinSocietyDrive('{{ camp.id }}', '{{ camp.society_name }}')" class="w-full py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow-lg shadow-indigo-600/30 transition flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-hand-holding-heart"></i> Pledge My Apartment / Flat
-                    </button>
-                </div>
+                <!-- Pledge Button -->
+                <button onclick="pledgeForSociety('{{ c.id }}')" class="w-full py-3 rounded-xl bg-gradient-to-r from-emerald-600 via-teal-600 to-indigo-600 text-white font-bold text-xs shadow-lg shadow-emerald-600/30 hover:scale-[1.01] active:scale-95 transition-all flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-hand-holding-hand"></i> Pledge Flat & Lock Discount
+                </button>
+
             </div>
             {% endfor %}
         </div>
     </div>
 
-
-    <!-- MUTUAL AID & TOOL LIBRARY HIGHLIGHT -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        
-        <div class="glass-panel rounded-3xl p-6 sm:p-8 space-y-4">
-            <div class="w-12 h-12 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xl">
-                <i class="fa-solid fa-hands-holding-circle"></i>
-            </div>
-            <h3 class="text-xl font-bold font-heading text-white">Neighborhood Mutual Aid Network</h3>
-            <p class="text-xs text-slate-300 leading-relaxed">
-                Connect vulnerable seniors or single-parent households with vetted community volunteer handymen for quick grocery runs, medicine delivery, wheelchair ramps, and emergency tech setup.
-            </p>
-            <button onclick="Toast.show('Mutual Aid registry requested! Neighborhood steward will contact you.', 'success')" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-emerald-300 text-xs font-bold border border-slate-700">
-                Register as Community Volunteer / Beneficiary
-            </button>
-        </div>
-
-        <div class="glass-panel rounded-3xl p-6 sm:p-8 space-y-4">
-            <div class="w-12 h-12 rounded-2xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-xl">
-                <i class="fa-solid fa-toolbox"></i>
-            </div>
-            <h3 class="text-xl font-bold font-heading text-white">Community Shared Tool Library</h3>
-            <p class="text-xs text-slate-300 leading-relaxed">
-                Why buy expensive power tools used once a year? Borrow high-pressure washers, laser levels, thermal leak cameras, and hedge trimmers from your RWA co-op bank for free.
-            </p>
-            <button onclick="Toast.show('Shared Tool Depot opened! Checking inventory for Sector 4 Hub...', 'info')" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-300 text-xs font-bold border border-slate-700">
-                Browse Shared Tools Inventory
-            </button>
-        </div>
-
-    </div>
-
 </div>
 
-<!-- JOIN SOCIETY DRIVE MODAL -->
-<div id="join-drive-modal" class="fixed inset-0 z-50 modal-backdrop hidden items-center justify-center p-4">
-    <div class="w-full max-w-md glass-panel rounded-3xl border border-indigo-500/40 p-6 sm:p-8 space-y-5">
-        <div class="flex items-center justify-between">
-            <h3 class="text-lg font-bold font-heading text-white">Pledge Flat to Drive</h3>
-            <button onclick="closeJoinModal()" class="w-8 h-8 rounded-full bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-        </div>
-
-        <div class="space-y-4 text-xs">
-            <div>
-                <label class="block text-slate-300 font-semibold mb-1">Society / Community</label>
-                <input type="text" id="pledge-society" readonly class="w-full px-4 py-2.5 rounded-xl glass-input text-slate-400">
-            </div>
-
-            <div>
-                <label class="block text-slate-300 font-semibold mb-1">Your Flat / Villa Number</label>
-                <input type="text" id="pledge-flat" value="Flat 402, Block C" class="w-full px-4 py-2.5 rounded-xl glass-input text-white">
-            </div>
-
-            <div>
-                <label class="block text-slate-300 font-semibold mb-1">Contact Phone</label>
-                <input type="tel" id="pledge-phone" value="+91 98450 33445" class="w-full px-4 py-2.5 rounded-xl glass-input text-white">
-            </div>
-
-            <button onclick="submitPledge()" class="w-full py-3 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-sm shadow-lg shadow-emerald-500/30">
-                Confirm Society Pledge
-            </button>
-        </div>
-    </div>
-</div>
-
-<!-- START NEW CAMPAIGN MODAL -->
-<div id="new-campaign-modal" class="fixed inset-0 z-50 modal-backdrop hidden items-center justify-center p-4">
-    <div class="w-full max-w-lg glass-panel rounded-3xl border border-indigo-500/40 p-6 sm:p-8 space-y-5">
-        <div class="flex items-center justify-between">
-            <h3 class="text-lg font-bold font-heading text-white">Launch New Society Campaign</h3>
-            <button onclick="closeNewCampaignModal()" class="w-8 h-8 rounded-full bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-        </div>
-
-        <div class="space-y-4 text-xs">
-            <div>
-                <label class="block text-slate-300 font-semibold mb-1">Apartment / Society Name</label>
-                <input type="text" id="new-camp-society" placeholder="e.g. Prestige Shantiniketan RWA" class="w-full px-4 py-2.5 rounded-xl glass-input text-white">
-            </div>
-
-            <div>
-                <label class="block text-slate-300 font-semibold mb-1">Bulk Service Needed</label>
-                <select class="w-full px-4 py-2.5 rounded-xl glass-input text-sm">
-                    <option value="Society Solar & Overhead Tank Cleaning" class="bg-slate-900">Solar Array & Water Tank Deep Sanitization</option>
-                    <option value="Apartment-wide AC Efficiency Tuneup" class="bg-slate-900">Society-wide AC Filter Jet Washing</option>
-                    <option value="Monsoon Balcony & Drainage Waterproofing" class="bg-slate-900">Monsoon Balcony & Drain Waterproofing</option>
-                    <option value="Community Garden Organic Landscaping" class="bg-slate-900">Community Garden Organic Landscaping</option>
-                </select>
-            </div>
-
-            <div class="grid grid-cols-2 gap-3">
-                <div>
-                    <label class="block text-slate-300 font-semibold mb-1">Target Households</label>
-                    <input type="number" value="25" class="w-full px-4 py-2.5 rounded-xl glass-input text-white">
-                </div>
-                <div>
-                    <label class="block text-slate-300 font-semibold mb-1">Campaign Duration</label>
-                    <select class="w-full px-4 py-2.5 rounded-xl glass-input text-sm">
-                        <option value="7 days" class="bg-slate-900">7 Days</option>
-                        <option value="14 days" class="bg-slate-900">14 Days</option>
-                    </select>
-                </div>
-            </div>
-
-            <button onclick="createCampaign()" class="w-full py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-sm shadow-lg shadow-indigo-600/30">
-                Publish Campaign to Co-op Guilds
-            </button>
-        </div>
-    </div>
-</div>
-{% endblock %}
-
-{% block scripts %}
 <script>
-let activeCampaignId = null;
+function pledgeForSociety(campaignId) {
+    fetch('/api/community/join', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({campaign_id: campaignId, flat_no: "Flat 402 - Palm Heights"})
+    }).then(r => r.json()).then(data => {
+        const countEl = document.getElementById(`pledges-count-${campaignId}`);
+        const pctEl = document.getElementById(`pledges-pct-${campaignId}`);
+        const barEl = document.getElementById(`pledges-bar-${campaignId}`);
 
-function joinSocietyDrive(campaignId, societyName) {
-    SoundFX.pop();
-    activeCampaignId = campaignId;
-    document.getElementById('pledge-society').value = societyName;
-    const modal = document.getElementById('join-drive-modal');
-    modal.classList.remove('hidden');
-    modal.classList.add('flex');
-}
+        if (countEl && data.current_pledges) countEl.textContent = data.current_pledges;
+        if (pctEl && data.pct_reached) pctEl.textContent = `${data.pct_reached}%`;
+        if (barEl && data.pct_reached) barEl.style.width = `${data.pct_reached}%`;
 
-function closeJoinModal() {
-    const modal = document.getElementById('join-drive-modal');
-    modal.classList.add('hidden');
-    modal.classList.remove('flex');
-}
-
-async function submitPledge() {
-    const flatNo = document.getElementById('pledge-flat').value;
-    try {
-        const response = await fetch('/api/community/join', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ campaign_id: activeCampaignId, flat_no: flatNo })
-        });
-        const res = await response.json();
-        closeJoinModal();
-
-        if (res.success) {
-            SoundFX.success();
-            const countEl = document.getElementById(`pledges-count-${activeCampaignId}`);
-            const barEl = document.getElementById(`camp-bar-${activeCampaignId}`);
-            if (countEl) countEl.innerText = res.current_pledges;
-            if (barEl) barEl.style.width = `${res.pct_reached}%`;
-
-            Toast.show(res.message, 'success');
-            if (typeof confetti === 'function') confetti({ particleCount: 60, spread: 60 });
-        }
-    } catch (e) {
-        Toast.show("Error joining campaign.", "error");
-    }
-}
-
-function openNewCampaignModal() {
-    SoundFX.pop();
-    const modal = document.getElementById('new-campaign-modal');
-    modal.classList.remove('hidden');
-    modal.classList.add('flex');
-}
-
-function closeNewCampaignModal() {
-    const modal = document.getElementById('new-campaign-modal');
-    modal.classList.add('hidden');
-    modal.classList.remove('flex');
-}
-
-function createCampaign() {
-    closeNewCampaignModal();
-    SoundFX.success();
-    Toast.show("🎉 New Society Campaign created! Co-op pod assigned for group discounts.", "success", 5000);
+        Toast.show(`🎉 Flat pledged! Society unlocked group discount tier for ${campaignId}.`, 'success');
+        SoundFX.cash();
+    });
 }
 </script>
 {% endblock %}

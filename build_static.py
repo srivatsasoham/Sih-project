@@ -18,7 +18,7 @@ def compile_pages():
             html = html.replace('/static/js/main.js', 'static/js/main.js')
             html = html.replace('/static/js/booking.js', 'static/js/booking.js')
             html = html.replace('/static/js/worker.js', 'static/js/worker.js')
-            html = html.replace('/static/js/governance.js', 'static/js/governance.js')
+            html = html.replace('/static/js/resilience.js', 'static/js/resilience.js')
             
             # Nav links
             html = re.sub(r'href="/"', 'href="index.html"', html)

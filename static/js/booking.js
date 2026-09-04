@@ -1,152 +1,72 @@
 /**
- * SahakariGig - Booking & Fair Economy Calculator Module
+ * SahiDeal - 7-Checkpoints Booking Engine & Escrow Flow
+ * Handles 01.Book -> 02.Match -> 03.Escrow -> 04.Track -> 05.Verify -> 06.Settle -> 07.Rate
  */
 
-let currentSelectedService = null;
+let activeBookingData = null;
 let currentBookingStep = 1;
 
-// Mock pro list for client-side fallback
-const MOCK_PROS = [
-    {
-        name: "Ramesh Kumar Sharma",
-        role: "Master Electrician & Solar Specialist",
-        rating: "4.94",
-        jobs_completed: 1420,
-        location: "Indiranagar (1.4 km away)",
-        avatar: "https://images.unsplash.com/photo-1540569014015-19a7be504e3a?w=150&auto=format&fit=crop&q=80"
-    },
-    {
-        name: "Lakshmi Devi Murugan",
-        role: "Sanitation Lead & Deep Cleaning Expert",
-        rating: "4.98",
-        jobs_completed: 980,
-        location: "Koramangala (2.1 km away)",
-        avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80"
-    },
-    {
-        name: "Arun Prakash V.",
-        role: "HVAC & Master Refrigeration Technician",
-        rating: "4.89",
-        jobs_completed: 1150,
-        location: "HSR Layout (0.8 km away)",
-        avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80"
-    }
-];
-
-// Fair Economy Comparison Calculator
-function updateFairCalculator(amount) {
-    const amt = parseFloat(amount) || 1000;
-    const sliderLabel = document.getElementById('calc-amount-label');
-    if (sliderLabel) sliderLabel.innerText = `₹${amt.toLocaleString('en-IN')}`;
-
-    // Math:
-    // Corporate Platform: 32% cut -> Worker gets 68%
-    // SahakariGig: 3% Co-op Welfare/Insurance Pool -> Worker gets 97% directly
-    const corpWorker = Math.round(amt * 0.68);
-    const corpCut = Math.round(amt * 0.32);
-
-    const coopWorker = Math.round(amt * 0.97);
-    const coopWelfare = Math.round(amt * 0.03);
-
-    const extraWorkerPocket = coopWorker - corpWorker;
-    const gainPct = Math.round((extraWorkerPocket / corpWorker) * 100);
-
-    // Update DOM elements if present
-    const elCorpWorker = document.getElementById('calc-corp-worker');
-    const elCorpCut = document.getElementById('calc-corp-cut');
-    const elCoopWorker = document.getElementById('calc-coop-worker');
-    const elCoopWelfare = document.getElementById('calc-coop-welfare');
-    const elExtraGain = document.getElementById('calc-extra-gain');
-    const elGainPct = document.getElementById('calc-gain-pct');
-
-    if (elCorpWorker) elCorpWorker.innerText = `₹${corpWorker.toLocaleString('en-IN')}`;
-    if (elCorpCut) elCorpCut.innerText = `₹${corpCut.toLocaleString('en-IN')}`;
-    if (elCoopWorker) elCoopWorker.innerText = `₹${coopWorker.toLocaleString('en-IN')}`;
-    if (elCoopWelfare) elCoopWelfare.innerText = `₹${coopWelfare.toLocaleString('en-IN')}`;
-    if (elExtraGain) elExtraGain.innerText = `+₹${extraWorkerPocket.toLocaleString('en-IN')}`;
-    if (elGainPct) elGainPct.innerText = `+${gainPct}% more income to worker`;
-
-    // Update graphical progress bars
-    const barCorp = document.getElementById('bar-corp-worker');
-    const barCoop = document.getElementById('bar-coop-worker');
-    if (barCorp) barCorp.style.width = '68%';
-    if (barCoop) barCoop.style.width = '97%';
+function openBookingModal(serviceId) {
+    // Fetch service info or grab from DOM
+    fetch(`/api/services?q=`)
+        .then(r => r.json())
+        .then(data => {
+            const service = (data.services || []).find(s => s.id === serviceId) || {
+                id: serviceId,
+                title: "Precision Service Booking",
+                price: 549,
+                market_price: 999,
+                worker_share: 505,
+                welfare_share: 44,
+                category: "general",
+                women_pro_available: true
+            };
+            initModalWithService(service);
+        })
+        .catch(() => {
+            initModalWithService({
+                id: serviceId,
+                title: "Precision Cooperative Service",
+                price: 549,
+                market_price: 999,
+                worker_share: 505,
+                welfare_share: 44,
+                category: "general",
+                women_pro_available: true
+            });
+        });
 }
 
-// Category Filter & Search
-function selectCategory(category, btnElement) {
-    SoundFX.pop();
-    document.querySelectorAll('.cat-filter-btn').forEach(b => {
-        b.classList.remove('bg-emerald-500', 'text-white', 'shadow-lg', 'shadow-emerald-500/20', 'border-emerald-400');
-        b.classList.add('bg-slate-800/80', 'text-slate-300', 'border-slate-700/60');
-    });
-
-    if (btnElement) {
-        btnElement.classList.remove('bg-slate-800/80', 'text-slate-300', 'border-slate-700/60');
-        btnElement.classList.add('bg-emerald-500', 'text-white', 'shadow-lg', 'shadow-emerald-500/20', 'border-emerald-400');
-    }
-
-    const cards = document.querySelectorAll('.service-card');
-    cards.forEach(card => {
-        const cardCat = card.getAttribute('data-category');
-        if (category === 'all' || cardCat === category) {
-            card.style.display = 'flex';
-        } else {
-            card.style.display = 'none';
-        }
-    });
-}
-
-function filterServices() {
-    const q = document.getElementById('service-search').value.toLowerCase().trim();
-    const cards = document.querySelectorAll('.service-card');
-    let visibleCount = 0;
-
-    cards.forEach(card => {
-        const title = card.getAttribute('data-title').toLowerCase();
-        const desc = card.getAttribute('data-desc').toLowerCase();
-        const cat = card.getAttribute('data-category-name').toLowerCase();
-
-        if (title.includes(q) || desc.includes(q) || cat.includes(q)) {
-            card.style.display = 'flex';
-            visibleCount++;
-        } else {
-            card.style.display = 'none';
-        }
-    });
-
-    const noResults = document.getElementById('no-services-found');
-    if (noResults) {
-        noResults.style.display = visibleCount === 0 ? 'block' : 'none';
-    }
-}
-
-// Open Booking Modal Wizard
-function openBookingModal(serviceData) {
-    SoundFX.pop();
-    currentSelectedService = serviceData;
-    currentBookingStep = 1;
-
+function initModalWithService(service) {
     const modal = document.getElementById('booking-modal');
     if (!modal) return;
 
-    // Populate Step 1
-    document.getElementById('modal-service-title').innerText = serviceData.title;
-    document.getElementById('modal-service-category').innerText = serviceData.category_name;
-    document.getElementById('modal-service-desc').innerText = serviceData.description;
-    document.getElementById('modal-service-price').innerText = `₹${serviceData.price}`;
-    document.getElementById('modal-market-price').innerText = `₹${serviceData.market_price}`;
-    document.getElementById('modal-worker-payout').innerText = `₹${serviceData.worker_share}`;
-    document.getElementById('modal-welfare-share').innerText = `₹${serviceData.welfare_share}`;
-    document.getElementById('modal-savings').innerText = `₹${serviceData.market_price - serviceData.price}`;
-
-    showBookingStep(1);
     modal.classList.remove('hidden');
     modal.classList.add('flex');
+    currentBookingStep = 1;
+
+    document.getElementById('modal-service-title').textContent = service.title;
+    document.getElementById('modal-service-id').value = service.id;
+    document.getElementById('modal-price-total').textContent = `₹${service.price}`;
+    document.getElementById('modal-worker-takehome').textContent = `₹${service.worker_share} (92%)`;
+    document.getElementById('modal-coop-reserve').textContent = `₹${service.welfare_share} (8% Co-op Pool)`;
+    document.getElementById('modal-savings').textContent = `₹${service.market_price - service.price}`;
+
+    // Women Pro Checkbox visibility
+    const womenPrefBox = document.getElementById('modal-women-pref-container');
+    if (womenPrefBox) {
+        if (service.women_pro_available) {
+            womenPrefBox.classList.remove('hidden');
+        } else {
+            womenPrefBox.classList.add('hidden');
+        }
+    }
+
+    renderBookingStep(1);
+    SoundFX.pop();
 }
 
 function closeBookingModal() {
-    SoundFX.pop();
     const modal = document.getElementById('booking-modal');
     if (modal) {
         modal.classList.add('hidden');
@@ -154,135 +74,147 @@ function closeBookingModal() {
     }
 }
 
-function showBookingStep(step) {
+function renderBookingStep(step) {
     currentBookingStep = step;
-    document.getElementById('booking-step-1').classList.toggle('hidden', step !== 1);
-    document.getElementById('booking-step-2').classList.toggle('hidden', step !== 2);
-    document.getElementById('booking-step-3').classList.toggle('hidden', step !== 3);
+    
+    // Hide all step sections
+    document.querySelectorAll('.booking-wizard-step').forEach(el => el.classList.add('hidden'));
 
-    // Indicator updates
-    document.getElementById('step-dot-1').className = step >= 1 ? 'w-8 h-2 rounded-full bg-emerald-400' : 'w-2 h-2 rounded-full bg-slate-700';
-    document.getElementById('step-dot-2').className = step >= 2 ? 'w-8 h-2 rounded-full bg-emerald-400' : 'w-2 h-2 rounded-full bg-slate-700';
-    document.getElementById('step-dot-3').className = step >= 3 ? 'w-8 h-2 rounded-full bg-emerald-400' : 'w-2 h-2 rounded-full bg-slate-700';
-}
-
-function proceedToStep2() {
-    SoundFX.pop();
-    showBookingStep(2);
-}
-
-// Submit Booking with graceful client fallback
-async function confirmBooking() {
-    if (!currentSelectedService) return;
-
-    const name = document.getElementById('book-name').value.trim() || 'Co-op Customer';
-    const phone = document.getElementById('book-phone').value.trim() || '+91 98450 11223';
-    const address = document.getElementById('book-address').value.trim() || 'Indiranagar 100ft Road, Bangalore';
-    const slot = document.getElementById('book-slot').value;
-    const notes = document.getElementById('book-notes').value.trim();
-
-    const submitBtn = document.getElementById('btn-confirm-booking');
-    submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-2"></i> Matching Nearest Co-op Pro...`;
-    submitBtn.disabled = true;
-
-    // Pick pro
-    const matchedPro = MOCK_PROS[Math.floor(Math.random() * MOCK_PROS.length)];
-    const bookingRef = `SG-${Math.floor(100000 + Math.random() * 900000)}`;
-
-    try {
-        const response = await fetch('/api/book', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                service_id: currentSelectedService.id,
-                name: name,
-                phone: phone,
-                address: address,
-                time_slot: slot,
-                notes: notes
-            })
-        });
-        if (response.ok) {
-            const res = await response.json();
-            renderBookingConfirmation(res.booking_id, res.matched_worker, res.breakdown.total_price, res.breakdown.worker_earnings_97pct, res.breakdown.welfare_fund_3pct, res.estimated_arrival);
-            return;
+    // Update dots
+    for (let i = 1; i <= 3; i++) {
+        const dot = document.getElementById(`step-dot-${i}`);
+        if (dot) {
+            if (i === step) {
+                dot.className = 'w-8 h-2.5 rounded-full bg-emerald-400 transition-all shadow-md shadow-emerald-500/50';
+            } else if (i < step) {
+                dot.className = 'w-2.5 h-2.5 rounded-full bg-emerald-600 transition-all';
+            } else {
+                dot.className = 'w-2.5 h-2.5 rounded-full bg-slate-700 transition-all';
+            }
         }
-    } catch (e) {
-        // Handled below via fallback
     }
 
-    // Client-side instant confirmation fallback
-    setTimeout(() => {
-        submitBtn.innerHTML = `Confirm & Reserve Pro`;
-        submitBtn.disabled = false;
-        renderBookingConfirmation(
-            bookingRef,
-            matchedPro,
-            currentSelectedService.price,
-            currentSelectedService.worker_share,
-            currentSelectedService.welfare_share,
-            "18 - 25 minutes"
-        );
-    }, 600);
+    const currentEl = document.getElementById(`booking-step-${step}`);
+    if (currentEl) currentEl.classList.remove('hidden');
 }
 
-function renderBookingConfirmation(bookingId, pro, totalPrice, workerShare, welfareShare, eta) {
-    document.getElementById('conf-booking-id').innerText = bookingId;
-    document.getElementById('conf-pro-name').innerText = pro.name;
-    document.getElementById('conf-pro-role').innerText = pro.role;
-    document.getElementById('conf-pro-avatar').src = pro.avatar;
-    document.getElementById('conf-pro-rating').innerText = pro.rating;
-    document.getElementById('conf-pro-jobs').innerText = `${pro.jobs_completed} jobs`;
-    document.getElementById('conf-pro-distance').innerText = pro.location;
-    document.getElementById('conf-eta').innerText = eta;
-    document.getElementById('conf-total-paid').innerText = `₹${totalPrice}`;
-    document.getElementById('conf-worker-earned').innerText = `₹${workerShare}`;
-    document.getElementById('conf-welfare-credit').innerText = `₹${welfareShare}`;
+function submitBookingOrder() {
+    const serviceId = document.getElementById('modal-service-id').value;
+    const name = document.getElementById('book-name').value || "Priya Sharma";
+    const phone = document.getElementById('book-phone').value || "+91 98450 12345";
+    const address = document.getElementById('book-address').value || "Indiranagar, Bangalore";
+    const timeSlot = document.getElementById('book-time-slot').value || "Immediate (<20 mins)";
+    const womenPref = document.getElementById('book-women-pref') ? document.getElementById('book-women-pref').checked : false;
 
-    showBookingStep(3);
-    SoundFX.success();
-    Toast.show(`🎉 Booking ${bookingId} Confirmed! 97% credited to ${pro.name}`, 'success');
+    const btn = document.getElementById('btn-confirm-escrow');
+    if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Locking Escrow & Matching Nearest Co-op Pro...';
+    }
 
-    if (typeof confetti === 'function') {
-        confetti({ particleCount: 80, spread: 70, origin: { y: 0.6 } });
+    fetch('/api/book', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            service_id: serviceId,
+            name: name,
+            phone: phone,
+            address: address,
+            time_slot: timeSlot,
+            women_pro: womenPref
+        })
+    }).then(r => r.json()).then(data => {
+        activeBookingData = data;
+        renderBookingConfirmation(data);
+        renderBookingStep(2);
+        Toast.show("🎉 Escrow payment locked! Co-op Pro assigned within <2km.", "success");
+        SoundFX.cash();
+    }).catch(err => {
+        Toast.show("Booking simulated in offline demo mode!", "info");
+    });
+}
+
+function renderBookingConfirmation(data) {
+    document.getElementById('confirm-booking-id').textContent = data.booking_id;
+    document.getElementById('confirm-worker-name').textContent = data.matched_worker.name;
+    document.getElementById('confirm-worker-role').textContent = data.matched_worker.role;
+    document.getElementById('confirm-worker-img').src = data.matched_worker.avatar;
+    document.getElementById('confirm-worker-distance').textContent = `${data.matched_worker.distance_km} km away`;
+    document.getElementById('confirm-worker-rating').textContent = `${data.matched_worker.rating} (${data.matched_worker.jobs_completed} jobs)`;
+    document.getElementById('confirm-start-otp').textContent = data.start_otp;
+    document.getElementById('confirm-complete-otp').textContent = data.complete_otp;
+    document.getElementById('confirm-eta').textContent = data.estimated_arrival;
+}
+
+function progressToTracking() {
+    renderBookingStep(3);
+    Toast.show("📡 Live GPS Dispatch Active: Pro is en route.", "info");
+}
+
+function completeSimulatedJob() {
+    Toast.show("✅ Work verified with Photo & Customer OTP! ₹643 disbursed instantly to Pro wallet.", "success");
+    SoundFX.cash();
+    closeBookingModal();
+}
+
+// Filter Services on Consumer Hub
+function filterServices() {
+    const query = (document.getElementById('service-search') ? document.getElementById('service-search').value : "").toLowerCase();
+    const womenOnly = document.getElementById('filter-women-only') ? document.getElementById('filter-women-only').checked : false;
+    const activeCategoryBtn = document.querySelector('.category-filter-btn.active');
+    const selectedCategory = activeCategoryBtn ? activeCategoryBtn.getAttribute('data-category') : 'all';
+
+    document.querySelectorAll('.service-catalog-card').forEach(card => {
+        const title = (card.getAttribute('data-title') || "").toLowerCase();
+        const desc = (card.getAttribute('data-desc') || "").toLowerCase();
+        const category = card.getAttribute('data-category') || "";
+        const hasWomenPro = card.getAttribute('data-women-pro') === "true";
+
+        let matchQuery = !query || title.includes(query) || desc.includes(query);
+        let matchCat = (selectedCategory === 'all' || category === selectedCategory);
+        let matchWomen = !womenOnly || hasWomenPro;
+
+        if (matchQuery && matchCat && matchWomen) {
+            card.classList.remove('hidden');
+        } else {
+            card.classList.add('hidden');
+        }
+    });
+}
+
+function selectCategoryFilter(category, btnElement) {
+    document.querySelectorAll('.category-filter-btn').forEach(b => {
+        b.classList.remove('active', 'bg-emerald-500', 'text-white', 'shadow-lg');
+        b.classList.add('text-slate-300', 'bg-slate-900/60', 'hover:bg-white/5');
+    });
+
+    btnElement.classList.add('active', 'bg-emerald-500', 'text-white', 'shadow-lg');
+    btnElement.classList.remove('text-slate-300', 'bg-slate-900/60');
+
+    filterServices();
+}
+
+function toggleWomenOnlyFilter() {
+    const checkbox = document.getElementById('filter-women-only');
+    if (checkbox) {
+        if (checkbox.checked) {
+            Toast.show("👩 Women Safety Filter Activated: Showing female-led verified professionals.", "info");
+        } else {
+            Toast.show("Showing all verified community professionals.", "info");
+        }
+        filterServices();
     }
 }
 
-// Emergency SOS Trigger
-function openSosModal() {
-    SoundFX.sos();
-    const modal = document.getElementById('sos-modal');
-    if (modal) {
-        modal.classList.remove('hidden');
-        modal.classList.add('flex');
-    }
-}
-
-function closeSosModal() {
+function startVoiceSearch() {
+    Toast.show("🎙️ Voice search activated: Speak your required service in English or Hindi...", "info");
     SoundFX.pop();
-    const modal = document.getElementById('sos-modal');
-    if (modal) {
-        modal.classList.add('hidden');
-        modal.classList.remove('flex');
-    }
-}
-
-async function triggerEmergencySos() {
-    const sosBtn = document.getElementById('btn-sos-dispatch');
-    sosBtn.innerHTML = `<i class="fa-solid fa-satellite-dish fa-spin mr-2"></i> Pinging Nearest Available Specialists...`;
-    sosBtn.disabled = true;
-
-    const assignedPro = MOCK_PROS[0];
-
     setTimeout(() => {
-        sosBtn.innerHTML = `<i class="fa-solid fa-bolt mr-2"></i> SOS Rapid Dispatch Activated`;
-        sosBtn.className = "w-full py-4 rounded-xl bg-emerald-500 text-white font-bold tracking-wide";
-
-        document.getElementById('sos-status-box').classList.remove('hidden');
-        document.getElementById('sos-pro-name').innerText = assignedPro.name;
-        document.getElementById('sos-pro-role').innerText = assignedPro.role;
-        document.getElementById('sos-pro-eta').innerText = "12 mins away";
-
-        Toast.show(`🚨 Emergency Handyman ${assignedPro.name} dispatched! ETA: 12 mins`, 'sos', 6000);
-    }, 800);
+        const searchInput = document.getElementById('service-search');
+        if (searchInput) {
+            searchInput.value = "Electrical";
+            filterServices();
+            Toast.show("🔍 Voice Recognized: 'Electrical Safety Audit'", "success");
+        }
+    }, 1500);
 }
