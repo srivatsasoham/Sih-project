@@ -177,17 +177,17 @@ const RoleGateway = {
         if (role === 'worker') {
             Toast.show("⚡ Switched to Worker-Owner Portal! Welcome Ramesh Kumar (Master Electrician).", "success");
             setTimeout(() => {
-                if (window.location.pathname.indexOf('worker') === -1) {
-                    window.location.href = window.location.pathname.includes('.html') ? 'worker.html' : '/worker';
+                if (!window.location.href.includes('worker')) {
+                    window.location.href = 'worker.html';
                 }
-            }, 800);
+            }, 600);
         } else {
             Toast.show("👤 Switched to Customer Portal! Welcome Priya Sharma (Resident).", "info");
             setTimeout(() => {
-                if (window.location.pathname.indexOf('worker') !== -1) {
-                    window.location.href = window.location.pathname.includes('.html') ? 'index.html' : '/';
+                if (window.location.href.includes('worker') || window.location.href.includes('governance') || window.location.href.includes('community') || window.location.href.includes('about')) {
+                    window.location.href = 'index.html';
                 }
-            }, 800);
+            }, 600);
         }
     },
 
