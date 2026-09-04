@@ -57,10 +57,10 @@
         <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
             <div class="flex items-center gap-2">
                 <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 animate-pulse">
-                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 mr-1.5"></span> LIVE CO-OP PULSE
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 mr-1.5"></span> REAL-TIME SYNC ACTIVE
                 </span>
                 <span id="live-feed-ticker" class="text-slate-300 transition-opacity duration-300 font-medium truncate max-w-md sm:max-w-xl">
-                    ⚡ Ramesh K. completed 'Safety Audit' in Indiranagar (+₹643 direct instant payout, 8% co-op fee)
+                    ⚡ Connected to Cooperative Realtime Dispatch Mesh (Cross-Tab Active)
                 </span>
             </div>
             
@@ -105,10 +105,10 @@
                 <!-- Desktop Navigation Links -->
                 <nav class="hidden lg:flex items-center gap-1 bg-slate-900/70 p-1.5 rounded-2xl border border-white/5">
                     <a href="index.html" class="px-3.5 py-2 rounded-xl text-xs font-semibold transition-all bg-emerald-500 text-white shadow-lg shadow-emerald-500/20">
-                        <i class="fa-solid fa-house-chimney mr-1.5 text-xs"></i> <span data-i18n="nav_services">Consumer Hub</span>
+                        <i class="fa-solid fa-house-chimney mr-1.5 text-xs"></i> <span data-i18n="nav_services">Customer Portal</span>
                     </a>
                     <a href="worker.html" class="px-3.5 py-2 rounded-xl text-xs font-semibold transition-all text-slate-300 hover:text-white hover:bg-white/5">
-                        <i class="fa-solid fa-screwdriver-wrench mr-1.5 text-xs"></i> <span data-i18n="nav_worker_hub">Worker-Owner Hub</span>
+                        <i class="fa-solid fa-screwdriver-wrench mr-1.5 text-xs"></i> <span data-i18n="nav_worker_hub">Worker-Owner Portal</span>
                     </a>
                     <a href="governance.html" class="px-3.5 py-2 rounded-xl text-xs font-semibold transition-all text-slate-300 hover:text-white hover:bg-white/5">
                         <i class="fa-solid fa-check-to-slot mr-1.5 text-xs"></i> <span data-i18n="nav_governance">Co-op Council (Voting)</span>
@@ -124,14 +124,14 @@
                 <!-- Action Controls: Role Login Switcher & Emergency SOS -->
                 <div class="flex items-center gap-2.5">
                     
-                    <!-- Role Login Switcher Pill -->
-                    <button onclick="RoleGateway.openModal()" class="flex items-center gap-2 px-3 py-2 rounded-xl bg-slate-800/90 border border-slate-700 hover:border-emerald-500/50 text-xs transition-all shadow-sm group">
+                    <!-- Dynamic User / Role Login Button -->
+                    <button onclick="RoleGateway.openModal()" class="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-800/90 border border-slate-700 hover:border-emerald-500/50 text-xs transition-all shadow-sm group">
                         <span id="current-role-badge" class="font-bold text-emerald-400">
-                            <i class="fa-solid fa-user-check mr-1 text-emerald-400"></i> Customer
+                            <i class="fa-solid fa-user mr-1"></i> Customer Mode
                         </span>
                         <span class="text-slate-500 hidden sm:inline">|</span>
-                        <span id="current-user-name" class="text-slate-300 hidden sm:inline font-medium group-hover:text-white">Priya S.</span>
-                        <i class="fa-solid fa-right-left text-[10px] text-slate-400 group-hover:text-emerald-400 ml-0.5"></i>
+                        <span id="current-user-name" class="text-slate-200 hidden sm:inline font-bold group-hover:text-white">Profile</span>
+                        <i class="fa-solid fa-gear text-[10px] text-slate-400 group-hover:text-emerald-400 ml-0.5"></i>
                     </button>
 
                     <!-- Emergency SOS Button -->
@@ -154,13 +154,13 @@
         <!-- Mobile Menu Dropdown -->
         <div id="mobile-menu" class="hidden lg:hidden bg-slate-900/95 border-b border-slate-800 px-4 py-4 space-y-2 backdrop-blur-xl">
             <button onclick="RoleGateway.openModal(); document.getElementById('mobile-menu').classList.add('hidden')" class="w-full text-left px-4 py-2.5 rounded-xl text-xs font-bold bg-emerald-950/60 border border-emerald-500/40 text-emerald-300 mb-2">
-                <i class="fa-solid fa-right-left mr-2"></i> Switch Portal Mode (Customer / Worker)
+                <i class="fa-solid fa-user-pen mr-2"></i> Register / Change Profile Details
             </button>
-            <a href="index.html" class="block px-4 py-2.5 rounded-xl text-sm font-medium text-slate-200 hover:bg-slate-800"><i class="fa-solid fa-house-chimney mr-2 text-emerald-400"></i> Consumer Hub</a>
-            <a href="worker.html" class="block px-4 py-2.5 rounded-xl text-sm font-medium text-slate-200 hover:bg-slate-800"><i class="fa-solid fa-screwdriver-wrench mr-2 text-emerald-400"></i> Worker-Owner Hub</a>
+            <a href="index.html" class="block px-4 py-2.5 rounded-xl text-sm font-medium text-slate-200 hover:bg-slate-800"><i class="fa-solid fa-house-chimney mr-2 text-emerald-400"></i> Customer Portal</a>
+            <a href="worker.html" class="block px-4 py-2.5 rounded-xl text-sm font-medium text-slate-200 hover:bg-slate-800"><i class="fa-solid fa-screwdriver-wrench mr-2 text-emerald-400"></i> Worker-Owner Portal</a>
             <a href="governance.html" class="block px-4 py-2.5 rounded-xl text-sm font-medium text-slate-200 hover:bg-slate-800"><i class="fa-solid fa-check-to-slot mr-2 text-emerald-400"></i> Co-op Council & Voting</a>
             <a href="community.html" class="block px-4 py-2.5 rounded-xl text-sm font-medium text-slate-200 hover:bg-slate-800"><i class="fa-solid fa-people-roof mr-2 text-emerald-400"></i> RWA Bulk Hub</a>
-            <a href="about.html" class="block px-4 py-2.5 rounded-xl text-sm font-medium text-slate-200 hover:bg-slate-800"><i class="fa-solid fa-lightbulb mr-2 text-emerald-400"></i> SIH Concept Pitch Deck</a>
+            <a href="about.html" class="block px-4 py-2.5 rounded-xl text-sm font-medium text-slate-200 hover:bg-slate-800"><i class="fa-solid fa-lightbulb mr-2 text-emerald-400"></i> SIH Pitch Deck</a>
         </div>
     </header>
 
@@ -175,7 +175,7 @@
             
             <div class="flex items-center gap-4 sm:gap-6">
                 <div class="relative">
-                    <img src="https://images.unsplash.com/photo-1540569014015-19a7be504e3a?w=150&amp;auto=format&amp;fit=crop&amp;q=80" alt="Ramesh Kumar Sharma" class="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl object-cover border-2 border-emerald-400 shadow-xl">
+                    <img id="worker-profile-avatar" src="https://images.unsplash.com/photo-1540569014015-19a7be504e3a?w=150&auto=format&fit=crop&q=80" alt="Worker Avatar" class="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl object-cover border-2 border-emerald-400 shadow-xl">
                     <span class="absolute -bottom-2 -right-2 px-2 py-0.5 rounded-lg text-[10px] font-black bg-emerald-500 text-white shadow-md">
                         OWNER
                     </span>
@@ -183,34 +183,34 @@
 
                 <div class="space-y-1">
                     <div class="flex flex-wrap items-center gap-2">
-                        <h1 class="text-2xl sm:text-3xl font-extrabold font-heading text-white">Ramesh Kumar Sharma</h1>
+                        <h1 class="text-2xl sm:text-3xl font-extrabold font-heading text-white" id="worker-profile-name">Ramesh Kumar Sharma</h1>
                         <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
                             <i class="fa-solid fa-crown text-amber-400 mr-1"></i> Co-op Founding Steward
                         </span>
-                        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-sky-500/20 text-sky-300 border border-sky-500/30">
+                        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-sky-500/20 text-sky-300 border border-sky-500/30" id="worker-profile-cert">
                             <i class="fa-solid fa-certificate mr-1"></i> PMKVY RPL Level 4
                         </span>
                     </div>
-                    <p class="text-xs sm:text-sm text-slate-300">Master Electrician &amp; Solar Specialist • 12 Years Exp</p>
+                    <p class="text-xs sm:text-sm text-slate-300" id="worker-profile-trade">Master Electrician & Plumber • 8 Years Exp</p>
                     <div class="flex flex-wrap items-center gap-3 text-xs text-slate-400 pt-1">
-                        <span><i class="fa-solid fa-star text-amber-400 mr-1"></i> <b class="text-white">4.94</b> rating</span>
+                        <span><i class="fa-solid fa-star text-amber-400 mr-1"></i> <b class="text-white" id="worker-profile-rating">4.96</b> rating</span>
                         <span>•</span>
-                        <span><i class="fa-solid fa-circle-check text-emerald-400 mr-1"></i> 1420 jobs completed</span>
+                        <span><i class="fa-solid fa-circle-check text-emerald-400 mr-1"></i> <span id="worker-profile-jobs-count">142</span> jobs completed</span>
                         <span>•</span>
                         <span><i class="fa-solid fa-id-card text-emerald-400 mr-1"></i> Aadhaar eKYC Verified</span>
                     </div>
                 </div>
             </div>
 
-            <!-- Online / Offline Controls & Quick Actions -->
-            <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3 bg-slate-900/80 p-3.5 rounded-2xl border border-slate-800">
-                <div id="status-live-badge" class="px-3 py-1.5 rounded-full text-xs font-medium bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 flex items-center gap-2">
-                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-                    <span>Online & Receiving &lt;3km Dispatches</span>
-                </div>
-                <button id="btn-status-toggle" onclick="toggleWorkerStatus()" class="px-4 py-2 rounded-xl text-xs font-semibold bg-rose-500/20 text-rose-300 border border-rose-500/40 hover:bg-rose-500/30 transition">
-                    Go Offline
+            <!-- Profile Edit / Switcher & Online Radar Toggle -->
+            <div class="flex flex-wrap items-center gap-3">
+                <button onclick="RoleGateway.openModal('worker')" class="px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-800 text-slate-300 hover:text-white border border-slate-700 transition">
+                    <i class="fa-solid fa-user-pen mr-1.5"></i> Edit Profile
                 </button>
+                <div id="status-live-badge" class="px-3.5 py-2 rounded-xl text-xs font-medium bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                    <span>Radar Active (&lt;3km)</span>
+                </div>
             </div>
 
         </div>
@@ -223,39 +223,39 @@
         <!-- Live Wallet Balance -->
         <div class="glass-panel rounded-3xl p-6 space-y-3 relative overflow-hidden">
             <div class="flex items-center justify-between text-xs text-slate-400">
-                <span>Available Co-op Earnings (92%)</span>
+                <span>Available Co-op Balance</span>
                 <i class="fa-solid fa-wallet text-emerald-400 text-lg"></i>
             </div>
             <div class="text-3xl font-black font-heading text-white" id="worker-wallet-bal">₹4,850</div>
             <div class="flex items-center justify-between pt-2 border-t border-slate-800">
                 <span class="text-[11px] text-emerald-400 font-semibold"><i class="fa-solid fa-bolt mr-1"></i> 0% Payout Fee</span>
                 <button onclick="openWithdrawModal()" class="px-3 py-1 rounded-lg bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-bold shadow-md transition">
-                    Instant UPI Payout
+                    Instant UPI Disbursal
                 </button>
             </div>
         </div>
 
-        <!-- Co-op Equity Shares -->
+        <!-- Today's Earnings -->
         <div class="glass-panel rounded-3xl p-6 space-y-3">
             <div class="flex items-center justify-between text-xs text-slate-400">
-                <span>Cooperative Ownership Shares</span>
+                <span>Today's Direct Earnings (92%)</span>
+                <i class="fa-solid fa-money-bill-trend-up text-emerald-400 text-lg"></i>
+            </div>
+            <div class="text-3xl font-black font-heading text-emerald-400" id="worker-today-earnings">₹0</div>
+            <p class="text-[11px] text-slate-400">Settles instantly via UPI after completion OTP.</p>
+        </div>
+
+        <!-- Co-op Equity Shares & Dividends -->
+        <div class="glass-panel rounded-3xl p-6 space-y-3">
+            <div class="flex items-center justify-between text-xs text-slate-400">
+                <span>Patronage Dividend Accrued</span>
                 <i class="fa-solid fa-chart-pie text-cyan-400 text-lg"></i>
             </div>
-            <div class="text-3xl font-black font-heading text-cyan-400">142 <span class="text-sm font-normal text-slate-400">Class-A</span></div>
-            <p class="text-[11px] text-slate-400">Earn 1 share for every 10 5-star gigs completed. Grants voting rights.</p>
+            <div class="text-3xl font-black font-heading text-cyan-400" id="worker-dividend-val">₹2,840</div>
+            <p class="text-[11px] text-slate-400">Accumulated from 8% cooperative reserve pool.</p>
         </div>
 
-        <!-- Patronage Dividend Accrued -->
-        <div class="glass-panel rounded-3xl p-6 space-y-3">
-            <div class="flex items-center justify-between text-xs text-slate-400">
-                <span>Accrued Patronage Dividend</span>
-                <i class="fa-solid fa-hand-holding-dollar text-amber-400 text-lg"></i>
-            </div>
-            <div class="text-3xl font-black font-heading text-amber-400">₹28400</div>
-            <p class="text-[11px] text-slate-400">Paid out quarterly from collective 8% co-op surplus reserve.</p>
-        </div>
-
-        <!-- Welfare Health Safety Net -->
+        <!-- Welfare Health Cover -->
         <div class="glass-panel rounded-3xl p-6 space-y-3">
             <div class="flex items-center justify-between text-xs text-slate-400">
                 <span>Welfare & Health Safety Net</span>
@@ -263,134 +263,42 @@
             </div>
             <div class="text-lg font-black font-heading text-indigo-300">₹5,00,000 Cover</div>
             <button onclick="openWelfareClaimModal()" class="w-full py-1.5 rounded-lg bg-indigo-600/30 hover:bg-indigo-600 text-indigo-200 text-xs font-bold border border-indigo-500/40 transition">
-                File Health / Ayushman Claim
+                Ayushman Co-op Claim
             </button>
         </div>
 
     </div>
 
 
-    <!-- RADAR GIGS & TOOL-BANK GRID -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <!-- RADAR INCOMING GIGS & EXECUTION WORKFLOW -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
         
-        <!-- Live Radar Gigs Column (2 Cols) -->
-        <div class="lg:col-span-2 space-y-6">
+        <!-- Radar & Active Tasks (8 Cols) -->
+        <div class="lg:col-span-8 space-y-6">
+            
             <div class="flex items-center justify-between">
                 <div>
                     <h2 class="text-xl font-bold font-heading text-white flex items-center gap-2">
-                        <i class="fa-solid fa-satellite-dish text-emerald-400"></i> Incoming Radar Dispatches (&lt; 3 km)
+                        <i class="fa-solid fa-satellite-dish text-emerald-400"></i> Live Radar Incoming Gigs (&lt; 3 km)
                     </h2>
-                    <p class="text-xs text-slate-400">Pre-funded Razorpay Escrow • Instant settlement upon completion OTP</p>
+                    <p class="text-xs text-slate-400">Customer requests broadcasted in real time appear here instantly.</p>
                 </div>
-                <span class="px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
-                    2 Gigs Available
+                <span id="radar-live-count" class="px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+                    Live Scan
                 </span>
             </div>
 
-            <!-- Radar Jobs List -->
-            <div class="space-y-4">
-                
-                <div id="job-card-JOB-9021" class="glass-panel rounded-3xl p-6 border border-white/10 hover:border-emerald-500/40 transition-all space-y-4">
-                    <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
-                        <div>
-                            <div class="flex items-center gap-2">
-                                <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-rose-500/20 text-rose-300 border border-rose-500/30">
-                                    High Urgency
-                                </span>
-                                <span class="text-xs text-slate-400 font-mono">JOB-9021</span>
-                            </div>
-                            <h3 class="text-base font-bold text-white mt-1">Emergency Circuit Breaker Tripping Diagnostic</h3>
-                            <div class="text-xs text-slate-300 mt-0.5">
-                                <i class="fa-solid fa-user text-slate-400 mr-1"></i> Customer: <b>Vikram Sethi</b> • <i class="fa-solid fa-location-dot text-emerald-400 mr-1"></i> 1.2 km (Indiranagar 12th Main)
-                            </div>
-                        </div>
-
-                        <div class="text-left sm:text-right">
-                            <div class="text-2xl font-black text-emerald-400 font-heading">₹643</div>
-                            <div class="text-[10px] text-cyan-400">+₹56 Co-op Credit</div>
-                        </div>
-                    </div>
-
-                    <!-- Job Tags -->
-                    <div class="flex flex-wrap items-center gap-2 pt-1">
-                        
-                        <span class="px-2 py-0.5 rounded-md text-[10px] font-medium bg-slate-800 text-slate-300 border border-slate-700">
-                            Tools Ready
-                        </span>
-                        
-                        <span class="px-2 py-0.5 rounded-md text-[10px] font-medium bg-slate-800 text-slate-300 border border-slate-700">
-                            Instant UPI Payout
-                        </span>
-                        
-                        <span class="px-2 py-0.5 rounded-md text-[10px] font-medium bg-slate-800 text-slate-300 border border-slate-700">
-                            Escrow Funded
-                        </span>
-                        
-                    </div>
-
-                    <!-- Actions -->
-                    <div class="flex items-center gap-3 pt-3 border-t border-slate-800">
-                        <button onclick="acceptRadarJob('JOB-9021')" class="flex-1 py-3 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold text-xs shadow-lg shadow-emerald-600/30 hover:scale-[1.01] active:scale-95 transition-all flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-circle-check"></i> Accept Gig & Start GIS Route
-                        </button>
-                        <button onclick="declineRadarJob('JOB-9021')" class="px-4 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white text-xs font-semibold transition">
-                            Decline
-                        </button>
-                    </div>
-                </div>
-                
-                <div id="job-card-JOB-9022" class="glass-panel rounded-3xl p-6 border border-white/10 hover:border-emerald-500/40 transition-all space-y-4">
-                    <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
-                        <div>
-                            <div class="flex items-center gap-2">
-                                <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-rose-500/20 text-rose-300 border border-rose-500/30">
-                                    Scheduled Today 5:30 PM
-                                </span>
-                                <span class="text-xs text-slate-400 font-mono">JOB-9022</span>
-                            </div>
-                            <h3 class="text-base font-bold text-white mt-1">Inverter Load Balancing &amp; Smart Meter Calibration</h3>
-                            <div class="text-xs text-slate-300 mt-0.5">
-                                <i class="fa-solid fa-user text-slate-400 mr-1"></i> Customer: <b>Ananya R.</b> • <i class="fa-solid fa-location-dot text-emerald-400 mr-1"></i> 2.1 km (Defence Colony)
-                            </div>
-                        </div>
-
-                        <div class="text-left sm:text-right">
-                            <div class="text-2xl font-black text-emerald-400 font-heading">₹820</div>
-                            <div class="text-[10px] text-cyan-400">+₹71 Co-op Credit</div>
-                        </div>
-                    </div>
-
-                    <!-- Job Tags -->
-                    <div class="flex flex-wrap items-center gap-2 pt-1">
-                        
-                        <span class="px-2 py-0.5 rounded-md text-[10px] font-medium bg-slate-800 text-slate-300 border border-slate-700">
-                            Pre-paid Escrow
-                        </span>
-                        
-                        <span class="px-2 py-0.5 rounded-md text-[10px] font-medium bg-slate-800 text-slate-300 border border-slate-700">
-                            RWA Society Member
-                        </span>
-                        
-                    </div>
-
-                    <!-- Actions -->
-                    <div class="flex items-center gap-3 pt-3 border-t border-slate-800">
-                        <button onclick="acceptRadarJob('JOB-9022')" class="flex-1 py-3 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold text-xs shadow-lg shadow-emerald-600/30 hover:scale-[1.01] active:scale-95 transition-all flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-circle-check"></i> Accept Gig & Start GIS Route
-                        </button>
-                        <button onclick="declineRadarJob('JOB-9022')" class="px-4 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white text-xs font-semibold transition">
-                            Decline
-                        </button>
-                    </div>
-                </div>
-                
+            <!-- Dynamic Radar Gigs Container -->
+            <div id="radar-gigs-container" class="space-y-4">
+                <!-- Javascript will inject incoming jobs here in real time! -->
             </div>
+
         </div>
 
-        <!-- Sidebar: Tool-Bank Micro-Loan Depot & Quick Governance -->
-        <div class="space-y-6">
+        <!-- Sidebar: Tool-Bank Micro-Loan & Recent Payouts Ledger (4 Cols) -->
+        <div class="lg:col-span-4 space-y-6">
             
-            <!-- Tool Bank Depot Card -->
+            <!-- Tool Bank Micro-Loan Card -->
             <div class="glass-panel rounded-3xl p-6 space-y-4 border border-indigo-500/30">
                 <div class="flex items-center gap-3">
                     <div class="w-10 h-10 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center text-lg">
@@ -398,33 +306,28 @@
                     </div>
                     <div>
                         <h3 class="text-base font-bold text-white">Co-op Tool-Bank Depot</h3>
-                        <p class="text-xs text-slate-400">Zero-Interest Tool Replacement Loans</p>
+                        <p class="text-xs text-slate-400">0% Interest Tool Replacement</p>
                     </div>
                 </div>
                 <p class="text-xs text-slate-300 leading-relaxed">
-                    Broken drill or multi-meter? Access community tool checkout or instant ₹8,000 micro-loan with 0% interest funded by the 8% reserve pool.
+                    Need replacement power tools or meters? Get instant ₹8,000 micro-loan with 0% interest funded by the 8% reserve pool.
                 </p>
                 <button onclick="requestToolLoan()" class="w-full py-2.5 rounded-xl bg-indigo-600/30 hover:bg-indigo-600 text-indigo-200 text-xs font-bold border border-indigo-500/40 transition">
                     <i class="fa-solid fa-hand-holding-hand mr-1.5"></i> Request Tool Replacement
                 </button>
             </div>
 
-            <!-- Democratic Ballot Card -->
-            <div class="glass-panel rounded-3xl p-6 space-y-4 border border-amber-500/30">
+            <!-- Real-Time Payout Transaction Ledger -->
+            <div class="glass-panel rounded-3xl p-6 space-y-4 border border-white/10">
                 <div class="flex items-center justify-between">
                     <h3 class="text-sm font-bold text-white flex items-center gap-2">
-                        <i class="fa-solid fa-check-to-slot text-amber-400"></i> Active Co-op Proposal
+                        <i class="fa-solid fa-receipt text-emerald-400"></i> Recent UPI Payouts
                     </h3>
-                    <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/20 text-amber-300">1 Member = 1 Vote</span>
+                    <span class="text-[10px] font-mono text-emerald-400">92% DIRECT</span>
                 </div>
-                <div class="p-3 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5 text-xs">
-                    <div class="font-bold text-white">Subsidize Electric 2-Wheeler Transition for 200 Co-op Members</div>
-                    <p class="text-slate-400 text-[11px]">Allocates ₹1,20,000 from Q2 Co-op Surplus to provide zero-interest ₹15,000 EV battery down-payment subsidies, cutting worker fuel expenses by ₹2,400/month.</p>
-                    <div class="flex gap-2 pt-2">
-                        <a href="governance.html" class="w-full py-1.5 rounded-lg bg-amber-500 hover:bg-amber-600 text-slate-950 text-xs font-bold text-center block transition">
-                            Cast Member Vote
-                        </a>
-                    </div>
+
+                <div id="worker-transactions-list" class="space-y-3 text-xs">
+                    <!-- Transactions dynamically injected -->
                 </div>
             </div>
 
@@ -433,6 +336,240 @@
     </div>
 
 </div>
+
+<script>
+// Real-time Worker Radar Controller
+function renderWorkerRadar() {
+    const container = document.getElementById('radar-gigs-container');
+    const countBadge = document.getElementById('radar-live-count');
+    if (!container) return;
+
+    const activeJobs = CoopSync.state.activeJobs || [];
+    if (countBadge) countBadge.textContent = `${activeJobs.length} Gigs on Radar`;
+
+    if (activeJobs.length === 0) {
+        container.innerHTML = `
+            <div class="glass-panel rounded-3xl p-8 text-center space-y-3 border border-white/5">
+                <div class="w-14 h-14 mx-auto rounded-2xl bg-slate-800 flex items-center justify-center text-slate-500 text-xl">
+                    <i class="fa-solid fa-satellite-dish"></i>
+                </div>
+                <h3 class="text-sm font-bold text-white">Radar Scanning for Nearby Customer Requests...</h3>
+                <p class="text-xs text-slate-400 max-w-sm mx-auto">
+                    Open the <b>Customer Portal (index.html)</b> in another browser tab and click <b>"Broadcast Problem"</b>. It will appear here instantly!
+                </p>
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = activeJobs.map(job => {
+        if (job.status === 'OPEN') {
+            return `
+                <div id="radar-job-${job.id}" class="glass-panel-glow rounded-3xl p-6 border border-emerald-500/40 space-y-4 animate-pulse-slow">
+                    <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-rose-500/20 text-rose-300 border border-rose-500/30">
+                                    ${job.urgency}
+                                </span>
+                                <span class="text-xs text-slate-400 font-mono">${job.id}</span>
+                            </div>
+                            <h3 class="text-base font-bold text-white mt-1">${job.serviceTitle}</h3>
+                            <div class="text-xs text-slate-300 mt-0.5">
+                                <i class="fa-solid fa-user text-slate-400 mr-1"></i> Customer: <b>${job.customerName}</b> • <i class="fa-solid fa-location-dot text-emerald-400 mr-1"></i> ${job.customerAddress}
+                            </div>
+                            <p class="text-xs text-slate-400 mt-1 italic">"${job.problemDescription}"</p>
+                        </div>
+
+                        <div class="text-left sm:text-right">
+                            <div class="text-2xl font-black text-emerald-400 font-heading">₹${job.workerPayout}</div>
+                            <div class="text-[10px] text-cyan-400">+₹${job.coopFee} Co-op Dividend Credit</div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-3 pt-3 border-t border-slate-800">
+                        <button onclick="acceptLiveJob('${job.id}')" class="flex-1 py-3 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold text-xs shadow-lg shadow-emerald-600/30 hover:scale-[1.01] active:scale-95 transition-all flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-circle-check"></i> Accept Task & Start Navigation
+                        </button>
+                    </div>
+                </div>
+            `;
+        } else {
+            // Active Ongoing Task Execution Workflow
+            return `
+                <div id="radar-job-${job.id}" class="glass-panel-glow rounded-3xl p-6 border border-emerald-500/50 space-y-5">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <span class="text-[10px] font-mono font-bold uppercase text-emerald-400">ACTIVE TASK IN PROGRESS • ${job.id}</span>
+                            <h3 class="text-base font-bold text-white">${job.serviceTitle}</h3>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-xl font-black text-emerald-400 font-heading">₹${job.workerPayout}</div>
+                            <span class="text-[10px] text-slate-400">Pre-paid Escrow Locked</span>
+                        </div>
+                    </div>
+
+                    <div class="p-3.5 rounded-2xl bg-slate-900 border border-slate-800 text-xs space-y-1">
+                        <div class="text-slate-300">Customer: <b class="text-white">${job.customerName}</b> (${job.customerPhone})</div>
+                        <div class="text-slate-400"><i class="fa-solid fa-location-dot text-emerald-400 mr-1"></i> ${job.customerAddress}</div>
+                    </div>
+
+                    <!-- 3-Step Execution Flow -->
+                    <div class="space-y-4 pt-2">
+                        
+                        <!-- Step 1: Start OTP -->
+                        ${job.status === 'ACCEPTED' ? `
+                            <div class="p-4 rounded-2xl bg-indigo-950/60 border border-indigo-500/40 space-y-3">
+                                <div class="text-xs font-bold text-indigo-200">1. Arrive at Customer Location & Enter Start OTP:</div>
+                                <div class="flex gap-2">
+                                    <input type="text" id="worker-input-start-otp-${job.id}" placeholder="Enter 4-digit code (e.g. ${job.startOtp})" class="w-full px-4 py-2.5 text-xs rounded-xl glass-input">
+                                    <button onclick="handleWorkerStartOtp('${job.id}')" class="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold shrink-0">
+                                        Verify OTP
+                                    </button>
+                                </div>
+                            </div>
+                        ` : `
+                            <div class="p-3 rounded-xl bg-emerald-950/40 border border-emerald-500/30 text-xs font-bold text-emerald-400 flex items-center justify-between">
+                                <span><i class="fa-solid fa-circle-check mr-1.5"></i> 1. Start OTP Verified (${job.startedAt || 'Started'})</span>
+                                <span class="text-[10px] font-mono text-emerald-300">WORK IN PROGRESS</span>
+                            </div>
+                        `}
+
+                        <!-- Step 2: Photo Proof & End OTP (Unlocked when work in progress) -->
+                        ${job.status === 'IN_PROGRESS' ? `
+                            <div class="p-4 rounded-2xl bg-slate-900/90 border border-emerald-500/40 space-y-4">
+                                <div class="space-y-2">
+                                    <div class="text-xs font-bold text-white">2. Upload Work Photo Proof (Before / After):</div>
+                                    <button onclick="triggerPhotoUpload('${job.id}')" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold border border-slate-700 flex items-center justify-center gap-2">
+                                        <i class="fa-solid fa-camera text-emerald-400"></i> Attach / Capture Work Proof Photo
+                                    </button>
+                                    <div id="photo-preview-${job.id}" class="text-[11px] text-emerald-400 hidden"><i class="fa-solid fa-check mr-1"></i> Work Photo Proof Uploaded & Hash-Locked!</div>
+                                </div>
+
+                                <div class="space-y-2 pt-2 border-t border-slate-800">
+                                    <div class="text-xs font-bold text-white">3. Job Done! Enter Customer Completion OTP:</div>
+                                    <div class="flex gap-2">
+                                        <input type="text" id="worker-input-complete-otp-${job.id}" placeholder="Enter Customer OTP (e.g. ${job.completeOtp})" class="w-full px-4 py-2.5 text-xs rounded-xl glass-input">
+                                        <button onclick="handleWorkerCompleteOtp('${job.id}')" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-xs font-bold shrink-0 shadow-lg shadow-emerald-600/30">
+                                            Settle Instant UPI
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        ` : ''}
+
+                    </div>
+                </div>
+            `;
+        }
+    }).join('');
+}
+
+function acceptLiveJob(jobId) {
+    const worker = CoopSync.getWorker() || {
+        name: "Ramesh Kumar Sharma",
+        phone: "+91 98860 54321",
+        trade: "Master Electrician & Plumber"
+    };
+
+    CoopSync.acceptJobByWorker(jobId, worker);
+    renderWorkerRadar();
+    Toast.show(`🚀 Task accepted! Customer notified of your arrival.`, 'success');
+    SoundFX.success();
+}
+
+function handleWorkerStartOtp(jobId) {
+    const input = document.getElementById(`worker-input-start-otp-${jobId}`);
+    if (!input) return;
+
+    const res = CoopSync.verifyStartOtp(jobId, input.value);
+    if (res.success) {
+        renderWorkerRadar();
+        Toast.show("✅ Start OTP Verified! Work timer and safety checklist started.", "success");
+        SoundFX.success();
+    } else {
+        Toast.show(res.message, "error");
+    }
+}
+
+function triggerPhotoUpload(jobId) {
+    CoopSync.uploadWorkPhotoProof(jobId, "https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=400&auto=format&fit=crop&q=80");
+    const preview = document.getElementById(`photo-preview-${jobId}`);
+    if (preview) preview.classList.remove('hidden');
+    Toast.show("📸 Work photo captured and hash-locked to Co-op audit trail!", "info");
+    SoundFX.pop();
+}
+
+function handleWorkerCompleteOtp(jobId) {
+    const input = document.getElementById(`worker-input-complete-otp-${jobId}`);
+    if (!input) return;
+
+    const res = CoopSync.verifyCompleteOtpAndSettle(jobId, input.value);
+    if (res.success) {
+        renderWorkerRadar();
+        renderWorkerWalletUI();
+        Toast.show(`🎉 Job Completed! ₹${res.job.workerPayout} Disbursed via UPI to your Bank Account!`, "success", 8000);
+        SoundFX.cash();
+    } else {
+        Toast.show(res.message, "error");
+    }
+}
+
+function renderWorkerWalletUI() {
+    const wallet = CoopSync.state.workerWallet;
+    const worker = CoopSync.getWorker();
+
+    if (worker) {
+        const nameEl = document.getElementById('worker-profile-name');
+        const tradeEl = document.getElementById('worker-profile-trade');
+        const ratingEl = document.getElementById('worker-profile-rating');
+        const jobsEl = document.getElementById('worker-profile-jobs-count');
+
+        if (nameEl) nameEl.textContent = worker.name;
+        if (tradeEl) tradeEl.textContent = `${worker.trade} • ${worker.experience || '8 Years'} Exp`;
+        if (jobsEl) jobsEl.textContent = wallet.totalJobs;
+    }
+
+    const balEl = document.getElementById('worker-wallet-bal');
+    const todayEl = document.getElementById('worker-today-earnings');
+    const divEl = document.getElementById('worker-dividend-val');
+    const txnList = document.getElementById('worker-transactions-list');
+
+    if (balEl) balEl.textContent = `₹${wallet.balance.toLocaleString('en-IN')}`;
+    if (todayEl) todayEl.textContent = `₹${wallet.earningsToday.toLocaleString('en-IN')}`;
+    if (divEl) divEl.textContent = `₹${wallet.dividendsAccrued.toLocaleString('en-IN')}`;
+
+    if (txnList) {
+        txnList.innerHTML = wallet.transactions.slice(0, 4).map(t => `
+            <div class="p-3 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-between">
+                <div>
+                    <div class="font-bold text-white text-xs">${t.title}</div>
+                    <div class="text-[10px] text-slate-400">${t.customer} • ${t.time}</div>
+                </div>
+                <div class="text-right">
+                    <div class="font-black text-emerald-400 text-xs">+₹${t.amount}</div>
+                    <div class="text-[9px] text-cyan-400">+₹${t.fee} Co-op Pool</div>
+                </div>
+            </div>
+        `).join('');
+    }
+}
+
+// Global Callback when new gig posted in real-time
+function onWorkerJobReceived(job) {
+    renderWorkerRadar();
+}
+
+function onWorkerJobRated(payload) {
+    Toast.show(`⭐ New 5-Star Review received from Customer!`, 'success');
+}
+
+// Initialize on DOM load
+document.addEventListener('DOMContentLoaded', () => {
+    renderWorkerWalletUI();
+    renderWorkerRadar();
+});
+</script>
 
     </main>
 
@@ -452,8 +589,8 @@
                 <div>
                     <h4 class="font-bold text-white text-xs uppercase tracking-wider mb-3">Core Platform</h4>
                     <ul class="space-y-2 text-[11px]">
-                        <li><a href="index.html" class="hover:text-emerald-400 transition">Consumer Hub (7 Checkpoints)</a></li>
-                        <li><a href="worker.html" class="hover:text-emerald-400 transition">Worker-Owner Radar & Wallet</a></li>
+                        <li><a href="index.html" class="hover:text-emerald-400 transition">Customer Portal (Post Problem)</a></li>
+                        <li><a href="worker.html" class="hover:text-emerald-400 transition">Worker Radar & Live Gigs</a></li>
                         <li><a href="governance.html" class="hover:text-emerald-400 transition">Democratic Voting & Open Ledger</a></li>
                         <li><a href="community.html" class="hover:text-emerald-400 transition">RWA Bulk Buying Campaigns</a></li>
                     </ul>
@@ -461,9 +598,9 @@
                 <div>
                     <h4 class="font-bold text-white text-xs uppercase tracking-wider mb-3">Trust & Security</h4>
                     <ul class="space-y-2 text-[11px]">
-                        <li><span class="text-slate-300"><i class="fa-solid fa-shield-halved text-emerald-400 mr-1.5"></i> Razorpay Escrow Protection</span></li>
-                        <li><span class="text-slate-300"><i class="fa-solid fa-id-card text-sky-400 mr-1.5"></i> Aadhaar eKYC & PMKVY RPL</span></li>
-                        <li><span class="text-slate-300"><i class="fa-solid fa-person-dress text-pink-400 mr-1.5"></i> Women Safety Protocol</span></li>
+                        <li><span class="text-slate-300"><i class="fa-solid fa-shield-halved text-emerald-400 mr-1.5"></i> Razorpay Escrow Milestone</span></li>
+                        <li><span class="text-slate-300"><i class="fa-solid fa-key text-sky-400 mr-1.5"></i> Dual OTP Handshake (Start & End)</span></li>
+                        <li><span class="text-slate-300"><i class="fa-solid fa-camera text-indigo-400 mr-1.5"></i> Hash-Locked Work Photo Proof</span></li>
                         <li><span class="text-slate-300"><i class="fa-solid fa-phone text-amber-400 mr-1.5"></i> Twilio IVR / SMS Fallback</span></li>
                     </ul>
                 </div>
@@ -498,16 +635,16 @@
     <!-- Toast Notification Container -->
     <div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none max-w-sm w-full"></div>
 
-    <!-- DUAL ROLE AUTH & LOGIN GATEWAY MODAL -->
+    <!-- USER REGISTRATION & LOGIN MODAL (Allows entering custom user details) -->
     <div id="role-auth-modal" class="fixed inset-0 z-50 modal-backdrop hidden items-center justify-center p-4">
-        <div class="relative w-full max-w-md glass-panel rounded-3xl border border-emerald-500/40 p-6 sm:p-8 overflow-hidden shadow-2xl">
+        <div class="relative w-full max-w-lg glass-panel rounded-3xl border border-emerald-500/40 p-6 sm:p-8 overflow-hidden shadow-2xl max-h-[90vh] overflow-y-auto">
             <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-emerald-500 via-teal-500 to-indigo-600"></div>
 
             <!-- Header -->
             <div class="flex items-center justify-between mb-5">
                 <div>
                     <span class="text-[10px] font-black uppercase tracking-widest text-emerald-400 font-mono">SIH 2026 • PS 26089</span>
-                    <h3 class="text-xl font-bold font-heading text-white">SahiDeal Portal Gateway</h3>
+                    <h3 class="text-xl font-bold font-heading text-white">Login / Register Profile</h3>
                 </div>
                 <button onclick="RoleGateway.closeModal()" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition">
                     <i class="fa-solid fa-xmark"></i>
@@ -517,60 +654,77 @@
             <!-- Role Selector Tabs -->
             <div class="flex p-1 rounded-2xl bg-slate-900 border border-slate-800 mb-6">
                 <button id="tab-btn-customer" onclick="RoleGateway.switchTab('customer')" class="flex-1 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-emerald-500 text-white shadow-lg shadow-emerald-500/30 transition-all">
-                    <i class="fa-solid fa-user-check mr-1.5"></i> Customer Login
+                    <i class="fa-solid fa-user-check mr-1.5"></i> Customer (Book & Post)
                 </button>
                 <button id="tab-btn-worker" onclick="RoleGateway.switchTab('worker')" class="flex-1 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-slate-400 hover:text-white transition-all">
-                    <i class="fa-solid fa-screwdriver-wrench mr-1.5"></i> Worker-Owner Login
+                    <i class="fa-solid fa-screwdriver-wrench mr-1.5"></i> Worker-Owner (Accept)
                 </button>
             </div>
 
-            <!-- View 1: Customer Login -->
-            <div id="auth-view-customer" class="space-y-4">
+            <!-- View 1: Customer Registration & Login Form -->
+            <form id="auth-view-customer" onsubmit="event.preventDefault(); RoleGateway.saveCustomCustomer();" class="space-y-4">
                 <p class="text-xs text-slate-300 leading-relaxed">
-                    Access verified neighborhood pros with 7-checkpoint escrow security and RWA discounts.
+                    Fill in your details as a Customer to post repair problems, track assigned workers, and release escrow upon satisfaction.
                 </p>
                 <div>
-                    <label class="block text-xs font-semibold text-slate-300 mb-1">Mobile Number (OTP Verification)</label>
-                    <input type="text" id="cust-login-phone" value="+91 98450 12345" class="w-full px-4 py-3 rounded-xl glass-input text-sm">
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Your Full Name *</label>
+                    <input type="text" id="cust-reg-name" required placeholder="e.g. Srivatsa Soham" value="Srivatsa Soham" class="w-full px-4 py-2.5 rounded-xl glass-input text-xs sm:text-sm">
                 </div>
-                <button onclick="RoleGateway.selectRole('customer')" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold text-sm shadow-lg shadow-emerald-600/30 hover:scale-[1.01] active:scale-95 transition-all flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-arrow-right-to-bracket"></i> Enter as Customer / Resident
-                </button>
-            </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Mobile Phone Number *</label>
+                    <input type="tel" id="cust-reg-phone" required placeholder="e.g. +91 98765 43210" value="+91 98765 43210" class="w-full px-4 py-2.5 rounded-xl glass-input text-xs sm:text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Your Street / Society Address *</label>
+                    <input type="text" id="cust-reg-address" required placeholder="e.g. Flat 304, Sobha Residency, Indiranagar" value="Flat 304, Sobha Residency, Indiranagar, Bangalore" class="w-full px-4 py-2.5 rounded-xl glass-input text-xs sm:text-sm">
+                </div>
+                <div class="pt-2">
+                    <button type="submit" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold text-xs sm:text-sm shadow-lg shadow-emerald-600/30 hover:scale-[1.01] active:scale-95 transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-arrow-right-to-bracket"></i> Login & Open Customer Portal
+                    </button>
+                </div>
+            </form>
 
-            <!-- View 2: Worker-Owner Login & Aadhaar eKYC -->
-            <div id="auth-view-worker" class="space-y-4 hidden">
+            <!-- View 2: Worker Registration & Login Form -->
+            <form id="auth-view-worker" onsubmit="event.preventDefault(); RoleGateway.saveCustomWorker();" class="space-y-4 hidden">
                 <p class="text-xs text-slate-300 leading-relaxed">
-                    Earn 92% direct take-home + co-op dividends, <3km radar dispatches, and tool bank loans.
+                    Fill in your trade details to receive live radar dispatches from customers, verify OTPs, and earn 92% direct instant UPI payouts.
                 </p>
                 <div>
-                    <label class="block text-xs font-semibold text-slate-300 mb-1">Registered Mobile Number</label>
-                    <input type="text" id="worker-login-phone" value="+91 98860 54321" class="w-full px-4 py-3 rounded-xl glass-input text-sm">
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Your Full Name *</label>
+                    <input type="text" id="worker-reg-name" required placeholder="e.g. Ramesh Kumar" value="Ramesh Kumar" class="w-full px-4 py-2.5 rounded-xl glass-input text-xs sm:text-sm">
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold text-slate-300 mb-1">Aadhaar eKYC / PMKVY RPL Badge</label>
-                    <div class="flex items-center gap-2 px-3 py-2 rounded-xl bg-emerald-950/60 border border-emerald-500/40 text-xs text-emerald-300">
-                        <i class="fa-solid fa-certificate text-emerald-400"></i>
-                        <span>Aadhaar Verified (UIDAI OTP & PMKVY Level 4)</span>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Mobile Phone Number *</label>
+                    <input type="tel" id="worker-reg-phone" required placeholder="e.g. +91 98860 54321" value="+91 98860 54321" class="w-full px-4 py-2.5 rounded-xl glass-input text-xs sm:text-sm">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1">Primary Trade / Skill *</label>
+                        <select id="worker-reg-trade" class="w-full px-3 py-2.5 rounded-xl glass-input text-xs">
+                            <option value="Master Electrician" class="bg-slate-900">⚡ Master Electrician</option>
+                            <option value="Hydro Plumber" class="bg-slate-900">🚰 Hydro Plumber</option>
+                            <option value="HVAC & AC Specialist" class="bg-slate-900">❄️ HVAC & AC Specialist</option>
+                            <option value="Deep Sanitation Lead" class="bg-slate-900">🧹 Deep Sanitation Lead</option>
+                            <option value="Precision Carpenter" class="bg-slate-900">🪚 Precision Carpenter</option>
+                            <option value="Elder & Home Care Pro" class="bg-slate-900">👵 Elder & Home Care Pro</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1">Experience</label>
+                        <input type="text" id="worker-reg-exp" value="8 Years" class="w-full px-3 py-2.5 rounded-xl glass-input text-xs">
                     </div>
                 </div>
-                <button onclick="RoleGateway.selectRole('worker')" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-amber-500 via-emerald-600 to-teal-600 text-white font-bold text-sm shadow-lg shadow-emerald-600/30 hover:scale-[1.01] active:scale-95 transition-all flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-screwdriver-wrench"></i> Enter as Worker-Owner (Ramesh Kumar)
-                </button>
-            </div>
-
-            <!-- 1-Click Fast Demo Box for Judges -->
-            <div class="pt-5 mt-5 border-t border-slate-800/80 text-center space-y-2">
-                <span class="text-[10px] font-mono text-slate-400 uppercase tracking-wider">Fast Demo Switching (SIH Jury Test)</span>
-                <div class="grid grid-cols-2 gap-2">
-                    <button onclick="RoleGateway.demoQuickLogin('customer')" class="py-2 px-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-200 text-xs font-semibold border border-slate-700 flex items-center justify-center gap-1.5">
-                        <i class="fa-solid fa-user text-emerald-400"></i> Demo Customer
-                    </button>
-                    <button onclick="RoleGateway.demoQuickLogin('worker')" class="py-2 px-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-200 text-xs font-semibold border border-slate-700 flex items-center justify-center gap-1.5">
-                        <i class="fa-solid fa-screwdriver-wrench text-amber-400"></i> Demo Worker-Owner
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Operating Location</label>
+                    <input type="text" id="worker-reg-loc" value="Indiranagar & Whitefield (1.2 km radius)" class="w-full px-4 py-2.5 rounded-xl glass-input text-xs sm:text-sm">
+                </div>
+                <div class="pt-2">
+                    <button type="submit" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-amber-500 via-emerald-600 to-teal-600 text-white font-bold text-xs sm:text-sm shadow-lg shadow-emerald-600/30 hover:scale-[1.01] active:scale-95 transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-screwdriver-wrench"></i> Login & Open Worker Radar
                     </button>
                 </div>
-            </div>
+            </form>
 
         </div>
     </div>
@@ -641,171 +795,8 @@
         </div>
     </div>
 
-    <!-- Booking Modal Wizard (7-Checkpoints Escrow Journey) -->
-    <div id="booking-modal" class="fixed inset-0 z-50 modal-backdrop hidden items-center justify-center p-4">
-        <div class="relative w-full max-w-xl glass-panel rounded-3xl border border-white/10 p-6 sm:p-8 overflow-hidden max-h-[92vh] overflow-y-auto">
-            
-            <!-- Header -->
-            <div class="flex items-center justify-between mb-5 pb-4 border-b border-slate-800">
-                <div>
-                    <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider font-mono">7 Trust Checkpoints Booking</span>
-                    <h3 class="text-xl font-bold font-heading text-white" id="modal-service-title">Service Name</h3>
-                </div>
-                <button onclick="closeBookingModal()" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-            </div>
-
-            <!-- Wizard Step Indicators -->
-            <div class="flex items-center justify-center gap-2 mb-6">
-                <div id="step-dot-1" class="w-8 h-2.5 rounded-full bg-emerald-400 transition-all shadow-md shadow-emerald-500/50"></div>
-                <div id="step-dot-2" class="w-2.5 h-2.5 rounded-full bg-slate-700 transition-all"></div>
-                <div id="step-dot-3" class="w-2.5 h-2.5 rounded-full bg-slate-700 transition-all"></div>
-            </div>
-
-            <input type="hidden" id="modal-service-id" value="">
-
-            <!-- STEP 1: Details & Escrow Transparency Breakdown -->
-            <div id="booking-step-1" class="booking-wizard-step space-y-5">
-                
-                <!-- Transparent Economics Breakdown Card -->
-                <div class="p-4 rounded-2xl bg-slate-900/90 border border-emerald-500/30 space-y-2 text-xs">
-                    <div class="flex items-center justify-between text-slate-300">
-                        <span>Total Service Fee (Escrow Held):</span>
-                        <span class="text-base font-black text-white font-heading" id="modal-price-total">₹699</span>
-                    </div>
-                    <div class="flex items-center justify-between text-emerald-400 font-semibold">
-                        <span><i class="fa-solid fa-hand-holding-dollar mr-1"></i> Direct to Worker (92%):</span>
-                        <span id="modal-worker-takehome">₹643</span>
-                    </div>
-                    <div class="flex items-center justify-between text-cyan-400 font-semibold">
-                        <span><i class="fa-solid fa-shield-heart mr-1"></i> Co-op Reserve & Dividend Pool (8%):</span>
-                        <span id="modal-coop-reserve">₹56</span>
-                    </div>
-                    <div class="flex items-center justify-between text-slate-400 pt-1.5 border-t border-slate-800 text-[11px]">
-                        <span>Savings vs Corporate Aggregator:</span>
-                        <span class="text-emerald-400 font-bold" id="modal-savings">₹451 Saved</span>
-                    </div>
-                </div>
-
-                <!-- Women Pro Filter Option inside Modal -->
-                <div id="modal-women-pref-container" class="p-3.5 rounded-xl bg-pink-950/40 border border-pink-500/30 flex items-center justify-between">
-                    <div class="flex items-center gap-2.5 text-xs text-pink-200">
-                        <i class="fa-solid fa-person-dress text-base text-pink-400"></i>
-                        <span>Assign Verified <b>Women Service Provider</b></span>
-                    </div>
-                    <input type="checkbox" id="book-women-pref" class="w-4 h-4 accent-pink-500 rounded cursor-pointer">
-                </div>
-
-                <!-- Input Fields -->
-                <div class="space-y-3">
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-300 mb-1">Your Full Name</label>
-                        <input type="text" id="book-name" value="Priya Sharma" class="w-full px-4 py-2.5 rounded-xl glass-input text-sm">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-300 mb-1">Mobile Number (For OTP Verification)</label>
-                        <input type="text" id="book-phone" value="+91 98450 12345" class="w-full px-4 py-2.5 rounded-xl glass-input text-sm">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-300 mb-1">Service Address & Flat Number</label>
-                        <input type="text" id="book-address" value="Flat 402, Palm Heights, Indiranagar, Bangalore" class="w-full px-4 py-2.5 rounded-xl glass-input text-sm">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-300 mb-1">Preferred Time Slot</label>
-                        <select id="book-time-slot" class="w-full px-4 py-2.5 rounded-xl glass-input text-sm">
-                            <option value="Immediate (<20 mins)" class="bg-slate-900">⚡ Immediate (< 20 mins dispatch)</option>
-                            <option value="Today Evening (5:00 PM - 6:30 PM)" class="bg-slate-900">📅 Today Evening (5:00 PM - 6:30 PM)</option>
-                            <option value="Tomorrow Morning (9:00 AM - 10:30 AM)" class="bg-slate-900">📅 Tomorrow Morning (9:00 AM - 10:30 AM)</option>
-                        </select>
-                    </div>
-                </div>
-
-                <button id="btn-confirm-escrow" onclick="submitBookingOrder()" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 via-teal-600 to-indigo-600 text-white font-bold tracking-wide shadow-lg shadow-emerald-600/30 hover:scale-[1.01] active:scale-95 transition-all flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-lock"></i> Fund Escrow & Match Nearest Co-op Pro
-                </button>
-            </div>
-
-            <!-- STEP 2: Assigned Pro & OTP Verification Details -->
-            <div id="booking-step-2" class="booking-wizard-step space-y-5 hidden">
-                <div class="text-center space-y-1">
-                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
-                        <i class="fa-solid fa-shield-check mr-1.5"></i> Razorpay Escrow Locked • Pro Assigned
-                    </span>
-                    <h4 class="text-lg font-bold text-white">Booking ID: <span id="confirm-booking-id" class="font-mono text-emerald-400">SG-892104</span></h4>
-                </div>
-
-                <!-- Matched Pro Card -->
-                <div class="p-4 rounded-2xl bg-slate-900/90 border border-slate-800 flex items-center gap-4">
-                    <img id="confirm-worker-img" src="" alt="Worker" class="w-16 h-16 rounded-2xl object-cover border-2 border-emerald-400 shrink-0">
-                    <div class="space-y-1 text-xs">
-                        <div class="text-sm font-bold text-white" id="confirm-worker-name">Ramesh Kumar Sharma</div>
-                        <div class="text-slate-300" id="confirm-worker-role">Master Electrician & Solar Specialist</div>
-                        <div class="flex items-center gap-3 text-slate-400 pt-0.5">
-                            <span class="text-emerald-400 font-bold" id="confirm-worker-distance">1.2 km away</span>
-                            <span>•</span>
-                            <span><i class="fa-solid fa-star text-amber-400 mr-1"></i><span id="confirm-worker-rating">4.94</span></span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- OTP Verification Matrix -->
-                <div class="grid grid-cols-2 gap-3">
-                    <div class="p-3.5 rounded-2xl bg-indigo-950/60 border border-indigo-500/40 text-center space-y-1">
-                        <div class="text-[10px] text-indigo-300 font-bold uppercase">1. Start Job OTP</div>
-                        <div class="text-2xl font-black font-mono text-white" id="confirm-start-otp">4819</div>
-                        <div class="text-[10px] text-slate-400">Give to pro upon arrival</div>
-                    </div>
-                    <div class="p-3.5 rounded-2xl bg-emerald-950/60 border border-emerald-500/40 text-center space-y-1">
-                        <div class="text-[10px] text-emerald-300 font-bold uppercase">2. Completion OTP</div>
-                        <div class="text-2xl font-black font-mono text-white" id="confirm-complete-otp">7392</div>
-                        <div class="text-[10px] text-slate-400">Give ONLY after work verified</div>
-                    </div>
-                </div>
-
-                <div class="p-3 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-300 flex items-center justify-between">
-                    <span>Estimated Arrival:</span>
-                    <span class="font-bold text-amber-400" id="confirm-eta">14 - 18 minutes</span>
-                </div>
-
-                <button onclick="progressToTracking()" class="w-full py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-sm shadow-lg shadow-emerald-500/30 transition-all">
-                    Track Pro on Live GIS Map <i class="fa-solid fa-arrow-right ml-1"></i>
-                </button>
-            </div>
-
-            <!-- STEP 3: Live Tracking & Completion Simulation -->
-            <div id="booking-step-3" class="booking-wizard-step space-y-5 hidden">
-                <div class="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-3">
-                    <div class="flex items-center justify-between text-xs">
-                        <span class="font-bold text-emerald-400"><i class="fa-solid fa-satellite-dish mr-1"></i> Live Pro Dispatch Radar</span>
-                        <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-mono text-[10px]">GIS SYNC 100%</span>
-                    </div>
-                    <div class="h-40 rounded-xl bg-slate-950 relative overflow-hidden flex items-center justify-center border border-slate-800">
-                        <div class="radar-sweep"></div>
-                        <div class="w-24 h-24 radar-ring"></div>
-                        <div class="w-48 h-48 radar-ring"></div>
-                        <div class="relative z-10 text-center space-y-1">
-                            <i class="fa-solid fa-location-dot text-emerald-400 text-2xl animate-bounce"></i>
-                            <div class="text-xs font-bold text-white">Pro is 600m away</div>
-                            <div class="text-[10px] text-slate-400">Arriving in approx 5 minutes</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="p-3.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-300 space-y-1">
-                    <div class="font-bold text-white"><i class="fa-solid fa-camera text-indigo-400 mr-1.5"></i> Verified Photo Proof Protocol:</div>
-                    <p class="text-slate-400 text-[11px]">Pro will capture and hash-lock a before & after photo to the Co-op audit ledger.</p>
-                </div>
-
-                <button onclick="completeSimulatedJob()" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 via-teal-600 to-indigo-600 text-white font-bold text-sm shadow-lg shadow-emerald-600/30 transition-all">
-                    <i class="fa-solid fa-circle-check mr-1.5"></i> Simulate Work Verified & Escrow Released
-                </button>
-            </div>
-
-        </div>
-    </div>
-
     <!-- Scripts -->
+    <script src="static/js/coop-live-sync.js"></script>
     <script src="static/js/main.js"></script>
     <script src="static/js/booking.js"></script>
     <script src="static/js/worker.js"></script>

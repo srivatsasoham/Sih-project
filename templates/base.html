@@ -57,10 +57,10 @@
         <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
             <div class="flex items-center gap-2">
                 <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 animate-pulse">
-                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 mr-1.5"></span> LIVE CO-OP PULSE
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 mr-1.5"></span> REAL-TIME SYNC ACTIVE
                 </span>
                 <span id="live-feed-ticker" class="text-slate-300 transition-opacity duration-300 font-medium truncate max-w-md sm:max-w-xl">
-                    ⚡ Ramesh K. completed 'Safety Audit' in Indiranagar (+₹643 direct instant payout, 8% co-op fee)
+                    ⚡ Connected to Cooperative Realtime Dispatch Mesh (Cross-Tab Active)
                 </span>
             </div>
             
@@ -104,19 +104,19 @@
 
                 <!-- Desktop Navigation Links -->
                 <nav class="hidden lg:flex items-center gap-1 bg-slate-900/70 p-1.5 rounded-2xl border border-white/5">
-                    <a href="{{ url_for('index') }}" class="px-3.5 py-2 rounded-xl text-xs font-semibold transition-all {% if request.path == '/' %}bg-emerald-500 text-white shadow-lg shadow-emerald-500/20{% else %}text-slate-300 hover:text-white hover:bg-white/5{% endif %}">
-                        <i class="fa-solid fa-house-chimney mr-1.5 text-xs"></i> <span data-i18n="nav_services">Consumer Hub</span>
+                    <a href="{{ url_for('index') }}" class="px-3.5 py-2 rounded-xl text-xs font-semibold transition-all {% if request.path == '/' or 'index' in request.path %}bg-emerald-500 text-white shadow-lg shadow-emerald-500/20{% else %}text-slate-300 hover:text-white hover:bg-white/5{% endif %}">
+                        <i class="fa-solid fa-house-chimney mr-1.5 text-xs"></i> <span data-i18n="nav_services">Customer Portal</span>
                     </a>
-                    <a href="{{ url_for('worker_dashboard') }}" class="px-3.5 py-2 rounded-xl text-xs font-semibold transition-all {% if request.path == '/worker' %}bg-emerald-500 text-white shadow-lg shadow-emerald-500/20{% else %}text-slate-300 hover:text-white hover:bg-white/5{% endif %}">
-                        <i class="fa-solid fa-screwdriver-wrench mr-1.5 text-xs"></i> <span data-i18n="nav_worker_hub">Worker-Owner Hub</span>
+                    <a href="{{ url_for('worker_dashboard') }}" class="px-3.5 py-2 rounded-xl text-xs font-semibold transition-all {% if 'worker' in request.path %}bg-emerald-500 text-white shadow-lg shadow-emerald-500/20{% else %}text-slate-300 hover:text-white hover:bg-white/5{% endif %}">
+                        <i class="fa-solid fa-screwdriver-wrench mr-1.5 text-xs"></i> <span data-i18n="nav_worker_hub">Worker-Owner Portal</span>
                     </a>
-                    <a href="{{ url_for('governance') }}" class="px-3.5 py-2 rounded-xl text-xs font-semibold transition-all {% if request.path == '/governance' %}bg-emerald-500 text-white shadow-lg shadow-emerald-500/20{% else %}text-slate-300 hover:text-white hover:bg-white/5{% endif %}">
+                    <a href="{{ url_for('governance') }}" class="px-3.5 py-2 rounded-xl text-xs font-semibold transition-all {% if 'governance' in request.path %}bg-emerald-500 text-white shadow-lg shadow-emerald-500/20{% else %}text-slate-300 hover:text-white hover:bg-white/5{% endif %}">
                         <i class="fa-solid fa-check-to-slot mr-1.5 text-xs"></i> <span data-i18n="nav_governance">Co-op Council (Voting)</span>
                     </a>
-                    <a href="{{ url_for('community') }}" class="px-3.5 py-2 rounded-xl text-xs font-semibold transition-all {% if request.path == '/community' %}bg-emerald-500 text-white shadow-lg shadow-emerald-500/20{% else %}text-slate-300 hover:text-white hover:bg-white/5{% endif %}">
+                    <a href="{{ url_for('community') }}" class="px-3.5 py-2 rounded-xl text-xs font-semibold transition-all {% if 'community' in request.path %}bg-emerald-500 text-white shadow-lg shadow-emerald-500/20{% else %}text-slate-300 hover:text-white hover:bg-white/5{% endif %}">
                         <i class="fa-solid fa-people-roof mr-1.5 text-xs"></i> <span data-i18n="nav_community">RWA Bulk Hub</span>
                     </a>
-                    <a href="{{ url_for('about') }}" class="px-3.5 py-2 rounded-xl text-xs font-semibold transition-all {% if request.path == '/about' %}bg-emerald-500 text-white shadow-lg shadow-emerald-500/20{% else %}text-slate-300 hover:text-white hover:bg-white/5{% endif %}">
+                    <a href="{{ url_for('about') }}" class="px-3.5 py-2 rounded-xl text-xs font-semibold transition-all {% if 'about' in request.path %}bg-emerald-500 text-white shadow-lg shadow-emerald-500/20{% else %}text-slate-300 hover:text-white hover:bg-white/5{% endif %}">
                         <i class="fa-solid fa-lightbulb mr-1.5 text-xs"></i> SIH Pitch Deck
                     </a>
                 </nav>
@@ -124,14 +124,14 @@
                 <!-- Action Controls: Role Login Switcher & Emergency SOS -->
                 <div class="flex items-center gap-2.5">
                     
-                    <!-- Role Login Switcher Pill -->
-                    <button onclick="RoleGateway.openModal()" class="flex items-center gap-2 px-3 py-2 rounded-xl bg-slate-800/90 border border-slate-700 hover:border-emerald-500/50 text-xs transition-all shadow-sm group">
+                    <!-- Dynamic User / Role Login Button -->
+                    <button onclick="RoleGateway.openModal()" class="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-800/90 border border-slate-700 hover:border-emerald-500/50 text-xs transition-all shadow-sm group">
                         <span id="current-role-badge" class="font-bold text-emerald-400">
-                            <i class="fa-solid fa-user-check mr-1 text-emerald-400"></i> Customer
+                            <i class="fa-solid fa-user mr-1"></i> Customer Mode
                         </span>
                         <span class="text-slate-500 hidden sm:inline">|</span>
-                        <span id="current-user-name" class="text-slate-300 hidden sm:inline font-medium group-hover:text-white">Priya S.</span>
-                        <i class="fa-solid fa-right-left text-[10px] text-slate-400 group-hover:text-emerald-400 ml-0.5"></i>
+                        <span id="current-user-name" class="text-slate-200 hidden sm:inline font-bold group-hover:text-white">Profile</span>
+                        <i class="fa-solid fa-gear text-[10px] text-slate-400 group-hover:text-emerald-400 ml-0.5"></i>
                     </button>
 
                     <!-- Emergency SOS Button -->
@@ -154,13 +154,13 @@
         <!-- Mobile Menu Dropdown -->
         <div id="mobile-menu" class="hidden lg:hidden bg-slate-900/95 border-b border-slate-800 px-4 py-4 space-y-2 backdrop-blur-xl">
             <button onclick="RoleGateway.openModal(); document.getElementById('mobile-menu').classList.add('hidden')" class="w-full text-left px-4 py-2.5 rounded-xl text-xs font-bold bg-emerald-950/60 border border-emerald-500/40 text-emerald-300 mb-2">
-                <i class="fa-solid fa-right-left mr-2"></i> Switch Portal Mode (Customer / Worker)
+                <i class="fa-solid fa-user-pen mr-2"></i> Register / Change Profile Details
             </button>
-            <a href="{{ url_for('index') }}" class="block px-4 py-2.5 rounded-xl text-sm font-medium text-slate-200 hover:bg-slate-800"><i class="fa-solid fa-house-chimney mr-2 text-emerald-400"></i> Consumer Hub</a>
-            <a href="{{ url_for('worker_dashboard') }}" class="block px-4 py-2.5 rounded-xl text-sm font-medium text-slate-200 hover:bg-slate-800"><i class="fa-solid fa-screwdriver-wrench mr-2 text-emerald-400"></i> Worker-Owner Hub</a>
+            <a href="{{ url_for('index') }}" class="block px-4 py-2.5 rounded-xl text-sm font-medium text-slate-200 hover:bg-slate-800"><i class="fa-solid fa-house-chimney mr-2 text-emerald-400"></i> Customer Portal</a>
+            <a href="{{ url_for('worker_dashboard') }}" class="block px-4 py-2.5 rounded-xl text-sm font-medium text-slate-200 hover:bg-slate-800"><i class="fa-solid fa-screwdriver-wrench mr-2 text-emerald-400"></i> Worker-Owner Portal</a>
             <a href="{{ url_for('governance') }}" class="block px-4 py-2.5 rounded-xl text-sm font-medium text-slate-200 hover:bg-slate-800"><i class="fa-solid fa-check-to-slot mr-2 text-emerald-400"></i> Co-op Council & Voting</a>
             <a href="{{ url_for('community') }}" class="block px-4 py-2.5 rounded-xl text-sm font-medium text-slate-200 hover:bg-slate-800"><i class="fa-solid fa-people-roof mr-2 text-emerald-400"></i> RWA Bulk Hub</a>
-            <a href="{{ url_for('about') }}" class="block px-4 py-2.5 rounded-xl text-sm font-medium text-slate-200 hover:bg-slate-800"><i class="fa-solid fa-lightbulb mr-2 text-emerald-400"></i> SIH Concept Pitch Deck</a>
+            <a href="{{ url_for('about') }}" class="block px-4 py-2.5 rounded-xl text-sm font-medium text-slate-200 hover:bg-slate-800"><i class="fa-solid fa-lightbulb mr-2 text-emerald-400"></i> SIH Pitch Deck</a>
         </div>
     </header>
 
@@ -185,8 +185,8 @@
                 <div>
                     <h4 class="font-bold text-white text-xs uppercase tracking-wider mb-3">Core Platform</h4>
                     <ul class="space-y-2 text-[11px]">
-                        <li><a href="{{ url_for('index') }}" class="hover:text-emerald-400 transition">Consumer Hub (7 Checkpoints)</a></li>
-                        <li><a href="{{ url_for('worker_dashboard') }}" class="hover:text-emerald-400 transition">Worker-Owner Radar & Wallet</a></li>
+                        <li><a href="{{ url_for('index') }}" class="hover:text-emerald-400 transition">Customer Portal (Post Problem)</a></li>
+                        <li><a href="{{ url_for('worker_dashboard') }}" class="hover:text-emerald-400 transition">Worker Radar & Live Gigs</a></li>
                         <li><a href="{{ url_for('governance') }}" class="hover:text-emerald-400 transition">Democratic Voting & Open Ledger</a></li>
                         <li><a href="{{ url_for('community') }}" class="hover:text-emerald-400 transition">RWA Bulk Buying Campaigns</a></li>
                     </ul>
@@ -194,9 +194,9 @@
                 <div>
                     <h4 class="font-bold text-white text-xs uppercase tracking-wider mb-3">Trust & Security</h4>
                     <ul class="space-y-2 text-[11px]">
-                        <li><span class="text-slate-300"><i class="fa-solid fa-shield-halved text-emerald-400 mr-1.5"></i> Razorpay Escrow Protection</span></li>
-                        <li><span class="text-slate-300"><i class="fa-solid fa-id-card text-sky-400 mr-1.5"></i> Aadhaar eKYC & PMKVY RPL</span></li>
-                        <li><span class="text-slate-300"><i class="fa-solid fa-person-dress text-pink-400 mr-1.5"></i> Women Safety Protocol</span></li>
+                        <li><span class="text-slate-300"><i class="fa-solid fa-shield-halved text-emerald-400 mr-1.5"></i> Razorpay Escrow Milestone</span></li>
+                        <li><span class="text-slate-300"><i class="fa-solid fa-key text-sky-400 mr-1.5"></i> Dual OTP Handshake (Start & End)</span></li>
+                        <li><span class="text-slate-300"><i class="fa-solid fa-camera text-indigo-400 mr-1.5"></i> Hash-Locked Work Photo Proof</span></li>
                         <li><span class="text-slate-300"><i class="fa-solid fa-phone text-amber-400 mr-1.5"></i> Twilio IVR / SMS Fallback</span></li>
                     </ul>
                 </div>
@@ -231,16 +231,16 @@
     <!-- Toast Notification Container -->
     <div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none max-w-sm w-full"></div>
 
-    <!-- DUAL ROLE AUTH & LOGIN GATEWAY MODAL -->
+    <!-- USER REGISTRATION & LOGIN MODAL (Allows entering custom user details) -->
     <div id="role-auth-modal" class="fixed inset-0 z-50 modal-backdrop hidden items-center justify-center p-4">
-        <div class="relative w-full max-w-md glass-panel rounded-3xl border border-emerald-500/40 p-6 sm:p-8 overflow-hidden shadow-2xl">
+        <div class="relative w-full max-w-lg glass-panel rounded-3xl border border-emerald-500/40 p-6 sm:p-8 overflow-hidden shadow-2xl max-h-[90vh] overflow-y-auto">
             <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-emerald-500 via-teal-500 to-indigo-600"></div>
 
             <!-- Header -->
             <div class="flex items-center justify-between mb-5">
                 <div>
                     <span class="text-[10px] font-black uppercase tracking-widest text-emerald-400 font-mono">SIH 2026 • PS 26089</span>
-                    <h3 class="text-xl font-bold font-heading text-white">SahiDeal Portal Gateway</h3>
+                    <h3 class="text-xl font-bold font-heading text-white">Login / Register Profile</h3>
                 </div>
                 <button onclick="RoleGateway.closeModal()" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition">
                     <i class="fa-solid fa-xmark"></i>
@@ -250,60 +250,77 @@
             <!-- Role Selector Tabs -->
             <div class="flex p-1 rounded-2xl bg-slate-900 border border-slate-800 mb-6">
                 <button id="tab-btn-customer" onclick="RoleGateway.switchTab('customer')" class="flex-1 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-emerald-500 text-white shadow-lg shadow-emerald-500/30 transition-all">
-                    <i class="fa-solid fa-user-check mr-1.5"></i> Customer Login
+                    <i class="fa-solid fa-user-check mr-1.5"></i> Customer (Book & Post)
                 </button>
                 <button id="tab-btn-worker" onclick="RoleGateway.switchTab('worker')" class="flex-1 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-slate-400 hover:text-white transition-all">
-                    <i class="fa-solid fa-screwdriver-wrench mr-1.5"></i> Worker-Owner Login
+                    <i class="fa-solid fa-screwdriver-wrench mr-1.5"></i> Worker-Owner (Accept)
                 </button>
             </div>
 
-            <!-- View 1: Customer Login -->
-            <div id="auth-view-customer" class="space-y-4">
+            <!-- View 1: Customer Registration & Login Form -->
+            <form id="auth-view-customer" onsubmit="event.preventDefault(); RoleGateway.saveCustomCustomer();" class="space-y-4">
                 <p class="text-xs text-slate-300 leading-relaxed">
-                    Access verified neighborhood pros with 7-checkpoint escrow security and RWA discounts.
+                    Fill in your details as a Customer to post repair problems, track assigned workers, and release escrow upon satisfaction.
                 </p>
                 <div>
-                    <label class="block text-xs font-semibold text-slate-300 mb-1">Mobile Number (OTP Verification)</label>
-                    <input type="text" id="cust-login-phone" value="+91 98450 12345" class="w-full px-4 py-3 rounded-xl glass-input text-sm">
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Your Full Name *</label>
+                    <input type="text" id="cust-reg-name" required placeholder="e.g. Srivatsa Soham" value="Srivatsa Soham" class="w-full px-4 py-2.5 rounded-xl glass-input text-xs sm:text-sm">
                 </div>
-                <button onclick="RoleGateway.selectRole('customer')" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold text-sm shadow-lg shadow-emerald-600/30 hover:scale-[1.01] active:scale-95 transition-all flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-arrow-right-to-bracket"></i> Enter as Customer / Resident
-                </button>
-            </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Mobile Phone Number *</label>
+                    <input type="tel" id="cust-reg-phone" required placeholder="e.g. +91 98765 43210" value="+91 98765 43210" class="w-full px-4 py-2.5 rounded-xl glass-input text-xs sm:text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Your Street / Society Address *</label>
+                    <input type="text" id="cust-reg-address" required placeholder="e.g. Flat 304, Sobha Residency, Indiranagar" value="Flat 304, Sobha Residency, Indiranagar, Bangalore" class="w-full px-4 py-2.5 rounded-xl glass-input text-xs sm:text-sm">
+                </div>
+                <div class="pt-2">
+                    <button type="submit" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold text-xs sm:text-sm shadow-lg shadow-emerald-600/30 hover:scale-[1.01] active:scale-95 transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-arrow-right-to-bracket"></i> Login & Open Customer Portal
+                    </button>
+                </div>
+            </form>
 
-            <!-- View 2: Worker-Owner Login & Aadhaar eKYC -->
-            <div id="auth-view-worker" class="space-y-4 hidden">
+            <!-- View 2: Worker Registration & Login Form -->
+            <form id="auth-view-worker" onsubmit="event.preventDefault(); RoleGateway.saveCustomWorker();" class="space-y-4 hidden">
                 <p class="text-xs text-slate-300 leading-relaxed">
-                    Earn 92% direct take-home + co-op dividends, <3km radar dispatches, and tool bank loans.
+                    Fill in your trade details to receive live radar dispatches from customers, verify OTPs, and earn 92% direct instant UPI payouts.
                 </p>
                 <div>
-                    <label class="block text-xs font-semibold text-slate-300 mb-1">Registered Mobile Number</label>
-                    <input type="text" id="worker-login-phone" value="+91 98860 54321" class="w-full px-4 py-3 rounded-xl glass-input text-sm">
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Your Full Name *</label>
+                    <input type="text" id="worker-reg-name" required placeholder="e.g. Ramesh Kumar" value="Ramesh Kumar" class="w-full px-4 py-2.5 rounded-xl glass-input text-xs sm:text-sm">
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold text-slate-300 mb-1">Aadhaar eKYC / PMKVY RPL Badge</label>
-                    <div class="flex items-center gap-2 px-3 py-2 rounded-xl bg-emerald-950/60 border border-emerald-500/40 text-xs text-emerald-300">
-                        <i class="fa-solid fa-certificate text-emerald-400"></i>
-                        <span>Aadhaar Verified (UIDAI OTP & PMKVY Level 4)</span>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Mobile Phone Number *</label>
+                    <input type="tel" id="worker-reg-phone" required placeholder="e.g. +91 98860 54321" value="+91 98860 54321" class="w-full px-4 py-2.5 rounded-xl glass-input text-xs sm:text-sm">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1">Primary Trade / Skill *</label>
+                        <select id="worker-reg-trade" class="w-full px-3 py-2.5 rounded-xl glass-input text-xs">
+                            <option value="Master Electrician" class="bg-slate-900">⚡ Master Electrician</option>
+                            <option value="Hydro Plumber" class="bg-slate-900">🚰 Hydro Plumber</option>
+                            <option value="HVAC & AC Specialist" class="bg-slate-900">❄️ HVAC & AC Specialist</option>
+                            <option value="Deep Sanitation Lead" class="bg-slate-900">🧹 Deep Sanitation Lead</option>
+                            <option value="Precision Carpenter" class="bg-slate-900">🪚 Precision Carpenter</option>
+                            <option value="Elder & Home Care Pro" class="bg-slate-900">👵 Elder & Home Care Pro</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1">Experience</label>
+                        <input type="text" id="worker-reg-exp" value="8 Years" class="w-full px-3 py-2.5 rounded-xl glass-input text-xs">
                     </div>
                 </div>
-                <button onclick="RoleGateway.selectRole('worker')" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-amber-500 via-emerald-600 to-teal-600 text-white font-bold text-sm shadow-lg shadow-emerald-600/30 hover:scale-[1.01] active:scale-95 transition-all flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-screwdriver-wrench"></i> Enter as Worker-Owner (Ramesh Kumar)
-                </button>
-            </div>
-
-            <!-- 1-Click Fast Demo Box for Judges -->
-            <div class="pt-5 mt-5 border-t border-slate-800/80 text-center space-y-2">
-                <span class="text-[10px] font-mono text-slate-400 uppercase tracking-wider">Fast Demo Switching (SIH Jury Test)</span>
-                <div class="grid grid-cols-2 gap-2">
-                    <button onclick="RoleGateway.demoQuickLogin('customer')" class="py-2 px-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-200 text-xs font-semibold border border-slate-700 flex items-center justify-center gap-1.5">
-                        <i class="fa-solid fa-user text-emerald-400"></i> Demo Customer
-                    </button>
-                    <button onclick="RoleGateway.demoQuickLogin('worker')" class="py-2 px-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-200 text-xs font-semibold border border-slate-700 flex items-center justify-center gap-1.5">
-                        <i class="fa-solid fa-screwdriver-wrench text-amber-400"></i> Demo Worker-Owner
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Operating Location</label>
+                    <input type="text" id="worker-reg-loc" value="Indiranagar & Whitefield (1.2 km radius)" class="w-full px-4 py-2.5 rounded-xl glass-input text-xs sm:text-sm">
+                </div>
+                <div class="pt-2">
+                    <button type="submit" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-amber-500 via-emerald-600 to-teal-600 text-white font-bold text-xs sm:text-sm shadow-lg shadow-emerald-600/30 hover:scale-[1.01] active:scale-95 transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-screwdriver-wrench"></i> Login & Open Worker Radar
                     </button>
                 </div>
-            </div>
+            </form>
 
         </div>
     </div>
@@ -374,171 +391,8 @@
         </div>
     </div>
 
-    <!-- Booking Modal Wizard (7-Checkpoints Escrow Journey) -->
-    <div id="booking-modal" class="fixed inset-0 z-50 modal-backdrop hidden items-center justify-center p-4">
-        <div class="relative w-full max-w-xl glass-panel rounded-3xl border border-white/10 p-6 sm:p-8 overflow-hidden max-h-[92vh] overflow-y-auto">
-            
-            <!-- Header -->
-            <div class="flex items-center justify-between mb-5 pb-4 border-b border-slate-800">
-                <div>
-                    <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider font-mono">7 Trust Checkpoints Booking</span>
-                    <h3 class="text-xl font-bold font-heading text-white" id="modal-service-title">Service Name</h3>
-                </div>
-                <button onclick="closeBookingModal()" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-            </div>
-
-            <!-- Wizard Step Indicators -->
-            <div class="flex items-center justify-center gap-2 mb-6">
-                <div id="step-dot-1" class="w-8 h-2.5 rounded-full bg-emerald-400 transition-all shadow-md shadow-emerald-500/50"></div>
-                <div id="step-dot-2" class="w-2.5 h-2.5 rounded-full bg-slate-700 transition-all"></div>
-                <div id="step-dot-3" class="w-2.5 h-2.5 rounded-full bg-slate-700 transition-all"></div>
-            </div>
-
-            <input type="hidden" id="modal-service-id" value="">
-
-            <!-- STEP 1: Details & Escrow Transparency Breakdown -->
-            <div id="booking-step-1" class="booking-wizard-step space-y-5">
-                
-                <!-- Transparent Economics Breakdown Card -->
-                <div class="p-4 rounded-2xl bg-slate-900/90 border border-emerald-500/30 space-y-2 text-xs">
-                    <div class="flex items-center justify-between text-slate-300">
-                        <span>Total Service Fee (Escrow Held):</span>
-                        <span class="text-base font-black text-white font-heading" id="modal-price-total">₹699</span>
-                    </div>
-                    <div class="flex items-center justify-between text-emerald-400 font-semibold">
-                        <span><i class="fa-solid fa-hand-holding-dollar mr-1"></i> Direct to Worker (92%):</span>
-                        <span id="modal-worker-takehome">₹643</span>
-                    </div>
-                    <div class="flex items-center justify-between text-cyan-400 font-semibold">
-                        <span><i class="fa-solid fa-shield-heart mr-1"></i> Co-op Reserve & Dividend Pool (8%):</span>
-                        <span id="modal-coop-reserve">₹56</span>
-                    </div>
-                    <div class="flex items-center justify-between text-slate-400 pt-1.5 border-t border-slate-800 text-[11px]">
-                        <span>Savings vs Corporate Aggregator:</span>
-                        <span class="text-emerald-400 font-bold" id="modal-savings">₹451 Saved</span>
-                    </div>
-                </div>
-
-                <!-- Women Pro Filter Option inside Modal -->
-                <div id="modal-women-pref-container" class="p-3.5 rounded-xl bg-pink-950/40 border border-pink-500/30 flex items-center justify-between">
-                    <div class="flex items-center gap-2.5 text-xs text-pink-200">
-                        <i class="fa-solid fa-person-dress text-base text-pink-400"></i>
-                        <span>Assign Verified <b>Women Service Provider</b></span>
-                    </div>
-                    <input type="checkbox" id="book-women-pref" class="w-4 h-4 accent-pink-500 rounded cursor-pointer">
-                </div>
-
-                <!-- Input Fields -->
-                <div class="space-y-3">
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-300 mb-1">Your Full Name</label>
-                        <input type="text" id="book-name" value="Priya Sharma" class="w-full px-4 py-2.5 rounded-xl glass-input text-sm">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-300 mb-1">Mobile Number (For OTP Verification)</label>
-                        <input type="text" id="book-phone" value="+91 98450 12345" class="w-full px-4 py-2.5 rounded-xl glass-input text-sm">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-300 mb-1">Service Address & Flat Number</label>
-                        <input type="text" id="book-address" value="Flat 402, Palm Heights, Indiranagar, Bangalore" class="w-full px-4 py-2.5 rounded-xl glass-input text-sm">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-300 mb-1">Preferred Time Slot</label>
-                        <select id="book-time-slot" class="w-full px-4 py-2.5 rounded-xl glass-input text-sm">
-                            <option value="Immediate (<20 mins)" class="bg-slate-900">⚡ Immediate (< 20 mins dispatch)</option>
-                            <option value="Today Evening (5:00 PM - 6:30 PM)" class="bg-slate-900">📅 Today Evening (5:00 PM - 6:30 PM)</option>
-                            <option value="Tomorrow Morning (9:00 AM - 10:30 AM)" class="bg-slate-900">📅 Tomorrow Morning (9:00 AM - 10:30 AM)</option>
-                        </select>
-                    </div>
-                </div>
-
-                <button id="btn-confirm-escrow" onclick="submitBookingOrder()" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 via-teal-600 to-indigo-600 text-white font-bold tracking-wide shadow-lg shadow-emerald-600/30 hover:scale-[1.01] active:scale-95 transition-all flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-lock"></i> Fund Escrow & Match Nearest Co-op Pro
-                </button>
-            </div>
-
-            <!-- STEP 2: Assigned Pro & OTP Verification Details -->
-            <div id="booking-step-2" class="booking-wizard-step space-y-5 hidden">
-                <div class="text-center space-y-1">
-                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
-                        <i class="fa-solid fa-shield-check mr-1.5"></i> Razorpay Escrow Locked • Pro Assigned
-                    </span>
-                    <h4 class="text-lg font-bold text-white">Booking ID: <span id="confirm-booking-id" class="font-mono text-emerald-400">SG-892104</span></h4>
-                </div>
-
-                <!-- Matched Pro Card -->
-                <div class="p-4 rounded-2xl bg-slate-900/90 border border-slate-800 flex items-center gap-4">
-                    <img id="confirm-worker-img" src="" alt="Worker" class="w-16 h-16 rounded-2xl object-cover border-2 border-emerald-400 shrink-0">
-                    <div class="space-y-1 text-xs">
-                        <div class="text-sm font-bold text-white" id="confirm-worker-name">Ramesh Kumar Sharma</div>
-                        <div class="text-slate-300" id="confirm-worker-role">Master Electrician & Solar Specialist</div>
-                        <div class="flex items-center gap-3 text-slate-400 pt-0.5">
-                            <span class="text-emerald-400 font-bold" id="confirm-worker-distance">1.2 km away</span>
-                            <span>•</span>
-                            <span><i class="fa-solid fa-star text-amber-400 mr-1"></i><span id="confirm-worker-rating">4.94</span></span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- OTP Verification Matrix -->
-                <div class="grid grid-cols-2 gap-3">
-                    <div class="p-3.5 rounded-2xl bg-indigo-950/60 border border-indigo-500/40 text-center space-y-1">
-                        <div class="text-[10px] text-indigo-300 font-bold uppercase">1. Start Job OTP</div>
-                        <div class="text-2xl font-black font-mono text-white" id="confirm-start-otp">4819</div>
-                        <div class="text-[10px] text-slate-400">Give to pro upon arrival</div>
-                    </div>
-                    <div class="p-3.5 rounded-2xl bg-emerald-950/60 border border-emerald-500/40 text-center space-y-1">
-                        <div class="text-[10px] text-emerald-300 font-bold uppercase">2. Completion OTP</div>
-                        <div class="text-2xl font-black font-mono text-white" id="confirm-complete-otp">7392</div>
-                        <div class="text-[10px] text-slate-400">Give ONLY after work verified</div>
-                    </div>
-                </div>
-
-                <div class="p-3 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-300 flex items-center justify-between">
-                    <span>Estimated Arrival:</span>
-                    <span class="font-bold text-amber-400" id="confirm-eta">14 - 18 minutes</span>
-                </div>
-
-                <button onclick="progressToTracking()" class="w-full py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-sm shadow-lg shadow-emerald-500/30 transition-all">
-                    Track Pro on Live GIS Map <i class="fa-solid fa-arrow-right ml-1"></i>
-                </button>
-            </div>
-
-            <!-- STEP 3: Live Tracking & Completion Simulation -->
-            <div id="booking-step-3" class="booking-wizard-step space-y-5 hidden">
-                <div class="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-3">
-                    <div class="flex items-center justify-between text-xs">
-                        <span class="font-bold text-emerald-400"><i class="fa-solid fa-satellite-dish mr-1"></i> Live Pro Dispatch Radar</span>
-                        <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-mono text-[10px]">GIS SYNC 100%</span>
-                    </div>
-                    <div class="h-40 rounded-xl bg-slate-950 relative overflow-hidden flex items-center justify-center border border-slate-800">
-                        <div class="radar-sweep"></div>
-                        <div class="w-24 h-24 radar-ring"></div>
-                        <div class="w-48 h-48 radar-ring"></div>
-                        <div class="relative z-10 text-center space-y-1">
-                            <i class="fa-solid fa-location-dot text-emerald-400 text-2xl animate-bounce"></i>
-                            <div class="text-xs font-bold text-white">Pro is 600m away</div>
-                            <div class="text-[10px] text-slate-400">Arriving in approx 5 minutes</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="p-3.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-300 space-y-1">
-                    <div class="font-bold text-white"><i class="fa-solid fa-camera text-indigo-400 mr-1.5"></i> Verified Photo Proof Protocol:</div>
-                    <p class="text-slate-400 text-[11px]">Pro will capture and hash-lock a before & after photo to the Co-op audit ledger.</p>
-                </div>
-
-                <button onclick="completeSimulatedJob()" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 via-teal-600 to-indigo-600 text-white font-bold text-sm shadow-lg shadow-emerald-600/30 transition-all">
-                    <i class="fa-solid fa-circle-check mr-1.5"></i> Simulate Work Verified & Escrow Released
-                </button>
-            </div>
-
-        </div>
-    </div>
-
     <!-- Scripts -->
+    <script src="{{ url_for('static', filename='js/coop-live-sync.js') }}"></script>
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     <script src="{{ url_for('static', filename='js/booking.js') }}"></script>
     <script src="{{ url_for('static', filename='js/worker.js') }}"></script>

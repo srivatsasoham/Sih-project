@@ -1,7 +1,7 @@
 /**
  * SahiDeal (पारस्परिक सहकारी) - Core JavaScript Engine
  * Smart India Hackathon 2026 - Problem Statement ID: 26089
- * Handles Role Switcher, Sound FX (Web Audio), Toast Notifications, Multilingual, and Live Pulse
+ * Handles Role Management, Custom Profile Registrations, Live Sync & Audio FX
  */
 
 // Sound FX Engine using Web Audio API (zero external audio dependencies)
@@ -52,8 +52,8 @@ const SoundFX = {
         try {
             if (window.confetti) {
                 window.confetti({
-                    particleCount: 50,
-                    spread: 60,
+                    particleCount: 60,
+                    spread: 70,
                     origin: { y: 0.8 }
                 });
             }
@@ -63,7 +63,7 @@ const SoundFX = {
 
 // Toast Notification Manager
 const Toast = {
-    show(message, type = 'success', duration = 4000) {
+    show(message, type = 'success', duration = 4500) {
         let container = document.getElementById('toast-container');
         if (!container) {
             container = document.createElement('div');
@@ -115,20 +115,51 @@ const Toast = {
     }
 };
 
-// Role Gateway & Authentication Manager
+// Role Gateway & Profile Manager
 const RoleGateway = {
-    currentRole: localStorage.getItem('sahideal_role') || 'customer',
+    currentRole: localStorage.getItem('sahideal_active_role') || (window.location.href.includes('worker') ? 'worker' : 'customer'),
     
     init() {
+        this.syncWithState();
         this.updateNavUI();
     },
 
-    openModal(defaultTab = 'customer') {
+    syncWithState() {
+        if (typeof CoopSync !== 'undefined') {
+            const customer = CoopSync.getCustomer();
+            const worker = CoopSync.getWorker();
+
+            const custNameInput = document.getElementById('cust-reg-name');
+            const custPhoneInput = document.getElementById('cust-reg-phone');
+            const custAddrInput = document.getElementById('cust-reg-address');
+
+            if (customer && custNameInput) {
+                custNameInput.value = customer.name || "";
+                custPhoneInput.value = customer.phone || "";
+                custAddrInput.value = customer.address || "";
+            }
+
+            const workNameInput = document.getElementById('worker-reg-name');
+            const workPhoneInput = document.getElementById('worker-reg-phone');
+            const workTradeInput = document.getElementById('worker-reg-trade');
+            const workLocInput = document.getElementById('worker-reg-loc');
+
+            if (worker && workNameInput) {
+                workNameInput.value = worker.name || "";
+                workPhoneInput.value = worker.phone || "";
+                if (workTradeInput) workTradeInput.value = worker.trade || "Master Electrician";
+                if (workLocInput) workLocInput.value = worker.location || "Indiranagar (1.2 km radius)";
+            }
+        }
+    },
+
+    openModal(defaultTab) {
         const modal = document.getElementById('role-auth-modal');
         if (modal) {
             modal.classList.remove('hidden');
             modal.classList.add('flex');
-            this.switchTab(defaultTab);
+            const tabToUse = defaultTab || (window.location.href.includes('worker') ? 'worker' : 'customer');
+            this.switchTab(tabToUse);
             SoundFX.pop();
         }
     },
@@ -160,52 +191,82 @@ const RoleGateway = {
         }
     },
 
-    selectRole(role) {
-        this.currentRole = role;
-        localStorage.setItem('sahideal_role', role);
-        
-        // Make asynchronous API call if backend active
-        fetch('/api/auth/switch-role', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({role: role})
-        }).catch(err => console.log("Static mode fallback"));
+    saveCustomCustomer() {
+        const name = document.getElementById('cust-reg-name').value.trim() || "Customer";
+        const phone = document.getElementById('cust-reg-phone').value.trim() || "+91 98765 43210";
+        const address = document.getElementById('cust-reg-address').value.trim() || "Indiranagar, Bangalore";
 
+        const user = { role: 'customer', name, phone, address };
+        if (typeof CoopSync !== 'undefined') {
+            CoopSync.setCustomer(user);
+        }
+
+        this.currentRole = 'customer';
+        localStorage.setItem('sahideal_active_role', 'customer');
         this.updateNavUI();
         this.closeModal();
 
-        if (role === 'worker') {
-            Toast.show("⚡ Switched to Worker-Owner Portal! Welcome Ramesh Kumar (Master Electrician).", "success");
-            setTimeout(() => {
-                if (!window.location.href.includes('worker')) {
-                    window.location.href = 'worker.html';
-                }
-            }, 600);
-        } else {
-            Toast.show("👤 Switched to Customer Portal! Welcome Priya Sharma (Resident).", "info");
-            setTimeout(() => {
-                if (window.location.href.includes('worker') || window.location.href.includes('governance') || window.location.href.includes('community') || window.location.href.includes('about')) {
-                    window.location.href = 'index.html';
-                }
-            }, 600);
-        }
+        Toast.show(`👋 Welcome, ${name}! Logged in as Customer. You can now post repair requests.`, 'success');
+        SoundFX.success();
+
+        setTimeout(() => {
+            if (!window.location.href.includes('index') && window.location.pathname !== '/' && !window.location.href.endsWith('/')) {
+                window.location.href = 'index.html';
+            }
+        }, 600);
     },
 
-    demoQuickLogin(role) {
-        this.selectRole(role);
+    saveCustomWorker() {
+        const name = document.getElementById('worker-reg-name').value.trim() || "Worker-Owner";
+        const phone = document.getElementById('worker-reg-phone').value.trim() || "+91 98860 54321";
+        const trade = document.getElementById('worker-reg-trade').value;
+        const exp = document.getElementById('worker-reg-exp') ? document.getElementById('worker-reg-exp').value : "8 Years";
+        const location = document.getElementById('worker-reg-loc') ? document.getElementById('worker-reg-loc').value : "Indiranagar";
+
+        const user = {
+            role: 'worker',
+            name,
+            phone,
+            trade,
+            experience: exp,
+            location,
+            avatar: "https://images.unsplash.com/photo-1540569014015-19a7be504e3a?w=150&auto=format&fit=crop&q=80"
+        };
+
+        if (typeof CoopSync !== 'undefined') {
+            CoopSync.setWorker(user);
+        }
+
+        this.currentRole = 'worker';
+        localStorage.setItem('sahideal_active_role', 'worker');
+        this.updateNavUI();
+        this.closeModal();
+
+        Toast.show(`⚡ Welcome, ${name} (${trade})! Worker Radar is active. You will receive live gig dispatches.`, 'success');
+        SoundFX.cash();
+
+        setTimeout(() => {
+            if (!window.location.href.includes('worker')) {
+                window.location.href = 'worker.html';
+            }
+        }, 600);
     },
 
     updateNavUI() {
         const badge = document.getElementById('current-role-badge');
         const roleName = document.getElementById('current-user-name');
-        if (badge && roleName) {
-            if (this.currentRole === 'worker') {
-                badge.innerHTML = '<i class="fa-solid fa-screwdriver-wrench text-amber-400 mr-1.5"></i> Worker-Owner';
-                roleName.textContent = 'Ramesh Kumar (Pro)';
-            } else {
-                badge.innerHTML = '<i class="fa-solid fa-user-check text-emerald-400 mr-1.5"></i> Customer';
-                roleName.textContent = 'Priya Sharma';
-            }
+        
+        let customer = (typeof CoopSync !== 'undefined') ? CoopSync.getCustomer() : null;
+        let worker = (typeof CoopSync !== 'undefined') ? CoopSync.getWorker() : null;
+
+        const isWorkerPage = window.location.href.includes('worker');
+
+        if (isWorkerPage) {
+            if (badge) badge.innerHTML = '<i class="fa-solid fa-screwdriver-wrench text-amber-400 mr-1.5"></i> Worker Radar';
+            if (roleName) roleName.textContent = worker ? worker.name : "Ramesh Kumar";
+        } else {
+            if (badge) badge.innerHTML = '<i class="fa-solid fa-user-check text-emerald-400 mr-1.5"></i> Customer';
+            if (roleName) roleName.textContent = customer ? customer.name : "Srivatsa Soham";
         }
     }
 };
@@ -213,7 +274,7 @@ const RoleGateway = {
 // Multilingual Translation Dictionary
 const TRANSLATIONS = {
     en: {
-        nav_services: "Consumer Hub",
+        nav_services: "Customer Portal",
         nav_worker_hub: "Worker-Owner Hub",
         nav_governance: "Co-op Council (Voting)",
         nav_community: "RWA Bulk Hub",
@@ -221,25 +282,21 @@ const TRANSLATIONS = {
         hero_title_1: "Fair Work.",
         hero_title_2: "Community Trust.",
         hero_title_3: "Zero Exploitation.",
-        hero_sub: "India's first 100% worker-owned cooperative for household & community services. 92% direct worker take-home, transparent 8% co-op fee, 7-checkpoint escrow, and democratic governance.",
-        calc_title: "The Platform Cooperativism Advantage",
-        calc_sub: "Test any service booking amount and compare how much more income stays in worker pockets with SahiDeal's 8% take-rate vs traditional 28% corporate fees."
+        hero_sub: "India's first 100% worker-owned cooperative for household & community services. 92% direct worker take-home, transparent 8% co-op fee, 7-checkpoint escrow, and democratic governance."
     },
     hi: {
-        nav_services: "ग्राहक हब",
-        nav_worker_hub: "श्रमिक-मालिक पोर्टल",
+        nav_services: "ग्राहक पोर्टल",
+        nav_worker_hub: "श्रमिक-मालिक हब",
         nav_governance: "सहकारी परिषद (मतदान)",
         nav_community: "सोसायटी सामूहिक हब",
         sos_btn: "आपातकालीन 15-मिनट मिस्त्री",
         hero_title_1: "उचित काम।",
         hero_title_2: "सामुदायिक विश्वास।",
         hero_title_3: "शून्य शोषण।",
-        hero_sub: "भारत का पहला 100% श्रमिक-स्वामित्व वाला सहकारी मंच। 92% सीधी श्रमिक कमाई, पारदर्शी 8% सहकारी शुल्क, 7-चेकपॉइंट एस्क्रो और लोकतांत्रिक शासन।",
-        calc_title: "सहकारी मॉडल का आर्थिक लाभ",
-        calc_sub: "किसी भी सेवा राशि की जांच करें और देखें कि पारंपरिक 28% कंपनियों की तुलना में सहीडील के 8% मॉडल से कारीगरों को कितना अधिक लाभ मिलता है।"
+        hero_sub: "भारत का पहला 100% श्रमिक-स्वामित्व वाला सहकारी मंच। 92% सीधी श्रमिक कमाई, पारदर्शी 8% सहकारी शुल्क, 7-चेकपॉइंट एस्क्रो और लोकतांत्रिक शासन।"
     },
     kn: {
-        nav_services: "ಗ್ರಾಹಕ ಹಬ್",
+        nav_services: "ಗ್ರಾಹಕ ಪೋರ್ಟಲ್",
         nav_worker_hub: "ಕಾರ್ಮಿಕ ಮಾಲೀಕ ಪೋರ್ಟಲ್",
         nav_governance: "ಸಹಕಾರಿ ಮಂಡಳಿ",
         nav_community: "ಸೊಸೈಟಿ ಹಬ್",
@@ -247,12 +304,10 @@ const TRANSLATIONS = {
         hero_title_1: "ನ್ಯಾಯಯುತ ಕೆಲಸ.",
         hero_title_2: "ಸಮುದಾಯ ನಂಬಿಕೆ.",
         hero_title_3: "ಶೂನ್ಯ ಶೋಷಣೆ.",
-        hero_sub: "ಭಾರತದ ಮೊದಲ 100% ಕಾರ್ಮಿಕರ ಒಡೆತನದ ಸಹಕಾರಿ ಸೇವಾ ವೇದಿಕೆ. 92% ನೇರ ಆದಾಯ ಮತ್ತು 8% ಸಹಕಾರಿ ಶುಲ್ಕ.",
-        calc_title: "ಪ್ಲಾಟ್‌ಫಾರ್ಮ್ ಕೋಆಪರೇಟಿವಿಸಂ ಪ್ರಯೋಜನ",
-        calc_sub: "ಕಾರ್ಮಿಕರಿಗೆ ಉಳಿಯುವ ಆದಾಯವನ್ನು ಹೋಲಿಸಲು ಸ್ಲೈಡರ್ ಬಳಸಿ."
+        hero_sub: "ಭಾರತದ ಮೊದಲ 100% ಕಾರ್ಮಿಕರ ಒಡೆತನದ ಸಹಕಾರಿ ಸೇವಾ ವೇದಿಕೆ. 92% ನೇರ ಆದಾಯ ಮತ್ತು 8% ಸಹಕಾರಿ ಶುಲ್ಕ."
     },
     ta: {
-        nav_services: "வாடிக்கையாளர் தளம்",
+        nav_services: "வாடிக்கையாளர் போர்டல்",
         nav_worker_hub: "தொழிலாளர் போர்டல்",
         nav_governance: "கூட்டுறவு சபை",
         nav_community: "குடியிருப்பு சங்கம்",
@@ -260,9 +315,7 @@ const TRANSLATIONS = {
         hero_title_1: "நியாயமான வேலை.",
         hero_title_2: "சமூக நம்பிக்கை.",
         hero_title_3: "சுரண்டலற்ற தளம்.",
-        hero_sub: "இந்தியாவின் முதல் தொழிலாளர் உரிமையாளர் கூட்டுறவு தளம். 92% நேரடி வருவாய், 8% எளிய கூட்டுறவு கட்டணம்.",
-        calc_title: "கூட்டுறவு மாதிரியின் பொருளாதார நன்மை",
-        calc_sub: "தொழிலாளர்களுக்கு கிடைக்கும் கூடுதல் வருவாயை கணக்கிடுங்கள்."
+        hero_sub: "இந்தியாவின் முதல் தொழிலாளர் உரிமையாளர் கூட்டுறவு தளம். 92% நேரடி வருவாய், 8% எளிய கூட்டுறவு கட்டணம்."
     }
 };
 
@@ -275,37 +328,6 @@ function changeLanguage(lang) {
         }
     });
     Toast.show(`Language switched to ${lang.toUpperCase()}`, 'info');
-}
-
-// Fair Calculator Controller (8% Co-op fee vs 28% Corporate cut)
-function updateFairCalculator(val) {
-    const amount = parseFloat(val);
-    const label = document.getElementById('calc-amount-label');
-    if (label) label.textContent = `₹${amount.toLocaleString('en-IN')}`;
-
-    // Corporate 28% cut
-    const corpMiddleman = Math.round(amount * 0.28);
-    const corpWorker = amount - corpMiddleman;
-
-    // SahiDeal 8% Co-op Fee (feeds welfare & dividends)
-    const coopReserve = Math.round(amount * 0.08);
-    const coopWorker = amount - coopReserve;
-    const extraInPocket = coopWorker - corpWorker;
-    const percentGain = Math.round((extraInPocket / corpWorker) * 100);
-
-    const elCorpWorker = document.getElementById('calc-corp-worker');
-    const elCorpCut = document.getElementById('calc-corp-cut');
-    const elCoopWorker = document.getElementById('calc-coop-worker');
-    const elCoopReserve = document.getElementById('calc-coop-reserve');
-    const elExtra = document.getElementById('calc-extra-gain');
-    const elGainPct = document.getElementById('calc-gain-pct');
-
-    if (elCorpWorker) elCorpWorker.textContent = `₹${corpWorker.toLocaleString('en-IN')}`;
-    if (elCorpCut) elCorpCut.textContent = `₹${corpMiddleman.toLocaleString('en-IN')} (28% Middleman Cut)`;
-    if (elCoopWorker) elCoopWorker.textContent = `₹${coopWorker.toLocaleString('en-IN')}`;
-    if (elCoopReserve) elCoopReserve.textContent = `₹${coopReserve.toLocaleString('en-IN')} (8% Co-op Reserve & Dividend)`;
-    if (elExtra) elExtra.textContent = `+₹${extraInPocket.toLocaleString('en-IN')}`;
-    if (elGainPct) elGainPct.textContent = `(+${percentGain}% higher take-home)`;
 }
 
 // Emergency SOS Modal Controller
@@ -336,42 +358,56 @@ function triggerEmergencySos() {
         btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Dispatched Pro via Rapid GIS Radar...';
     }
 
-    fetch('/api/sos', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({service_type: type})
-    }).then(r => r.json()).then(data => {
+    if (typeof CoopSync !== 'undefined') {
+        const customer = CoopSync.getCustomer() || { name: "Valued Customer", phone: "+91 98450 12345", address: "Indiranagar" };
+        CoopSync.postCustomerJob({
+            title: `🚨 EMERGENCY: ${type}`,
+            category: "emergency",
+            description: `Urgent emergency response requested at ${customer.address}. Immediate <15 min dispatch needed.`,
+            price: 399,
+            customerName: customer.name,
+            customerPhone: customer.phone,
+            customerAddress: customer.address,
+            urgency: "⚡ Critical Emergency (<15 mins)"
+        });
+    }
+
+    setTimeout(() => {
         if (statusBox) statusBox.classList.remove('hidden');
-        if (btn) btn.innerHTML = '<i class="fa-solid fa-circle-check"></i> Master Pro Dispatched (ETA: 12 Mins)';
-        Toast.show("🚨 Emergency SOS Handyman Ramesh Kumar dispatched! Police vetted & 1.2km away.", "sos", 6000);
+        if (btn) btn.innerHTML = '<i class="fa-solid fa-circle-check"></i> Nearest Handyman Dispatched (ETA: 12 Mins)';
+        Toast.show("🚨 Emergency SOS Handyman dispatched! Broadcast sent to all nearby workers.", "sos", 6000);
         SoundFX.sos();
-    }).catch(err => {
-        if (statusBox) statusBox.classList.remove('hidden');
-        if (btn) btn.innerHTML = '<i class="fa-solid fa-circle-check"></i> Master Pro Dispatched (ETA: 12 Mins)';
-        Toast.show("🚨 Emergency SOS Handyman Ramesh Kumar dispatched! ETA: 12 Mins.", "sos", 6000);
-    });
+    }, 600);
 }
 
-// Live Ticker Carousel
-const LIVE_TICKERS = [
-    "⚡ Ramesh K. completed 'Safety Audit' in Indiranagar (+₹643 direct instant payout, 8% co-op fee)",
-    "👵 Senior citizen booked 'Elder Tech Handyman' via Twilio IVR voice call in Kannada",
-    "🛡️ Palm Meadows RWA unlocked 25% Group Discount on Solar Deep Cleaning",
-    "🗳️ 18 Co-op members voted YES on Proposal #08 (EV Battery Subsidies)",
-    "👩 Women-Safety Filter: Lakshmi Devi assigned for Deep Home Sanitation in Koramangala"
-];
-let tickerIndex = 0;
-setInterval(() => {
-    const ticker = document.getElementById('live-feed-ticker');
-    if (ticker) {
-        ticker.style.opacity = 0;
-        setTimeout(() => {
-            tickerIndex = (tickerIndex + 1) % LIVE_TICKERS.length;
-            ticker.textContent = LIVE_TICKERS[tickerIndex];
-            ticker.style.opacity = 1;
-        }, 300);
-    }
-}, 5000);
+// Fair Calculator Controller (8% Co-op fee vs 28% Corporate cut)
+function updateFairCalculator(val) {
+    const amount = parseFloat(val);
+    const label = document.getElementById('calc-amount-label');
+    if (label) label.textContent = `₹${amount.toLocaleString('en-IN')}`;
+
+    const corpMiddleman = Math.round(amount * 0.28);
+    const corpWorker = amount - corpMiddleman;
+
+    const coopReserve = Math.round(amount * 0.08);
+    const coopWorker = amount - coopReserve;
+    const extraInPocket = coopWorker - corpWorker;
+    const percentGain = Math.round((extraInPocket / corpWorker) * 100);
+
+    const elCorpWorker = document.getElementById('calc-corp-worker');
+    const elCorpCut = document.getElementById('calc-corp-cut');
+    const elCoopWorker = document.getElementById('calc-coop-worker');
+    const elCoopReserve = document.getElementById('calc-coop-reserve');
+    const elExtra = document.getElementById('calc-extra-gain');
+    const elGainPct = document.getElementById('calc-gain-pct');
+
+    if (elCorpWorker) elCorpWorker.textContent = `₹${corpWorker.toLocaleString('en-IN')}`;
+    if (elCorpCut) elCorpCut.textContent = `₹${corpMiddleman.toLocaleString('en-IN')} (28% Middleman Cut)`;
+    if (elCoopWorker) elCoopWorker.textContent = `₹${coopWorker.toLocaleString('en-IN')}`;
+    if (elCoopReserve) elCoopReserve.textContent = `₹${coopReserve.toLocaleString('en-IN')} (8% Co-op Reserve & Dividend)`;
+    if (elExtra) elExtra.textContent = `+₹${extraInPocket.toLocaleString('en-IN')}`;
+    if (elGainPct) elGainPct.textContent = `(+${percentGain}% higher take-home)`;
+}
 
 // Initialize on DOM Ready
 document.addEventListener('DOMContentLoaded', () => {

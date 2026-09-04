@@ -15,6 +15,7 @@ def compile_pages():
             # Adjust static and route links so pages can load seamlessly directly or via static web server
             html = content
             html = html.replace('/static/css/style.css', 'static/css/style.css')
+            html = html.replace('/static/js/coop-live-sync.js', 'static/js/coop-live-sync.js')
             html = html.replace('/static/js/main.js', 'static/js/main.js')
             html = html.replace('/static/js/booking.js', 'static/js/booking.js')
             html = html.replace('/static/js/worker.js', 'static/js/worker.js')
