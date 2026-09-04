@@ -46,6 +46,14 @@ const SoundFX = {
         this.playTone(660, 'sawtooth', 0.2, 220);
         this.playTone(880, 'sawtooth', 0.3, 440);
     },
+    alarm() {
+        // Loud alternating multi-pulse alarm for incoming gig on active worker tab
+        this.playTone(1046.50, 'sawtooth', 0.18, 0);   // C6
+        this.playTone(880.00, 'sawtooth', 0.18, 180);  // A5
+        this.playTone(1046.50, 'sawtooth', 0.18, 360); // C6
+        this.playTone(880.00, 'sawtooth', 0.18, 540);  // A5
+        this.playTone(1174.66, 'sawtooth', 0.30, 720); // D6
+    },
     cash() {
         this.playTone(987.77, 'sine', 0.1, 0);
         this.playTone(1318.51, 'sine', 0.25, 80);
@@ -115,13 +123,51 @@ const Toast = {
     }
 };
 
-// Role Gateway & Profile Manager
+// Dynamic Navigation Active Highlight Engine
+function highlightActiveNav() {
+    const currentPath = window.location.pathname.toLowerCase();
+    const currentHref = window.location.href.toLowerCase();
+
+    // Map keywords to nav element IDs
+    const navItems = [
+        { id: 'nav-link-index', mobileId: 'mobile-nav-index', match: () => currentPath === '/' || currentPath.endsWith('index.html') || (!currentHref.includes('worker') && !currentHref.includes('governance') && !currentHref.includes('community') && !currentHref.includes('about')) },
+        { id: 'nav-link-worker', mobileId: 'mobile-nav-worker', match: () => currentHref.includes('worker') },
+        { id: 'nav-link-governance', mobileId: 'mobile-nav-governance', match: () => currentHref.includes('governance') },
+        { id: 'nav-link-community', mobileId: 'mobile-nav-community', match: () => currentHref.includes('community') },
+        { id: 'nav-link-about', mobileId: 'mobile-nav-about', match: () => currentHref.includes('about') }
+    ];
+
+    navItems.forEach(item => {
+        const el = document.getElementById(item.id);
+        const mobileEl = document.getElementById(item.mobileId);
+        const isActive = item.match();
+
+        if (el) {
+            if (isActive) {
+                el.className = 'px-3.5 py-2 rounded-xl text-xs font-bold transition-all bg-emerald-500 text-white shadow-lg shadow-emerald-500/30 scale-[1.02]';
+            } else {
+                el.className = 'px-3.5 py-2 rounded-xl text-xs font-semibold transition-all text-slate-300 hover:text-white hover:bg-white/5';
+            }
+        }
+
+        if (mobileEl) {
+            if (isActive) {
+                mobileEl.className = 'block px-4 py-2.5 rounded-xl text-sm font-bold bg-emerald-500 text-white shadow-md';
+            } else {
+                mobileEl.className = 'block px-4 py-2.5 rounded-xl text-sm font-medium text-slate-200 hover:bg-slate-800';
+            }
+        }
+    });
+}
+
+// Role Gateway & Profile Manager (Enforces Single Active Session)
 const RoleGateway = {
     currentRole: localStorage.getItem('sahideal_active_role') || (window.location.href.includes('worker') ? 'worker' : 'customer'),
     
     init() {
         this.syncWithState();
         this.updateNavUI();
+        highlightActiveNav();
     },
 
     syncWithState() {
@@ -133,10 +179,10 @@ const RoleGateway = {
             const custPhoneInput = document.getElementById('cust-reg-phone');
             const custAddrInput = document.getElementById('cust-reg-address');
 
-            if (customer && custNameInput) {
-                custNameInput.value = customer.name || "";
-                custPhoneInput.value = customer.phone || "";
-                custAddrInput.value = customer.address || "";
+            if (customer) {
+                if (custNameInput) custNameInput.value = customer.name || "";
+                if (custPhoneInput) custPhoneInput.value = customer.phone || "";
+                if (custAddrInput) custAddrInput.value = customer.address || "";
             }
 
             const workNameInput = document.getElementById('worker-reg-name');
@@ -144,11 +190,11 @@ const RoleGateway = {
             const workTradeInput = document.getElementById('worker-reg-trade');
             const workLocInput = document.getElementById('worker-reg-loc');
 
-            if (worker && workNameInput) {
-                workNameInput.value = worker.name || "";
-                workPhoneInput.value = worker.phone || "";
-                if (workTradeInput) workTradeInput.value = worker.trade || "Master Electrician";
-                if (workLocInput) workLocInput.value = worker.location || "Indiranagar (1.2 km radius)";
+            if (worker) {
+                if (workNameInput) workNameInput.value = worker.name || "";
+                if (workPhoneInput) workPhoneInput.value = worker.phone || "";
+                if (workTradeInput && worker.trade) workTradeInput.value = worker.trade;
+                if (workLocInput && worker.location) workLocInput.value = worker.location;
             }
         }
     },
@@ -192,7 +238,7 @@ const RoleGateway = {
     },
 
     saveCustomCustomer() {
-        const name = document.getElementById('cust-reg-name').value.trim() || "Customer";
+        const name = document.getElementById('cust-reg-name').value.trim() || "Customer Member";
         const phone = document.getElementById('cust-reg-phone').value.trim() || "+91 98765 43210";
         const address = document.getElementById('cust-reg-address').value.trim() || "Indiranagar, Bangalore";
 
@@ -213,16 +259,17 @@ const RoleGateway = {
             if (!window.location.href.includes('index') && window.location.pathname !== '/' && !window.location.href.endsWith('/')) {
                 window.location.href = 'index.html';
             }
-        }, 600);
+        }, 500);
     },
 
     saveCustomWorker() {
         const name = document.getElementById('worker-reg-name').value.trim() || "Worker-Owner";
         const phone = document.getElementById('worker-reg-phone').value.trim() || "+91 98860 54321";
         const trade = document.getElementById('worker-reg-trade').value;
-        const exp = document.getElementById('worker-reg-exp') ? document.getElementById('worker-reg-exp').value : "8 Years";
-        const location = document.getElementById('worker-reg-loc') ? document.getElementById('worker-reg-loc').value : "Indiranagar";
+        const exp = document.getElementById('worker-reg-exp') ? document.getElementById('worker-reg-exp').value.trim() : "8 Years";
+        const location = document.getElementById('worker-reg-loc') ? document.getElementById('worker-reg-loc').value.trim() : "Indiranagar";
 
+        const existingWorker = (typeof CoopSync !== 'undefined') ? CoopSync.getWorker() : null;
         const user = {
             role: 'worker',
             name,
@@ -230,7 +277,7 @@ const RoleGateway = {
             trade,
             experience: exp,
             location,
-            avatar: "https://images.unsplash.com/photo-1540569014015-19a7be504e3a?w=150&auto=format&fit=crop&q=80"
+            avatar: (existingWorker && existingWorker.avatar) ? existingWorker.avatar : (typeof CoopSync !== 'undefined' ? CoopSync.DEFAULT_AVATAR : "")
         };
 
         if (typeof CoopSync !== 'undefined') {
@@ -249,7 +296,38 @@ const RoleGateway = {
             if (!window.location.href.includes('worker')) {
                 window.location.href = 'worker.html';
             }
+        }, 500);
+    },
+
+    logout() {
+        if (typeof CoopSync !== 'undefined') {
+            CoopSync.logout();
+        }
+        this.currentRole = null;
+        localStorage.removeItem('sahideal_active_role');
+        this.updateNavUI();
+        this.closeRoleMenu();
+        Toast.show("🔒 Logged out successfully. You are now in guest mode.", "info");
+        SoundFX.pop();
+        setTimeout(() => {
+            if (window.location.href.includes('worker')) {
+                window.location.href = 'index.html';
+            }
         }, 600);
+    },
+
+    toggleRoleMenu() {
+        const menu = document.getElementById('role-dropdown-menu');
+        if (menu) {
+            menu.classList.toggle('hidden');
+        }
+    },
+
+    closeRoleMenu() {
+        const menu = document.getElementById('role-dropdown-menu');
+        if (menu) {
+            menu.classList.add('hidden');
+        }
     },
 
     updateNavUI() {
@@ -258,15 +336,19 @@ const RoleGateway = {
         
         let customer = (typeof CoopSync !== 'undefined') ? CoopSync.getCustomer() : null;
         let worker = (typeof CoopSync !== 'undefined') ? CoopSync.getWorker() : null;
+        const activeRole = localStorage.getItem('sahideal_active_role');
 
         const isWorkerPage = window.location.href.includes('worker');
 
-        if (isWorkerPage) {
-            if (badge) badge.innerHTML = '<i class="fa-solid fa-screwdriver-wrench text-amber-400 mr-1.5"></i> Worker Radar';
-            if (roleName) roleName.textContent = worker ? worker.name : "Ramesh Kumar";
+        if (activeRole === 'worker' || (isWorkerPage && activeRole !== 'customer')) {
+            if (badge) badge.innerHTML = '<i class="fa-solid fa-screwdriver-wrench text-amber-400 mr-1.5"></i> Worker Mode';
+            if (roleName) roleName.textContent = worker ? worker.name : "Worker-Owner";
+        } else if (activeRole === 'customer' || (!isWorkerPage && customer)) {
+            if (badge) badge.innerHTML = '<i class="fa-solid fa-user-check text-emerald-400 mr-1.5"></i> Customer Mode';
+            if (roleName) roleName.textContent = customer ? customer.name : "Customer";
         } else {
-            if (badge) badge.innerHTML = '<i class="fa-solid fa-user-check text-emerald-400 mr-1.5"></i> Customer';
-            if (roleName) roleName.textContent = customer ? customer.name : "Srivatsa Soham";
+            if (badge) badge.innerHTML = '<i class="fa-solid fa-arrow-right-to-bracket text-emerald-400 mr-1.5"></i> Login / Role';
+            if (roleName) roleName.textContent = "Guest";
         }
     }
 };
@@ -348,34 +430,66 @@ function closeSosModal() {
     }
 }
 
+let sosTimerInterval = null;
+
 function triggerEmergencySos() {
     const btn = document.getElementById('btn-sos-dispatch');
     const statusBox = document.getElementById('sos-status-box');
     const type = document.getElementById('sos-type') ? document.getElementById('sos-type').value : "Emergency Pipe Burst";
+    const loc = document.getElementById('sos-location') ? document.getElementById('sos-location').value.trim() : "Indiranagar 100ft Road";
 
     if (btn) {
         btn.disabled = true;
         btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Dispatched Pro via Rapid GIS Radar...';
     }
 
+    let customer = (typeof CoopSync !== 'undefined') ? CoopSync.getCustomer() : null;
+    if (!customer) {
+        customer = { name: "Citizen Member", phone: "+91 98450 12345", address: loc || "Indiranagar" };
+    }
+
     if (typeof CoopSync !== 'undefined') {
-        const customer = CoopSync.getCustomer() || { name: "Valued Customer", phone: "+91 98450 12345", address: "Indiranagar" };
         CoopSync.postCustomerJob({
             title: `🚨 EMERGENCY: ${type}`,
             category: "emergency",
-            description: `Urgent emergency response requested at ${customer.address}. Immediate <15 min dispatch needed.`,
+            description: `Critical emergency response at ${loc || customer.address}. Immediate <15 min dispatch needed.`,
             price: 399,
             customerName: customer.name,
             customerPhone: customer.phone,
-            customerAddress: customer.address,
+            customerAddress: loc || customer.address,
             urgency: "⚡ Critical Emergency (<15 mins)"
         });
     }
 
     setTimeout(() => {
         if (statusBox) statusBox.classList.remove('hidden');
-        if (btn) btn.innerHTML = '<i class="fa-solid fa-circle-check"></i> Nearest Handyman Dispatched (ETA: 12 Mins)';
-        Toast.show("🚨 Emergency SOS Handyman dispatched! Broadcast sent to all nearby workers.", "sos", 6000);
+        if (btn) {
+            btn.innerHTML = '<i class="fa-solid fa-phone-volume mr-1"></i> Call Dispatched Specialist (+91 98860 54321)';
+            btn.className = 'w-full py-4 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold tracking-wide shadow-lg shadow-emerald-600/40 hover:scale-[1.01] transition-all flex items-center justify-center gap-2';
+            btn.disabled = false;
+            btn.onclick = () => {
+                Toast.show("📞 Connecting emergency phone bridge to Ramesh Kumar...", "info");
+                window.open('tel:+919886054321');
+            };
+        }
+
+        // Start live 15-min countdown
+        let totalSeconds = 15 * 60;
+        const etaEl = document.getElementById('sos-pro-eta');
+        if (sosTimerInterval) clearInterval(sosTimerInterval);
+        sosTimerInterval = setInterval(() => {
+            totalSeconds--;
+            if (totalSeconds <= 0) {
+                clearInterval(sosTimerInterval);
+                if (etaEl) etaEl.textContent = "Arrived at Doorstep!";
+                return;
+            }
+            const mins = Math.floor(totalSeconds / 60);
+            const secs = totalSeconds % 60;
+            if (etaEl) etaEl.textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')} mins away`;
+        }, 1000);
+
+        Toast.show("🚨 Emergency SOS Handyman dispatched! Nearest cooperative responder notified.", "sos", 7000);
         SoundFX.sos();
     }, 600);
 }

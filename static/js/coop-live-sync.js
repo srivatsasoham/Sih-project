@@ -4,13 +4,25 @@
  * Uses BroadcastChannel + LocalStorage Events + REST API fallback
  */
 
+const DEFAULT_SHADOW_AVATAR = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='%2364748b'%3E%3Crect width='100' height='100' fill='%230f172a'/%3E%3Cpath d='M50 48a18 18 0 1 0 0-36 18 18 0 0 0 0 36zm0 10c-20 0-36 12-36 28v6h72v-6c0-16-16-28-36-28z' fill='%23475569'/%3E%3C/svg%3E";
+
 const CoopSync = {
     channel: null,
+    DEFAULT_AVATAR: DEFAULT_SHADOW_AVATAR,
     
     // Default initial seed state if empty
     state: {
+        activeRole: localStorage.getItem('sahideal_active_role') || null,
+        isWorkerOnline: localStorage.getItem('sahideal_worker_online') !== 'false',
         customerUser: null,
-        workerUser: null,
+        workerUser: {
+            name: "Ramesh Kumar",
+            phone: "+91 98860 54321",
+            trade: "Master Electrician & Plumber",
+            experience: "8 Years",
+            location: "Indiranagar (1.2 km radius)",
+            avatar: DEFAULT_SHADOW_AVATAR
+        },
         activeJobs: [],
         completedJobs: [],
         workerWallet: {
@@ -87,14 +99,18 @@ const CoopSync = {
         this.loadState();
 
         if (type === 'JOB_POSTED') {
-            // If on Worker page, play incoming job alert sound and update radar
-            if (typeof onWorkerJobReceived === 'function') {
-                onWorkerJobReceived(payload);
+            // If on Worker page and worker is ONLINE, sound alarm and update radar
+            if (this.state.isWorkerOnline) {
+                if (typeof onWorkerJobReceived === 'function') {
+                    onWorkerJobReceived(payload);
+                }
+                if (typeof SoundFX !== 'undefined') {
+                    SoundFX.alarm(); // Loud audio alert for active worker
+                }
+                if (typeof Toast !== 'undefined') {
+                    Toast.show(`🚨 INCOMING GIG ALARM: ${payload.serviceTitle} (₹${payload.workerPayout}) from ${payload.customerName}`, 'sos', 8000);
+                }
             }
-            if (typeof Toast !== 'undefined') {
-                Toast.show(`🔔 New Gig Alert: ${payload.serviceTitle} from ${payload.customerName} (₹${payload.workerPayout})`, 'info', 6000);
-            }
-            if (typeof SoundFX !== 'undefined') SoundFX.pop();
         } 
         else if (type === 'JOB_ACCEPTED') {
             // If on Customer page, transition immediately to Live GPS Tracking
@@ -123,6 +139,11 @@ const CoopSync = {
             }
             if (typeof SoundFX !== 'undefined') SoundFX.cash();
         }
+        else if (type === 'JOB_TIMEOUT') {
+            if (typeof onCustomerJobTimeout === 'function') {
+                onCustomerJobTimeout(payload);
+            }
+        }
         else if (type === 'JOB_RATED') {
             if (typeof onWorkerJobRated === 'function') {
                 onWorkerJobRated(payload);
@@ -131,21 +152,54 @@ const CoopSync = {
                 Toast.show(`⭐ Customer rated you ${payload.rating} Stars! Trust Score updated.`, 'success');
             }
         }
+        else if (type === 'WORKER_STATUS_CHANGED') {
+            if (typeof onWorkerStatusChanged === 'function') {
+                onWorkerStatusChanged(payload);
+            }
+        }
 
         if (window.onCoopStateUpdated) {
             window.onCoopStateUpdated(this.state);
         }
     },
 
-    // Session Management
+    // Online / Offline & Role Session Management
+    setWorkerOnline(isOnline) {
+        this.state.isWorkerOnline = isOnline;
+        localStorage.setItem('sahideal_worker_online', isOnline ? 'true' : 'false');
+        this.saveState();
+        this.broadcast('WORKER_STATUS_CHANGED', { isOnline });
+        return isOnline;
+    },
+
     setCustomer(user) {
         this.state.customerUser = user;
+        this.state.activeRole = 'customer';
+        localStorage.setItem('sahideal_active_role', 'customer');
         this.saveState();
     },
 
     setWorker(user) {
         this.state.workerUser = user;
+        this.state.activeRole = 'worker';
+        localStorage.setItem('sahideal_active_role', 'worker');
         this.saveState();
+    },
+
+    logout() {
+        this.state.activeRole = null;
+        localStorage.removeItem('sahideal_active_role');
+        this.saveState();
+        this.broadcast('USER_LOGGED_OUT', {});
+    },
+
+    updateWorkerAvatar(avatarDataUrl) {
+        if (!this.state.workerUser) {
+            this.state.workerUser = { name: "Ramesh Kumar", role: "worker", avatar: DEFAULT_SHADOW_AVATAR };
+        }
+        this.state.workerUser.avatar = avatarDataUrl;
+        this.saveState();
+        this.broadcast('WORKER_AVATAR_UPDATED', { avatar: avatarDataUrl });
     },
 
     getCustomer() {
@@ -179,8 +233,9 @@ const CoopSync = {
             coopFee: coopFee,
             startOtp: startOtp,
             completeOtp: completeOtp,
-            status: "OPEN", // OPEN -> ACCEPTED -> IN_PROGRESS -> COMPLETED -> RATED
+            status: "OPEN", // OPEN -> ACCEPTED -> IN_PROGRESS -> COMPLETED -> TIMEOUT
             createdAt: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+            createdAtTimestamp: Date.now(),
             workerName: null,
             workerPhone: null,
             workerAvatar: null,
@@ -201,14 +256,20 @@ const CoopSync = {
 
     acceptJobByWorker(jobId, worker) {
         const jobIndex = this.state.activeJobs.findIndex(j => j.id === jobId);
-        if (jobIndex === -1) return null;
+        if (jobIndex === -1) return { success: false, message: "Job not found" };
 
         const job = this.state.activeJobs[jobIndex];
+        
+        // Strictly only ONE active worker can accept
+        if (job.status !== 'OPEN') {
+            return { success: false, message: "This task was already accepted by another specialist!" };
+        }
+
         job.status = "ACCEPTED";
-        job.workerName = worker.name || "Co-op Verified Specialist";
+        job.workerName = worker.name || "Co-op Specialist";
         job.workerPhone = worker.phone || "+91 98860 54321";
-        job.workerTrade = worker.trade || "Master Technician";
-        job.workerAvatar = worker.avatar || "https://images.unsplash.com/photo-1540569014015-19a7be504e3a?w=150&auto=format&fit=crop&q=80";
+        job.workerTrade = worker.trade || "Master Specialist";
+        job.workerAvatar = worker.avatar || DEFAULT_SHADOW_AVATAR;
         job.acceptedAt = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
         job.etaMinutes = 12;
 
@@ -216,6 +277,33 @@ const CoopSync = {
         this.saveState();
 
         this.broadcast('JOB_ACCEPTED', job);
+        return { success: true, job };
+    },
+
+    timeoutCustomerJob(jobId) {
+        const jobIndex = this.state.activeJobs.findIndex(j => j.id === jobId);
+        if (jobIndex === -1) return null;
+
+        const job = this.state.activeJobs[jobIndex];
+        if (job.status === 'OPEN') {
+            job.status = 'TIMEOUT';
+            this.state.activeJobs[jobIndex] = job;
+            this.saveState();
+            this.broadcast('JOB_TIMEOUT', job);
+        }
+        return job;
+    },
+
+    retryBroadcastJob(jobId) {
+        const jobIndex = this.state.activeJobs.findIndex(j => j.id === jobId);
+        if (jobIndex === -1) return null;
+
+        const job = this.state.activeJobs[jobIndex];
+        job.status = 'OPEN';
+        job.createdAtTimestamp = Date.now();
+        this.state.activeJobs[jobIndex] = job;
+        this.saveState();
+        this.broadcast('JOB_POSTED', job);
         return job;
     },
 

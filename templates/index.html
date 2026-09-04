@@ -100,7 +100,7 @@
                     
                     <div>
                         <label class="block font-semibold text-slate-300 mb-1">What is the issue / service needed? *</label>
-                        <input type="text" id="post-job-title" required placeholder="e.g. Bathroom washbasin pipe leaking water & flooding floor" value="Bathroom washbasin pipe leaking water & flooding floor" class="w-full px-4 py-3 rounded-xl glass-input text-xs sm:text-sm">
+                        <input type="text" id="post-job-title" required placeholder="e.g. Bathroom washbasin pipe leaking water & flooding floor" class="w-full px-4 py-3 rounded-xl glass-input text-xs sm:text-sm">
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -127,17 +127,17 @@
 
                     <div>
                         <label class="block font-semibold text-slate-300 mb-1">Detailed Description of the Problem</label>
-                        <textarea id="post-job-desc" rows="2" placeholder="Provide extra details like floor number, brand of appliance, or specific tools needed..." class="w-full px-4 py-2.5 rounded-xl glass-input text-xs">Water is dripping heavily from the cold water connection under the sink. Need immediate leak arrest and washer replacement.</textarea>
+                        <textarea id="post-job-desc" rows="2" placeholder="Provide extra details like floor number, brand of appliance, or specific tools needed..." class="w-full px-4 py-2.5 rounded-xl glass-input text-xs"></textarea>
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <label class="block font-semibold text-slate-300 mb-1">Service Address / Location *</label>
-                            <input type="text" id="post-job-address" required placeholder="Flat 402, Palm Heights, Indiranagar" value="Flat 402, Palm Heights, Indiranagar, Bangalore" class="w-full px-4 py-2.5 rounded-xl glass-input text-xs">
+                            <input type="text" id="post-job-address" required placeholder="e.g. Flat 402, Palm Heights, Indiranagar, Bangalore" class="w-full px-4 py-2.5 rounded-xl glass-input text-xs">
                         </div>
                         <div>
                             <label class="block font-semibold text-slate-300 mb-1">Your Name & Mobile Number *</label>
-                            <input type="text" id="post-job-customer-info" required placeholder="Srivatsa Soham (+91 98765 43210)" value="Srivatsa Soham (+91 98765 43210)" class="w-full px-4 py-2.5 rounded-xl glass-input text-xs">
+                            <input type="text" id="post-job-customer-info" required placeholder="e.g. Srivatsa Soham (+91 98765 43210)" class="w-full px-4 py-2.5 rounded-xl glass-input text-xs">
                         </div>
                     </div>
 
@@ -190,7 +190,7 @@
                         </p>
                     </div>
 
-                    <!-- State 1: Broadcasting / Searching Pros -->
+                    <!-- State 1: Broadcasting / Searching Pros with 5-min Countdown -->
                     <div id="track-state-searching" class="hidden text-center py-8 space-y-4">
                         <div class="relative w-20 h-20 mx-auto">
                             <div class="radar-sweep"></div>
@@ -199,10 +199,16 @@
                         </div>
                         <div>
                             <h4 class="text-sm font-bold text-white">Broadcasting Request on Co-op Radar...</h4>
-                            <p class="text-xs text-slate-400 mt-1">Alert sent to nearby trade specialists (&lt;3km). Open the <b>Worker Portal</b> in another tab to accept!</p>
+                            <p class="text-xs text-slate-400 mt-1">Alert sent to nearby online specialists (&lt;3km). Waiting for single pro acceptance.</p>
                         </div>
-                        <div class="p-3 rounded-xl bg-emerald-950/50 border border-emerald-500/30 text-xs text-emerald-300 font-mono">
-                            Status: WAITING_WORKER_ACCEPTANCE
+                        <div class="p-3 rounded-xl bg-emerald-950/50 border border-emerald-500/30 text-xs text-emerald-300 font-mono space-y-1">
+                            <div>Searching nearby active pros: <b id="broadcast-timer-display" class="text-white text-sm font-bold">05:00</b></div>
+                            <div class="text-[10px] text-slate-400">Open <b>Worker Portal (worker.html)</b> in another tab to accept!</div>
+                        </div>
+                        <div>
+                            <button type="button" onclick="testSimulateTimeout()" class="text-[10px] text-amber-400/80 hover:text-amber-300 underline cursor-pointer">
+                                ⚡ Test SIH Timeout Flow (Simulate 10s timer)
+                            </button>
                         </div>
                     </div>
 
@@ -216,7 +222,7 @@
                             </div>
 
                             <div class="flex items-center gap-3 pt-1">
-                                <img id="assigned-pro-avatar" src="https://images.unsplash.com/photo-1540569014015-19a7be504e3a?w=150&auto=format&fit=crop&q=80" alt="Worker" class="w-12 h-12 rounded-2xl object-cover border-2 border-emerald-400">
+                                <img id="assigned-pro-avatar" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='%2364748b'%3E%3Crect width='100' height='100' fill='%230f172a'/%3E%3Cpath d='M50 48a18 18 0 1 0 0-36 18 18 0 0 0 0 36zm0 10c-20 0-36 12-36 28v6h72v-6c0-16-16-28-36-28z' fill='%23475569'/%3E%3C/svg%3E" alt="Worker" class="w-12 h-12 rounded-2xl object-cover border-2 border-emerald-400 bg-slate-900">
                                 <div class="space-y-0.5 text-xs">
                                     <div class="font-bold text-white text-sm" id="assigned-pro-name">Ramesh Kumar</div>
                                     <div class="text-slate-300" id="assigned-pro-trade">Master Electrician & Plumber</div>
@@ -279,6 +285,27 @@
                         <button onclick="openRatingModal()" class="w-full py-3 rounded-xl bg-yellow-500 hover:bg-yellow-600 text-slate-950 font-bold text-xs shadow-lg transition">
                             <i class="fa-solid fa-star mr-1"></i> Rate Worker & Submit Review
                         </button>
+                    </div>
+
+                    <!-- State 5: Timeout / No Workers Found within 5 Minutes -->
+                    <div id="track-state-timeout" class="hidden p-6 rounded-2xl bg-amber-950/70 border border-amber-500/50 text-center space-y-3">
+                        <div class="w-12 h-12 mx-auto rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center text-xl">
+                            <i class="fa-solid fa-clock-rotate-left"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-bold text-white font-heading">No Active Workers Found in 5 Mins</h4>
+                            <p class="text-xs text-slate-300 mt-1 leading-relaxed">
+                                All verified specialists within 3km are currently busy or offline. Please retry in a few moments or dispatch Emergency SOS.
+                            </p>
+                        </div>
+                        <div class="flex flex-col sm:flex-row gap-2 pt-2">
+                            <button onclick="retryActiveBroadcast()" class="flex-1 py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-slate-950 font-bold text-xs shadow-lg transition flex items-center justify-center gap-1.5">
+                                <i class="fa-solid fa-rotate-right"></i> Retry Broadcast Now
+                            </button>
+                            <button onclick="openSosModal()" class="py-3 px-4 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs shadow-lg transition flex items-center justify-center gap-1.5">
+                                <i class="fa-solid fa-bolt"></i> Emergency SOS
+                            </button>
+                        </div>
                     </div>
 
                 </div>
@@ -392,6 +419,8 @@
 <script>
 let currentActiveJob = null;
 let selectedRating = 5;
+let searchTimerInterval = null;
+let searchSecondsRemaining = 300; // 5 minutes
 
 function postCustomerProblem() {
     const title = document.getElementById('post-job-title').value.trim();
@@ -410,17 +439,63 @@ function postCustomerProblem() {
         title: title,
         category: category,
         description: desc,
-        customerAddress: address,
-        customerName: customerInfo.split('(')[0].trim(),
-        customerPhone: customerInfo.includes('(') ? customerInfo.split('(')[1].replace(')', '').trim() : "+91 98765 43210",
+        customerAddress: address || (CoopSync.getCustomer() ? CoopSync.getCustomer().address : "Indiranagar, Bangalore"),
+        customerName: customerInfo.split('(')[0].trim() || (CoopSync.getCustomer() ? CoopSync.getCustomer().name : "Customer Member"),
+        customerPhone: customerInfo.includes('(') ? customerInfo.split('(')[1].replace(')', '').trim() : (CoopSync.getCustomer() ? CoopSync.getCustomer().phone : "+91 98765 43210"),
         urgency: urgency,
         price: 499
     });
 
     currentActiveJob = job;
+    start5MinSearchTimer();
     updateCustomerTrackerUI('SEARCHING', job);
     Toast.show("🚀 Request broadcasted to all online Co-op Workers! Open Worker Portal in another tab to accept.", "success", 7000);
     SoundFX.pop();
+}
+
+function start5MinSearchTimer(initialSeconds = 300) {
+    if (searchTimerInterval) clearInterval(searchTimerInterval);
+    searchSecondsRemaining = initialSeconds;
+    updateTimerDisplay();
+
+    searchTimerInterval = setInterval(() => {
+        searchSecondsRemaining--;
+        updateTimerDisplay();
+
+        if (searchSecondsRemaining <= 0) {
+            clearInterval(searchTimerInterval);
+            if (currentActiveJob && currentActiveJob.status === 'OPEN') {
+                CoopSync.timeoutCustomerJob(currentActiveJob.id);
+                updateCustomerTrackerUI('TIMEOUT', currentActiveJob);
+                Toast.show("⚠️ No active workers were found within 5 minutes. Please retry or dispatch Emergency SOS.", "error", 7000);
+                SoundFX.sos();
+            }
+        }
+    }, 1000);
+}
+
+function updateTimerDisplay() {
+    const timerEl = document.getElementById('broadcast-timer-display');
+    if (timerEl) {
+        const mins = Math.floor(searchSecondsRemaining / 60);
+        const secs = searchSecondsRemaining % 60;
+        timerEl.textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    }
+}
+
+function testSimulateTimeout() {
+    Toast.show("⚡ Fast-forwarding search timer to 10 seconds for testing...", "info");
+    start5MinSearchTimer(10);
+}
+
+function retryActiveBroadcast() {
+    if (currentActiveJob) {
+        CoopSync.retryBroadcastJob(currentActiveJob.id);
+        start5MinSearchTimer(300);
+        updateCustomerTrackerUI('SEARCHING', currentActiveJob);
+        Toast.show("🔄 Re-broadcasting request to all online cooperative specialists...", "info");
+        SoundFX.pop();
+    }
 }
 
 function updateCustomerTrackerUI(state, job) {
@@ -430,6 +505,7 @@ function updateCustomerTrackerUI(state, job) {
     const stateAccepted = document.getElementById('track-state-accepted');
     const stateInProgress = document.getElementById('track-state-inprogress');
     const stateCompleted = document.getElementById('track-state-completed');
+    const stateTimeout = document.getElementById('track-state-timeout');
 
     // Hide all
     if (stateIdle) stateIdle.classList.add('hidden');
@@ -437,29 +513,44 @@ function updateCustomerTrackerUI(state, job) {
     if (stateAccepted) stateAccepted.classList.add('hidden');
     if (stateInProgress) stateInProgress.classList.add('hidden');
     if (stateCompleted) stateCompleted.classList.add('hidden');
+    if (stateTimeout) stateTimeout.classList.add('hidden');
 
     if (state === 'SEARCHING') {
         if (pill) { pill.className = 'px-2.5 py-1 rounded-full text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30 animate-pulse'; pill.textContent = 'Searching Pro...'; }
         if (stateSearching) stateSearching.classList.remove('hidden');
     } else if (state === 'ACCEPTED') {
+        if (searchTimerInterval) clearInterval(searchTimerInterval);
         if (pill) { pill.className = 'px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'; pill.textContent = 'Pro En Route'; }
         if (stateAccepted) {
             stateAccepted.classList.remove('hidden');
             document.getElementById('assigned-pro-name').textContent = job.workerName || "Ramesh Kumar";
             document.getElementById('assigned-pro-trade').textContent = job.workerTrade || "Master Specialist";
             document.getElementById('assigned-pro-phone').textContent = job.workerPhone || "+91 98860 54321";
+            if (job.workerAvatar) {
+                document.getElementById('assigned-pro-avatar').src = job.workerAvatar;
+            }
             document.getElementById('live-start-otp').textContent = job.startOtp;
             document.getElementById('live-complete-otp').textContent = job.completeOtp;
         }
     } else if (state === 'IN_PROGRESS') {
+        if (searchTimerInterval) clearInterval(searchTimerInterval);
         if (pill) { pill.className = 'px-2.5 py-1 rounded-full text-[10px] font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30'; pill.textContent = 'Work In Progress'; }
         if (stateInProgress) {
             stateInProgress.classList.remove('hidden');
             document.getElementById('inprogress-complete-otp').textContent = job.completeOtp;
         }
     } else if (state === 'COMPLETED') {
+        if (searchTimerInterval) clearInterval(searchTimerInterval);
         if (pill) { pill.className = 'px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'; pill.textContent = 'Completed'; }
         if (stateCompleted) stateCompleted.classList.remove('hidden');
+    } else if (state === 'TIMEOUT') {
+        if (searchTimerInterval) clearInterval(searchTimerInterval);
+        if (pill) { pill.className = 'px-2.5 py-1 rounded-full text-[10px] font-bold bg-rose-500/20 text-rose-300 border border-rose-500/30'; pill.textContent = 'No Workers Found'; }
+        if (stateTimeout) stateTimeout.classList.remove('hidden');
+    } else if (state === 'IDLE') {
+        if (searchTimerInterval) clearInterval(searchTimerInterval);
+        if (pill) { pill.className = 'px-2.5 py-1 rounded-full text-[10px] font-bold bg-slate-800 text-slate-400 border border-slate-700'; pill.textContent = 'No Active Request'; }
+        if (stateIdle) stateIdle.classList.remove('hidden');
     }
 }
 
@@ -477,6 +568,11 @@ function onCustomerJobStarted(job) {
 function onCustomerJobCompleted(job) {
     currentActiveJob = job;
     updateCustomerTrackerUI('COMPLETED', job);
+}
+
+function onCustomerJobTimeout(job) {
+    currentActiveJob = job;
+    updateCustomerTrackerUI('TIMEOUT', job);
 }
 
 function openRatingModal() {
@@ -514,14 +610,26 @@ function submitWorkerRating() {
     updateCustomerTrackerUI('IDLE');
 }
 
-// Sync on startup if there is an active job
+// Sync on startup if there is an active job or saved user details
 document.addEventListener('DOMContentLoaded', () => {
+    const customer = CoopSync.getCustomer();
+    if (customer) {
+        const nameInput = document.getElementById('post-job-customer-info');
+        const addrInput = document.getElementById('post-job-address');
+        if (nameInput && customer.name) nameInput.value = `${customer.name} (${customer.phone || '+91 98765 43210'})`;
+        if (addrInput && customer.address) addrInput.value = customer.address;
+    }
+
     if (CoopSync.state.activeJobs.length > 0) {
         const latestJob = CoopSync.state.activeJobs[0];
         currentActiveJob = latestJob;
-        if (latestJob.status === 'OPEN') updateCustomerTrackerUI('SEARCHING', latestJob);
+        if (latestJob.status === 'OPEN') {
+            start5MinSearchTimer();
+            updateCustomerTrackerUI('SEARCHING', latestJob);
+        }
         else if (latestJob.status === 'ACCEPTED') updateCustomerTrackerUI('ACCEPTED', latestJob);
         else if (latestJob.status === 'IN_PROGRESS') updateCustomerTrackerUI('IN_PROGRESS', latestJob);
+        else if (latestJob.status === 'TIMEOUT') updateCustomerTrackerUI('TIMEOUT', latestJob);
     }
 });
 </script>

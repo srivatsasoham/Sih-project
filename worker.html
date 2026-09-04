@@ -103,36 +103,56 @@
                 </a>
 
                 <!-- Desktop Navigation Links -->
-                <nav class="hidden lg:flex items-center gap-1 bg-slate-900/70 p-1.5 rounded-2xl border border-white/5">
-                    <a href="index.html" class="px-3.5 py-2 rounded-xl text-xs font-semibold transition-all bg-emerald-500 text-white shadow-lg shadow-emerald-500/20">
+                <nav class="hidden lg:flex items-center gap-1 bg-slate-900/70 p-1.5 rounded-2xl border border-white/5" id="main-nav-bar">
+                    <a id="nav-link-index" href="index.html" class="px-3.5 py-2 rounded-xl text-xs font-semibold transition-all bg-emerald-500 text-white shadow-lg shadow-emerald-500/20">
                         <i class="fa-solid fa-house-chimney mr-1.5 text-xs"></i> <span data-i18n="nav_services">Customer Portal</span>
                     </a>
-                    <a href="worker.html" class="px-3.5 py-2 rounded-xl text-xs font-semibold transition-all text-slate-300 hover:text-white hover:bg-white/5">
+                    <a id="nav-link-worker" href="worker.html" class="px-3.5 py-2 rounded-xl text-xs font-semibold transition-all text-slate-300 hover:text-white hover:bg-white/5">
                         <i class="fa-solid fa-screwdriver-wrench mr-1.5 text-xs"></i> <span data-i18n="nav_worker_hub">Worker-Owner Portal</span>
                     </a>
-                    <a href="governance.html" class="px-3.5 py-2 rounded-xl text-xs font-semibold transition-all text-slate-300 hover:text-white hover:bg-white/5">
+                    <a id="nav-link-governance" href="governance.html" class="px-3.5 py-2 rounded-xl text-xs font-semibold transition-all text-slate-300 hover:text-white hover:bg-white/5">
                         <i class="fa-solid fa-check-to-slot mr-1.5 text-xs"></i> <span data-i18n="nav_governance">Co-op Council (Voting)</span>
                     </a>
-                    <a href="community.html" class="px-3.5 py-2 rounded-xl text-xs font-semibold transition-all text-slate-300 hover:text-white hover:bg-white/5">
+                    <a id="nav-link-community" href="community.html" class="px-3.5 py-2 rounded-xl text-xs font-semibold transition-all text-slate-300 hover:text-white hover:bg-white/5">
                         <i class="fa-solid fa-people-roof mr-1.5 text-xs"></i> <span data-i18n="nav_community">RWA Bulk Hub</span>
                     </a>
-                    <a href="about.html" class="px-3.5 py-2 rounded-xl text-xs font-semibold transition-all text-slate-300 hover:text-white hover:bg-white/5">
+                    <a id="nav-link-about" href="about.html" class="px-3.5 py-2 rounded-xl text-xs font-semibold transition-all text-slate-300 hover:text-white hover:bg-white/5">
                         <i class="fa-solid fa-lightbulb mr-1.5 text-xs"></i> SIH Pitch Deck
                     </a>
                 </nav>
 
                 <!-- Action Controls: Role Login Switcher & Emergency SOS -->
-                <div class="flex items-center gap-2.5">
+                <div class="flex items-center gap-2.5 relative">
                     
-                    <!-- Dynamic User / Role Login Button -->
-                    <button onclick="RoleGateway.openModal()" class="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-800/90 border border-slate-700 hover:border-emerald-500/50 text-xs transition-all shadow-sm group">
-                        <span id="current-role-badge" class="font-bold text-emerald-400">
-                            <i class="fa-solid fa-user mr-1"></i> Customer Mode
-                        </span>
-                        <span class="text-slate-500 hidden sm:inline">|</span>
-                        <span id="current-user-name" class="text-slate-200 hidden sm:inline font-bold group-hover:text-white">Profile</span>
-                        <i class="fa-solid fa-gear text-[10px] text-slate-400 group-hover:text-emerald-400 ml-0.5"></i>
-                    </button>
+                    <!-- Dynamic User / Role Login Button with Dropdown -->
+                    <div class="relative">
+                        <button onclick="RoleGateway.toggleRoleMenu()" class="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-800/90 border border-slate-700 hover:border-emerald-500/50 text-xs transition-all shadow-sm group">
+                            <span id="current-role-badge" class="font-bold text-emerald-400">
+                                <i class="fa-solid fa-user mr-1"></i> Customer Mode
+                            </span>
+                            <span class="text-slate-500 hidden sm:inline">|</span>
+                            <span id="current-user-name" class="text-slate-200 hidden sm:inline font-bold group-hover:text-white">Profile</span>
+                            <i class="fa-solid fa-chevron-down text-[10px] text-slate-400 group-hover:text-emerald-400 ml-0.5"></i>
+                        </button>
+
+                        <!-- Role & Profile Dropdown Menu -->
+                        <div id="role-dropdown-menu" class="hidden absolute right-0 mt-2 w-56 glass-panel rounded-2xl border border-white/10 p-2 shadow-2xl z-50 space-y-1">
+                            <button onclick="RoleGateway.openModal(); RoleGateway.closeRoleMenu();" class="w-full text-left px-3 py-2 rounded-xl text-xs font-semibold text-slate-200 hover:bg-emerald-500/20 hover:text-emerald-300 transition flex items-center gap-2">
+                                <i class="fa-solid fa-user-pen text-emerald-400"></i> Edit Profile Details
+                            </button>
+                            <button onclick="RoleGateway.openModal('customer'); RoleGateway.closeRoleMenu();" class="w-full text-left px-3 py-2 rounded-xl text-xs font-semibold text-slate-200 hover:bg-emerald-500/20 hover:text-emerald-300 transition flex items-center gap-2">
+                                <i class="fa-solid fa-house-chimney text-cyan-400"></i> Switch to Customer Mode
+                            </button>
+                            <button onclick="RoleGateway.openModal('worker'); RoleGateway.closeRoleMenu();" class="w-full text-left px-3 py-2 rounded-xl text-xs font-semibold text-slate-200 hover:bg-emerald-500/20 hover:text-emerald-300 transition flex items-center gap-2">
+                                <i class="fa-solid fa-screwdriver-wrench text-amber-400"></i> Switch to Worker Mode
+                            </button>
+                            <div class="border-t border-slate-800 pt-1">
+                                <button onclick="RoleGateway.logout()" class="w-full text-left px-3 py-2 rounded-xl text-xs font-semibold text-rose-400 hover:bg-rose-500/20 transition flex items-center gap-2">
+                                    <i class="fa-solid fa-arrow-right-from-bracket"></i> Log Out & Go Offline
+                                </button>
+                            </div>
+                        </div>
+                    </div>
 
                     <!-- Emergency SOS Button -->
                     <button onclick="openSosModal()" class="relative group px-3.5 py-2 rounded-xl bg-gradient-to-r from-rose-600 to-red-600 text-white text-xs font-bold shadow-lg shadow-rose-600/30 hover:shadow-rose-600/50 hover:scale-[1.02] active:scale-95 transition-all flex items-center gap-1.5">
@@ -156,11 +176,12 @@
             <button onclick="RoleGateway.openModal(); document.getElementById('mobile-menu').classList.add('hidden')" class="w-full text-left px-4 py-2.5 rounded-xl text-xs font-bold bg-emerald-950/60 border border-emerald-500/40 text-emerald-300 mb-2">
                 <i class="fa-solid fa-user-pen mr-2"></i> Register / Change Profile Details
             </button>
-            <a href="index.html" class="block px-4 py-2.5 rounded-xl text-sm font-medium text-slate-200 hover:bg-slate-800"><i class="fa-solid fa-house-chimney mr-2 text-emerald-400"></i> Customer Portal</a>
-            <a href="worker.html" class="block px-4 py-2.5 rounded-xl text-sm font-medium text-slate-200 hover:bg-slate-800"><i class="fa-solid fa-screwdriver-wrench mr-2 text-emerald-400"></i> Worker-Owner Portal</a>
-            <a href="governance.html" class="block px-4 py-2.5 rounded-xl text-sm font-medium text-slate-200 hover:bg-slate-800"><i class="fa-solid fa-check-to-slot mr-2 text-emerald-400"></i> Co-op Council & Voting</a>
-            <a href="community.html" class="block px-4 py-2.5 rounded-xl text-sm font-medium text-slate-200 hover:bg-slate-800"><i class="fa-solid fa-people-roof mr-2 text-emerald-400"></i> RWA Bulk Hub</a>
-            <a href="about.html" class="block px-4 py-2.5 rounded-xl text-sm font-medium text-slate-200 hover:bg-slate-800"><i class="fa-solid fa-lightbulb mr-2 text-emerald-400"></i> SIH Pitch Deck</a>
+            <a id="mobile-nav-index" href="index.html" class="block px-4 py-2.5 rounded-xl text-sm font-medium text-slate-200 hover:bg-slate-800"><i class="fa-solid fa-house-chimney mr-2 text-emerald-400"></i> Customer Portal</a>
+            <a id="mobile-nav-worker" href="worker.html" class="block px-4 py-2.5 rounded-xl text-sm font-medium text-slate-200 hover:bg-slate-800"><i class="fa-solid fa-screwdriver-wrench mr-2 text-emerald-400"></i> Worker-Owner Portal</a>
+            <a id="mobile-nav-governance" href="governance.html" class="block px-4 py-2.5 rounded-xl text-sm font-medium text-slate-200 hover:bg-slate-800"><i class="fa-solid fa-check-to-slot mr-2 text-emerald-400"></i> Co-op Council & Voting</a>
+            <a id="mobile-nav-community" href="community.html" class="block px-4 py-2.5 rounded-xl text-sm font-medium text-slate-200 hover:bg-slate-800"><i class="fa-solid fa-people-roof mr-2 text-emerald-400"></i> RWA Bulk Hub</a>
+            <a id="mobile-nav-about" href="about.html" class="block px-4 py-2.5 rounded-xl text-sm font-medium text-slate-200 hover:bg-slate-800"><i class="fa-solid fa-lightbulb mr-2 text-emerald-400"></i> SIH Pitch Deck</a>
+            <button onclick="RoleGateway.logout(); document.getElementById('mobile-menu').classList.add('hidden')" class="w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold text-rose-400 hover:bg-rose-950/40"><i class="fa-solid fa-arrow-right-from-bracket mr-2"></i> Log Out & Go Offline</button>
         </div>
     </header>
 
@@ -174,16 +195,16 @@
         <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
             
             <div class="flex items-center gap-4 sm:gap-6">
-                <div class="relative">
-                    <img id="worker-profile-avatar" src="https://images.unsplash.com/photo-1540569014015-19a7be504e3a?w=150&auto=format&fit=crop&q=80" alt="Worker Avatar" class="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl object-cover border-2 border-emerald-400 shadow-xl">
-                    <span class="absolute -bottom-2 -right-2 px-2 py-0.5 rounded-lg text-[10px] font-black bg-emerald-500 text-white shadow-md">
-                        OWNER
-                    </span>
+                <div class="relative group">
+                    <img id="worker-profile-avatar" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='%2364748b'%3E%3Crect width='100' height='100' fill='%230f172a'/%3E%3Cpath d='M50 48a18 18 0 1 0 0-36 18 18 0 0 0 0 36zm0 10c-20 0-36 12-36 28v6h72v-6c0-16-16-28-36-28z' fill='%23475569'/%3E%3C/svg%3E" alt="Worker Avatar" class="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl object-cover border-2 border-emerald-400 shadow-xl bg-slate-900">
+                    <button onclick="openWorkerAvatarModal()" class="absolute -bottom-1 -right-1 w-8 h-8 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white shadow-lg border-2 border-slate-900 flex items-center justify-center transition hover:scale-110" title="Edit / Change Profile Picture">
+                        <i class="fa-solid fa-camera text-xs"></i>
+                    </button>
                 </div>
 
                 <div class="space-y-1">
                     <div class="flex flex-wrap items-center gap-2">
-                        <h1 class="text-2xl sm:text-3xl font-extrabold font-heading text-white" id="worker-profile-name">Ramesh Kumar Sharma</h1>
+                        <h1 class="text-2xl sm:text-3xl font-extrabold font-heading text-white" id="worker-profile-name">Ramesh Kumar</h1>
                         <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
                             <i class="fa-solid fa-crown text-amber-400 mr-1"></i> Co-op Founding Steward
                         </span>
@@ -202,15 +223,25 @@
                 </div>
             </div>
 
-            <!-- Profile Edit / Switcher & Online Radar Toggle -->
+            <!-- Profile Edit / Switcher & Online/Offline Radar Switch -->
             <div class="flex flex-wrap items-center gap-3">
+                
+                <!-- Online / Offline Toggle Switch -->
+                <div class="flex items-center gap-1 bg-slate-900/90 p-1.5 rounded-2xl border border-slate-700 shadow-inner">
+                    <button id="btn-status-online" onclick="setWorkerLiveStatus(true)" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all bg-emerald-500 text-white shadow-md flex items-center gap-1.5">
+                        <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span> Online / Active
+                    </button>
+                    <button id="btn-status-offline" onclick="setWorkerLiveStatus(false)" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all text-slate-400 hover:text-white flex items-center gap-1.5">
+                        <i class="fa-solid fa-moon text-xs"></i> Offline
+                    </button>
+                </div>
+
+                <button onclick="openWorkerAvatarModal()" class="px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-800 text-slate-300 hover:text-white border border-slate-700 transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-image-portrait text-emerald-400"></i> Change Photo
+                </button>
                 <button onclick="RoleGateway.openModal('worker')" class="px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-800 text-slate-300 hover:text-white border border-slate-700 transition">
                     <i class="fa-solid fa-user-pen mr-1.5"></i> Edit Profile
                 </button>
-                <div id="status-live-badge" class="px-3.5 py-2 rounded-xl text-xs font-medium bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 flex items-center gap-2">
-                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-                    <span>Radar Active (&lt;3km)</span>
-                </div>
             </div>
 
         </div>
@@ -337,14 +368,72 @@
 
 </div>
 
-<!-- REAL-TIME CAMERA CAPTURE VIEW FINDER MODAL -->
+<!-- WORKER PROFILE PICTURE CUSTOMIZER MODAL -->
+<div id="worker-avatar-modal" class="fixed inset-0 z-50 modal-backdrop hidden items-center justify-center p-4">
+    <div class="relative w-full max-w-md glass-panel rounded-3xl border border-emerald-500/40 p-6 space-y-5 shadow-2xl overflow-hidden">
+        
+        <div class="flex items-center justify-between pb-2 border-b border-slate-800">
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-camera text-emerald-400 text-lg"></i>
+                <h3 class="text-base font-bold font-heading text-white">Edit Profile Picture</h3>
+            </div>
+            <button onclick="closeWorkerAvatarModal()" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <!-- Current / New Avatar Preview -->
+        <div class="text-center space-y-3">
+            <div class="relative w-28 h-28 mx-auto">
+                <img id="worker-avatar-preview-box" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='%2364748b'%3E%3Crect width='100' height='100' fill='%230f172a'/%3E%3Cpath d='M50 48a18 18 0 1 0 0-36 18 18 0 0 0 0 36zm0 10c-20 0-36 12-36 28v6h72v-6c0-16-16-28-36-28z' fill='%23475569'/%3E%3C/svg%3E" alt="Avatar Preview" class="w-full h-full rounded-3xl object-cover border-4 border-emerald-400 shadow-xl bg-slate-900">
+            </div>
+            <p class="text-xs text-slate-300">Choose how you want to update your worker-owner profile picture:</p>
+        </div>
+
+        <!-- Action Options -->
+        <div class="space-y-3">
+            
+            <!-- Option 1: Upload from device -->
+            <label class="w-full py-3 px-4 rounded-2xl bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-300 border border-emerald-500/40 cursor-pointer transition flex items-center justify-between text-xs font-bold">
+                <div class="flex items-center gap-2.5">
+                    <i class="fa-solid fa-cloud-arrow-up text-base text-emerald-400"></i>
+                    <span>Upload Custom Photo from Device</span>
+                </div>
+                <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                <input type="file" accept="image/*" onchange="handleWorkerAvatarUploaded(event)" class="hidden">
+            </label>
+
+            <!-- Option 2: Live Selfie -->
+            <button onclick="takeWorkerProfileSelfie()" class="w-full py-3 px-4 rounded-2xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 border border-indigo-500/40 transition flex items-center justify-between text-xs font-bold">
+                <div class="flex items-center gap-2.5">
+                    <i class="fa-solid fa-camera text-base text-indigo-400"></i>
+                    <span>Take a Live Selfie with Camera</span>
+                </div>
+                <i class="fa-solid fa-chevron-right text-[10px]"></i>
+            </button>
+
+            <!-- Option 3: Reset to Blank Shadow Silhouette -->
+            <button onclick="revertToBlankSilhouette()" class="w-full py-3 px-4 rounded-2xl bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition flex items-center justify-between text-xs font-bold">
+                <div class="flex items-center gap-2.5">
+                    <i class="fa-solid fa-user-ninja text-base text-slate-400"></i>
+                    <span>Reset to Blank Shadow Silhouette (No Photo)</span>
+                </div>
+                <i class="fa-solid fa-rotate-left text-[10px]"></i>
+            </button>
+
+        </div>
+
+    </div>
+</div>
+
+<!-- REAL-TIME CAMERA CAPTURE VIEW FINDER MODAL (FOR WORK PROOF & SELFIE) -->
 <div id="real-camera-modal" class="fixed inset-0 z-50 modal-backdrop hidden items-center justify-center p-4">
     <div class="relative w-full max-w-md glass-panel rounded-3xl border border-emerald-500/40 p-6 space-y-4 shadow-2xl overflow-hidden">
         
         <div class="flex items-center justify-between pb-2 border-b border-slate-800">
             <div class="flex items-center gap-2">
                 <i class="fa-solid fa-camera text-emerald-400 text-lg"></i>
-                <h3 class="text-base font-bold font-heading text-white">Take Work Photo Proof</h3>
+                <h3 class="text-base font-bold font-heading text-white" id="camera-modal-title">Take Work Photo Proof</h3>
             </div>
             <button onclick="closeRealCameraModal()" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition">
                 <i class="fa-solid fa-xmark"></i>
@@ -395,7 +484,7 @@
             </div>
 
             <!-- Fallback File Upload Input -->
-            <div class="pt-2 border-t border-slate-800 flex items-center justify-between text-xs">
+            <div id="camera-fallback-file-box" class="pt-2 border-t border-slate-800 flex items-center justify-between text-xs">
                 <span class="text-slate-400">Or choose from gallery:</span>
                 <label class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold cursor-pointer transition border border-slate-700">
                     <i class="fa-solid fa-folder-open mr-1 text-emerald-400"></i> Browse Device
@@ -409,17 +498,71 @@
 
 <script>
 let currentCapturingJobId = null;
+let isCapturingSelfie = false;
 let mediaStream = null;
 let snappedImageDataUrl = null;
 
-// Real-time Worker Radar Controller
+// Real-time Worker Online/Offline & Radar Controller
+function setWorkerLiveStatus(isOnline) {
+    CoopSync.setWorkerOnline(isOnline);
+    updateWorkerStatusUI(isOnline);
+    renderWorkerRadar();
+    if (isOnline) {
+        Toast.show("🟢 You are now ONLINE & ACTIVE! Radar mesh is scanning for nearby customer problem requests.", "success");
+        SoundFX.success();
+    } else {
+        Toast.show("🔴 You are now OFFLINE. Radar is paused; you will not receive live incoming dispatches.", "info");
+        SoundFX.pop();
+    }
+}
+
+function updateWorkerStatusUI(isOnline) {
+    const btnOnline = document.getElementById('btn-status-online');
+    const btnOffline = document.getElementById('btn-status-offline');
+
+    if (btnOnline && btnOffline) {
+        if (isOnline) {
+            btnOnline.className = 'px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all bg-emerald-500 text-white shadow-md flex items-center gap-1.5';
+            btnOffline.className = 'px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all text-slate-400 hover:text-white flex items-center gap-1.5';
+        } else {
+            btnOnline.className = 'px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all text-slate-400 hover:text-white flex items-center gap-1.5';
+            btnOffline.className = 'px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all bg-rose-500 text-white shadow-md flex items-center gap-1.5';
+        }
+    }
+}
+
 function renderWorkerRadar() {
     const container = document.getElementById('radar-gigs-container');
     const countBadge = document.getElementById('radar-live-count');
     if (!container) return;
 
+    const isOnline = CoopSync.state.isWorkerOnline !== false;
+    updateWorkerStatusUI(isOnline);
+
+    if (!isOnline) {
+        if (countBadge) countBadge.textContent = "Radar Paused (Offline)";
+        container.innerHTML = `
+            <div class="glass-panel rounded-3xl p-8 text-center space-y-4 border border-rose-500/30">
+                <div class="w-16 h-16 mx-auto rounded-3xl bg-rose-500/20 text-rose-400 flex items-center justify-center text-2xl border border-rose-500/30">
+                    <i class="fa-solid fa-moon"></i>
+                </div>
+                <div class="space-y-1">
+                    <h3 class="text-lg font-bold text-white font-heading">You are Currently OFFLINE</h3>
+                    <p class="text-xs text-slate-300 max-w-md mx-auto">
+                        In order to receive nearby customer problem broadcasts, audio alarms, and earn 92% direct take-home pay, please activate your online status.
+                    </p>
+                </div>
+                <button onclick="setWorkerLiveStatus(true)" class="px-6 py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-slate-950 font-bold text-xs shadow-lg shadow-emerald-500/30 hover:scale-[1.02] active:scale-95 transition-all inline-flex items-center gap-2">
+                    <i class="fa-solid fa-bolt text-sm"></i> Go Online & Activate Live Radar
+                </button>
+            </div>
+        `;
+        return;
+    }
+
     const activeJobs = CoopSync.state.activeJobs || [];
-    if (countBadge) countBadge.textContent = `${activeJobs.length} Gigs on Radar`;
+    const openCount = activeJobs.filter(j => j.status === 'OPEN').length;
+    if (countBadge) countBadge.textContent = `${activeJobs.length} Gigs on Radar (${openCount} New)`;
 
     if (activeJobs.length === 0) {
         container.innerHTML = `
@@ -429,7 +572,7 @@ function renderWorkerRadar() {
                 </div>
                 <h3 class="text-sm font-bold text-white">Radar Scanning for Nearby Customer Requests...</h3>
                 <p class="text-xs text-slate-400 max-w-sm mx-auto">
-                    Open the <b>Customer Portal (index.html)</b> in another browser tab and click <b>"Broadcast Problem"</b>. It will appear here instantly!
+                    Open the <b>Customer Portal (index.html)</b> in another browser tab and click <b>"Broadcast Problem"</b>. It will appear here instantly with an audible alarm!
                 </p>
             </div>
         `;
@@ -439,7 +582,7 @@ function renderWorkerRadar() {
     container.innerHTML = activeJobs.map(job => {
         if (job.status === 'OPEN') {
             return `
-                <div id="radar-job-${job.id}" class="glass-panel-glow rounded-3xl p-6 border border-emerald-500/40 space-y-4">
+                <div id="radar-job-${job.id}" class="glass-panel-glow rounded-3xl p-6 border border-emerald-500/40 space-y-4 animate-pulse">
                     <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
                         <div>
                             <div class="flex items-center gap-2">
@@ -547,15 +690,27 @@ function renderWorkerRadar() {
 }
 
 function acceptLiveJob(jobId) {
+    if (CoopSync.state.isWorkerOnline === false) {
+        Toast.show("⚠️ You are currently OFFLINE. Please toggle to ONLINE status at top before accepting tasks.", "error");
+        return;
+    }
+
     const worker = CoopSync.getWorker() || {
-        name: "Ramesh Kumar Sharma",
+        name: "Ramesh Kumar",
         phone: "+91 98860 54321",
-        trade: "Master Electrician & Plumber"
+        trade: "Master Electrician & Plumber",
+        avatar: CoopSync.DEFAULT_AVATAR
     };
 
-    CoopSync.acceptJobByWorker(jobId, worker);
+    const res = CoopSync.acceptJobByWorker(jobId, worker);
+    if (!res.success) {
+        Toast.show(res.message || "This task is no longer available!", "error");
+        renderWorkerRadar();
+        return;
+    }
+
     renderWorkerRadar();
-    Toast.show(`🚀 Task accepted! Customer notified of your arrival.`, 'success');
+    Toast.show(`🚀 Task accepted! Customer notified with your ETA & Start OTP.`, 'success');
     SoundFX.success();
 }
 
@@ -581,6 +736,19 @@ function handleWorkerStartOtp(jobId) {
 // -------------------------------------------------------------
 function openRealCameraModal(jobId) {
     currentCapturingJobId = jobId;
+    isCapturingSelfie = false;
+    document.getElementById('camera-modal-title').textContent = "Take Work Photo Proof";
+    setupCameraStream('environment');
+}
+
+function takeWorkerProfileSelfie() {
+    closeWorkerAvatarModal();
+    isCapturingSelfie = true;
+    document.getElementById('camera-modal-title').textContent = "Take Profile Picture Selfie";
+    setupCameraStream('user');
+}
+
+function setupCameraStream(facingMode) {
     const modal = document.getElementById('real-camera-modal');
     const video = document.getElementById('webcam-video-stream');
     const preview = document.getElementById('webcam-captured-preview');
@@ -599,10 +767,9 @@ function openRealCameraModal(jobId) {
     if (liveControls) liveControls.classList.remove('hidden');
     if (previewControls) previewControls.classList.add('hidden');
 
-    // Request actual camera stream from browser / device
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         navigator.mediaDevices.getUserMedia({
-            video: { facingMode: 'environment', width: { ideal: 1280 }, height: { ideal: 720 } }
+            video: { facingMode: facingMode, width: { ideal: 1280 }, height: { ideal: 720 } }
         })
         .then(stream => {
             mediaStream = stream;
@@ -610,14 +777,12 @@ function openRealCameraModal(jobId) {
                 video.srcObject = stream;
                 video.play();
             }
-            Toast.show("📷 Real-life Camera connected successfully!", "info");
+            Toast.show("📷 Camera connected!", "info");
         })
         .catch(err => {
-            console.warn("Camera access permission denied or unavailable:", err);
-            Toast.show("📷 Camera permission needed, or browse from device gallery below.", "info");
+            console.warn("Camera permission denied:", err);
+            Toast.show("📷 Camera permission needed, or select from gallery below.", "info");
         });
-    } else {
-        Toast.show("Camera API not supported on this browser, please select photo from gallery.", "info");
     }
 }
 
@@ -637,7 +802,6 @@ function snapPhotoFromWebcam() {
         
         snappedImageDataUrl = canvas.toDataURL('image/jpeg', 0.85);
 
-        // Switch to preview mode
         if (preview) {
             preview.src = snappedImageDataUrl;
             preview.classList.remove('hidden');
@@ -666,10 +830,15 @@ function retakePhoto() {
 }
 
 function confirmAndUploadSnappedPhoto() {
-    if (currentCapturingJobId && snappedImageDataUrl) {
+    if (isCapturingSelfie && snappedImageDataUrl) {
+        CoopSync.updateWorkerAvatar(snappedImageDataUrl);
+        renderWorkerWalletUI();
+        Toast.show("📸 Profile selfie updated successfully!", "success");
+        SoundFX.success();
+    } else if (currentCapturingJobId && snappedImageDataUrl) {
         CoopSync.uploadWorkPhotoProof(currentCapturingJobId, snappedImageDataUrl);
         renderWorkerRadar();
-        Toast.show("📸 Real-life photo proof confirmed and hash-locked!", "success");
+        Toast.show("📸 Real-life work photo proof confirmed and hash-locked!", "success");
         SoundFX.success();
     }
     closeRealCameraModal();
@@ -677,13 +846,19 @@ function confirmAndUploadSnappedPhoto() {
 
 function handleDevicePhotoSelected(event) {
     const file = event.target.files[0];
-    if (file && currentCapturingJobId) {
+    if (file) {
         const reader = new FileReader();
         reader.onload = function(e) {
             snappedImageDataUrl = e.target.result;
-            CoopSync.uploadWorkPhotoProof(currentCapturingJobId, snappedImageDataUrl);
-            renderWorkerRadar();
-            Toast.show("📸 Device photo proof uploaded & hash-locked to Co-op Ledger!", "success");
+            if (isCapturingSelfie) {
+                CoopSync.updateWorkerAvatar(snappedImageDataUrl);
+                renderWorkerWalletUI();
+                Toast.show("📸 Profile picture updated successfully!", "success");
+            } else if (currentCapturingJobId) {
+                CoopSync.uploadWorkPhotoProof(currentCapturingJobId, snappedImageDataUrl);
+                renderWorkerRadar();
+                Toast.show("📸 Work photo uploaded & hash-locked to Co-op Ledger!", "success");
+            }
             SoundFX.success();
             closeRealCameraModal();
         };
@@ -698,11 +873,67 @@ function closeRealCameraModal() {
         modal.classList.remove('flex');
     }
 
-    // Stop webcam tracks
     if (mediaStream) {
         mediaStream.getTracks().forEach(track => track.stop());
         mediaStream = null;
     }
+}
+
+// -------------------------------------------------------------
+// Worker Avatar Customizer Modal Functions
+// -------------------------------------------------------------
+function openWorkerAvatarModal() {
+    const modal = document.getElementById('worker-avatar-modal');
+    const worker = CoopSync.getWorker();
+    const previewBox = document.getElementById('worker-avatar-preview-box');
+    if (previewBox && worker && worker.avatar) {
+        previewBox.src = worker.avatar;
+    }
+    if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        SoundFX.pop();
+    }
+}
+
+function closeWorkerAvatarModal() {
+    const modal = document.getElementById('worker-avatar-modal');
+    if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+    }
+}
+
+function handleWorkerAvatarUploaded(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const avatarUrl = e.target.result;
+            CoopSync.updateWorkerAvatar(avatarUrl);
+            renderWorkerWalletUI();
+            closeWorkerAvatarModal();
+            Toast.show("🎉 Profile picture updated successfully!", "success");
+            SoundFX.success();
+        };
+        reader.readAsDataURL(file);
+    }
+}
+
+function revertToBlankSilhouette() {
+    CoopSync.updateWorkerAvatar(CoopSync.DEFAULT_AVATAR);
+    renderWorkerWalletUI();
+    closeWorkerAvatarModal();
+    Toast.show("👤 Profile picture reset to blank shadow silhouette.", "info");
+    SoundFX.pop();
+}
+
+function selectAvatarPreset(url) {
+    CoopSync.updateWorkerAvatar(url);
+    renderWorkerWalletUI();
+    closeWorkerAvatarModal();
+    Toast.show("✨ Avatar silhouette selected!", "success");
+    SoundFX.pop();
 }
 
 function handleWorkerCompleteOtp(jobId) {
@@ -732,10 +963,12 @@ function renderWorkerWalletUI() {
         const tradeEl = document.getElementById('worker-profile-trade');
         const ratingEl = document.getElementById('worker-profile-rating');
         const jobsEl = document.getElementById('worker-profile-jobs-count');
+        const avatarEl = document.getElementById('worker-profile-avatar');
 
         if (nameEl) nameEl.textContent = worker.name;
         if (tradeEl) tradeEl.textContent = `${worker.trade} • ${worker.experience || '8 Years'} Exp`;
         if (jobsEl) jobsEl.textContent = wallet.totalJobs;
+        if (avatarEl && worker.avatar) avatarEl.src = worker.avatar;
     }
 
     const balEl = document.getElementById('worker-wallet-bal');
@@ -876,15 +1109,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 </p>
                 <div>
                     <label class="block text-xs font-semibold text-slate-300 mb-1">Your Full Name *</label>
-                    <input type="text" id="cust-reg-name" required placeholder="e.g. Srivatsa Soham" value="Srivatsa Soham" class="w-full px-4 py-2.5 rounded-xl glass-input text-xs sm:text-sm">
+                    <input type="text" id="cust-reg-name" required placeholder="e.g. Srivatsa Soham" class="w-full px-4 py-2.5 rounded-xl glass-input text-xs sm:text-sm">
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-slate-300 mb-1">Mobile Phone Number *</label>
-                    <input type="tel" id="cust-reg-phone" required placeholder="e.g. +91 98765 43210" value="+91 98765 43210" class="w-full px-4 py-2.5 rounded-xl glass-input text-xs sm:text-sm">
+                    <input type="tel" id="cust-reg-phone" required placeholder="e.g. +91 98765 43210" class="w-full px-4 py-2.5 rounded-xl glass-input text-xs sm:text-sm">
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-slate-300 mb-1">Your Street / Society Address *</label>
-                    <input type="text" id="cust-reg-address" required placeholder="e.g. Flat 304, Sobha Residency, Indiranagar" value="Flat 304, Sobha Residency, Indiranagar, Bangalore" class="w-full px-4 py-2.5 rounded-xl glass-input text-xs sm:text-sm">
+                    <input type="text" id="cust-reg-address" required placeholder="e.g. Flat 304, Sobha Residency, Indiranagar, Bangalore" class="w-full px-4 py-2.5 rounded-xl glass-input text-xs sm:text-sm">
                 </div>
                 <div class="pt-2">
                     <button type="submit" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold text-xs sm:text-sm shadow-lg shadow-emerald-600/30 hover:scale-[1.01] active:scale-95 transition-all flex items-center justify-center gap-2">
@@ -900,11 +1133,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 </p>
                 <div>
                     <label class="block text-xs font-semibold text-slate-300 mb-1">Your Full Name *</label>
-                    <input type="text" id="worker-reg-name" required placeholder="e.g. Ramesh Kumar" value="Ramesh Kumar" class="w-full px-4 py-2.5 rounded-xl glass-input text-xs sm:text-sm">
+                    <input type="text" id="worker-reg-name" required placeholder="e.g. Ramesh Kumar" class="w-full px-4 py-2.5 rounded-xl glass-input text-xs sm:text-sm">
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-slate-300 mb-1">Mobile Phone Number *</label>
-                    <input type="tel" id="worker-reg-phone" required placeholder="e.g. +91 98860 54321" value="+91 98860 54321" class="w-full px-4 py-2.5 rounded-xl glass-input text-xs sm:text-sm">
+                    <input type="tel" id="worker-reg-phone" required placeholder="e.g. +91 98860 54321" class="w-full px-4 py-2.5 rounded-xl glass-input text-xs sm:text-sm">
                 </div>
                 <div class="grid grid-cols-2 gap-3">
                     <div>
@@ -920,12 +1153,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                     <div>
                         <label class="block text-xs font-semibold text-slate-300 mb-1">Experience</label>
-                        <input type="text" id="worker-reg-exp" value="8 Years" class="w-full px-3 py-2.5 rounded-xl glass-input text-xs">
+                        <input type="text" id="worker-reg-exp" placeholder="e.g. 8 Years" class="w-full px-3 py-2.5 rounded-xl glass-input text-xs">
                     </div>
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-slate-300 mb-1">Operating Location</label>
-                    <input type="text" id="worker-reg-loc" value="Indiranagar & Whitefield (1.2 km radius)" class="w-full px-4 py-2.5 rounded-xl glass-input text-xs sm:text-sm">
+                    <input type="text" id="worker-reg-loc" placeholder="e.g. Indiranagar & Whitefield (1.2 km radius)" class="w-full px-4 py-2.5 rounded-xl glass-input text-xs sm:text-sm">
                 </div>
                 <div class="pt-2">
                     <button type="submit" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-amber-500 via-emerald-600 to-teal-600 text-white font-bold text-xs sm:text-sm shadow-lg shadow-emerald-600/30 hover:scale-[1.01] active:scale-95 transition-all flex items-center justify-center gap-2">
@@ -970,7 +1203,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 <div>
                     <label class="block text-xs font-semibold text-slate-300 mb-1.5">Your Exact Street & Apartment Address</label>
-                    <input type="text" id="sos-location" value="Flat 402, Palm Heights, Indiranagar 100ft Road" class="w-full px-4 py-3 rounded-xl glass-input text-sm">
+                    <input type="text" id="sos-location" placeholder="e.g. Flat 402, Palm Heights, Indiranagar 100ft Road" class="w-full px-4 py-3 rounded-xl glass-input text-sm">
                 </div>
 
                 <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 flex items-center gap-3">
