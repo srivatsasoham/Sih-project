@@ -46,186 +46,208 @@
     <!-- Custom Glassmorphism Styles -->
     <link rel="stylesheet" href="static/css/style.css">
 
+
+
+
 <style id="light-theme-overrides">
-    /* ===== SahiDeal LIGHT THEME ===== */
-    :root {
-        color-scheme: light;
-    }
+/* =========================================================
+   SAHIDEAL - FORCE LIGHT THEME
+   This override intentionally comes AFTER Tailwind + style.css
+   ========================================================= */
 
-    html, body {
-        background: #f8fafc !important;
-        color: #1e293b !important;
-    }
+html {
+    color-scheme: light !important;
+    background: #f8fafc !important;
+}
 
-    body {
-        background-color: #f8fafc !important;
-    }
+html, body {
+    background: #f8fafc !important;
+    color: #1e293b !important;
+}
 
-    /* Custom dark backgrounds -> light */
-    .bg-coop-dark { background-color: #f8fafc !important; }
-    .bg-coop-card { background-color: #ffffff !important; }
+body {
+    background-color: #f8fafc !important;
+}
 
-    .bg-slate-950,
-    .bg-slate-950\/90,
-    .bg-slate-900,
-    .bg-slate-900\/95,
-    .bg-slate-900\/90,
-    .bg-slate-900\/80,
-    .bg-slate-900\/70,
-    .bg-slate-800,
-    .bg-slate-800\/90 {
-        background-color: #ffffff !important;
-    }
+/* Main custom backgrounds */
+.bg-coop-dark,
+.bg-coop-dark\/85,
+.bg-coop-card {
+    background-color: #ffffff !important;
+}
 
-    .bg-slate-950\/90 { background-color: rgba(248,250,252,.96) !important; }
-    .bg-slate-900\/95 { background-color: rgba(255,255,255,.97) !important; }
-    .bg-slate-900\/90 { background-color: rgba(255,255,255,.95) !important; }
-    .bg-slate-900\/80 { background-color: rgba(255,255,255,.92) !important; }
-    .bg-slate-900\/70 { background-color: rgba(255,255,255,.90) !important; }
-    .bg-slate-800\/90 { background-color: rgba(248,250,252,.96) !important; }
+/* Dark Tailwind surfaces */
+.bg-slate-950,
+.bg-slate-900,
+.bg-slate-800,
+.bg-slate-700 {
+    background-color: #ffffff !important;
+}
 
-    /* Text */
-    .text-white { color: #0f172a !important; }
-    .text-slate-100 { color: #1e293b !important; }
-    .text-slate-200 { color: #334155 !important; }
-    .text-slate-300 { color: #475569 !important; }
-    .text-slate-400 { color: #64748b !important; }
-    .text-slate-500 { color: #64748b !important; }
+.bg-slate-950\/90 { background-color: rgba(248,250,252,.97) !important; }
+.bg-slate-900\/95 { background-color: rgba(255,255,255,.98) !important; }
+.bg-slate-900\/90 { background-color: rgba(255,255,255,.96) !important; }
+.bg-slate-900\/80 { background-color: rgba(255,255,255,.94) !important; }
+.bg-slate-900\/70 { background-color: rgba(255,255,255,.92) !important; }
+.bg-slate-800\/90 { background-color: rgba(248,250,252,.98) !important; }
 
-    /* Borders */
-    .border-white\/5,
-    .border-white\/10,
-    .border-slate-700,
-    .border-slate-800,
-    .border-slate-800\/80 {
-        border-color: #e2e8f0 !important;
-    }
+/* Common text colors */
+.text-white { color: #0f172a !important; }
+.text-slate-100 { color: #1e293b !important; }
+.text-slate-200 { color: #334155 !important; }
+.text-slate-300 { color: #475569 !important; }
+.text-slate-400 { color: #64748b !important; }
+.text-slate-500 { color: #64748b !important; }
 
-    /* Inputs / selects */
-    .glass-input,
-    input.glass-input,
-    select.glass-input,
-    textarea.glass-input {
-        background: #ffffff !important;
-        color: #1e293b !important;
-        border-color: #cbd5e1 !important;
-    }
+/* Borders */
+.border-white\/5,
+.border-white\/10,
+.border-slate-700,
+.border-slate-800,
+.border-slate-800\/80 {
+    border-color: #e2e8f0 !important;
+}
 
-    .glass-input::placeholder {
-        color: #94a3b8 !important;
-    }
+/* Header / navigation */
+header {
+    background: rgba(255,255,255,.94) !important;
+    border-color: #e2e8f0 !important;
+}
 
-    select option {
-        background: #ffffff !important;
-        color: #1e293b !important;
-    }
+nav {
+    background: rgba(241,245,249,.98) !important;
+    border-color: #e2e8f0 !important;
+}
 
-    /* Panels */
-    .glass-panel,
-    .glass-panel-glow {
-        background: rgba(255,255,255,.88) !important;
-        border-color: #e2e8f0;
-        box-shadow: 0 10px 30px rgba(15,23,42,.08) !important;
-    }
+/* Cards / glass panels */
+.glass-panel,
+.glass-panel-glow {
+    background: rgba(255,255,255,.96) !important;
+    border-color: #e2e8f0 !important;
+    box-shadow: 0 10px 30px rgba(15,23,42,.08) !important;
+}
 
-    /* Navigation */
-    header {
-        background: rgba(255,255,255,.88) !important;
-        border-color: #e2e8f0 !important;
-    }
+/* Inputs */
+.glass-input,
+input.glass-input,
+select.glass-input,
+textarea.glass-input {
+    background: #ffffff !important;
+    color: #1e293b !important;
+    border-color: #cbd5e1 !important;
+}
 
-    nav {
-        background: rgba(241,245,249,.95) !important;
-        border-color: #e2e8f0 !important;
-    }
+.glass-input::placeholder {
+    color: #94a3b8 !important;
+}
 
-    /* Footer */
-    footer {
-        background: #f1f5f9 !important;
-        border-color: #cbd5e1 !important;
-        color: #64748b !important;
-    }
+select,
+select option {
+    background-color: #ffffff !important;
+    color: #1e293b !important;
+}
 
-    /* Modal backdrop */
-    .modal-backdrop {
-        background: rgba(15,23,42,.45) !important;
-    }
+/* Light tinted surfaces */
+.bg-emerald-950\/60,
+.bg-emerald-950\/40 {
+    background-color: #ecfdf5 !important;
+}
 
-    /* Light versions of dark tinted status cards */
-    .bg-emerald-950\/60,
-    .bg-emerald-950\/40 {
-        background-color: #ecfdf5 !important;
-    }
+.bg-indigo-950\/60 {
+    background-color: #eef2ff !important;
+}
 
-    .bg-indigo-950\/60 {
-        background-color: #eef2ff !important;
-    }
+.bg-pink-950\/40 {
+    background-color: #fdf2f8 !important;
+}
 
-    .bg-pink-950\/40 {
-        background-color: #fdf2f8 !important;
-    }
+/* Translucent colored buttons */
+.bg-emerald-600\/30 {
+    background-color: #d1fae5 !important;
+    color: #047857 !important;
+}
 
-    /* Keep colored text readable */
-    .text-emerald-200 { color: #047857 !important; }
-    .text-emerald-300 { color: #047857 !important; }
-    .text-emerald-400 { color: #059669 !important; }
+.bg-rose-600\/30 {
+    background-color: #ffe4e6 !important;
+    color: #be123c !important;
+}
 
-    .text-teal-300 { color: #0f766e !important; }
-    .text-cyan-300 { color: #0e7490 !important; }
-    .text-indigo-300 { color: #4338ca !important; }
-    .text-amber-300 { color: #b45309 !important; }
-    .text-rose-300 { color: #be123c !important; }
+/* Readable accent text */
+.text-emerald-200,
+.text-emerald-300 { color: #047857 !important; }
 
-    /* Buttons that use translucent dark fills */
-    .bg-emerald-600\/30 {
-        background-color: #d1fae5 !important;
-        color: #047857 !important;
-    }
+.text-emerald-400 { color: #059669 !important; }
+.text-teal-300 { color: #0f766e !important; }
+.text-cyan-300 { color: #0e7490 !important; }
+.text-indigo-300 { color: #4338ca !important; }
+.text-amber-300 { color: #b45309 !important; }
+.text-rose-300 { color: #be123c !important; }
 
-    .bg-rose-600\/30 {
-        background-color: #ffe4e6 !important;
-        color: #be123c !important;
-    }
+/* Buttons with dark utility backgrounds */
+button.bg-slate-800,
+.bg-slate-800 {
+    color: #334155 !important;
+}
 
-    /* Hover states */
-    .hover\:bg-slate-800:hover {
-        background-color: #e2e8f0 !important;
-    }
+.hover\:bg-slate-800:hover {
+    background-color: #e2e8f0 !important;
+}
 
-    .hover\:bg-slate-700:hover {
-        background-color: #cbd5e1 !important;
-    }
+.hover\:bg-slate-700:hover {
+    background-color: #cbd5e1 !important;
+}
 
-    .hover\:text-white:hover {
-        color: #0f172a !important;
-    }
+.hover\:text-white:hover {
+    color: #0f172a !important;
+}
 
-    /* Progress bars / secondary surfaces */
-    .bg-slate-700 {
-        background-color: #cbd5e1 !important;
-    }
+/* Keep actual colored buttons white */
+.bg-emerald-500,
+.bg-emerald-600,
+.bg-rose-600,
+.bg-red-600,
+[class*="from-emerald-"],
+[class*="from-rose-"] {
+    color: #ffffff !important;
+}
 
-    /* Background decorative layers */
-    .bg-mesh,
-    .bg-grid-pattern {
-        opacity: .35;
-    }
+/* Progress bars / separators */
+.bg-slate-700 {
+    background-color: #cbd5e1 !important;
+}
 
-    /* Ensure icons and controls remain visible */
-    button.bg-slate-800,
-    .bg-slate-800 {
-        color: #334155 !important;
-    }
+/* Footer */
+footer {
+    background: #f1f5f9 !important;
+    border-color: #cbd5e1 !important;
+    color: #64748b !important;
+}
 
-    /* Preserve white text on strongly colored buttons */
-    .bg-emerald-500,
-    .bg-emerald-600,
-    .bg-rose-600,
-    .bg-red-600,
-    [class*="from-emerald-"],
-    [class*="from-rose-"] {
-        color: #ffffff !important;
-    }
+/* Modal */
+.modal-backdrop {
+    background: rgba(15,23,42,.45) !important;
+}
+
+/* Dark utility cards inside modals/content */
+.p-4.bg-slate-900,
+.p-3\.5.bg-slate-900,
+.p-4.rounded-2xl.bg-slate-900\/80,
+.p-4.rounded-2xl.bg-slate-900\/90,
+.p-3\.5.rounded-xl.bg-slate-900 {
+    background-color: #f8fafc !important;
+}
+
+/* Remove dark-looking decorative overlays while keeping them subtle */
+.bg-mesh,
+.bg-grid-pattern {
+    opacity: .25 !important;
+}
+
+/* Make dark Tailwind text on buttons/cards readable */
+.text-slate-200,
+.text-slate-300 {
+    text-shadow: none !important;
+}
 </style>
 
 </head>
