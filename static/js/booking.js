@@ -1,6 +1,6 @@
 /**
- * SahiDeal - 7-Checkpoints Booking Engine & Escrow Flow
- * Handles 01.Book -> 02.Match -> 03.Escrow -> 04.Track -> 05.Verify -> 06.Settle -> 07.Rate
+ * Co-Work (पारस्परिक सहकारी) - 7-Checkpoints Booking Engine
+ * Handles Booking Flow: Book → Match → Escrow → Track → Verify → Settle → Rate
  */
 
 let activeBookingData = null;

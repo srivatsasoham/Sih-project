@@ -1,5 +1,5 @@
 /**
- * SahiDeal - Worker-Owner Portal Engine
+ * Co-Work (पारस्परिक सहकारी) - Worker-Owner Portal Engine
  * Powers Radar GIS dispatches, 5-step job execution, Instant UPI Payouts, and Welfare Claims
  */
 

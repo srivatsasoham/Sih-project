@@ -6,12 +6,12 @@
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
 
     <!-- GOVERNANCE HEADER -->
-    <div class="glass-panel-glow rounded-3xl p-6 sm:p-10 border border-emerald-500/30 text-center space-y-3">
-        <span class="text-xs font-mono font-bold uppercase tracking-wider text-emerald-400 bg-emerald-950/60 px-3 py-1 rounded-full border border-emerald-500/30">
+    <div class="glass-panel-glow rounded-3xl p-6 sm:p-10 border border-emerald-300 text-center space-y-3 bg-white shadow-sm">
+        <span class="text-xs font-mono font-bold uppercase tracking-wider text-emerald-800 bg-emerald-100 px-3 py-1 rounded-full border border-emerald-300">
             <i class="fa-solid fa-users-gear mr-1"></i> Democratic Platform Cooperativism
         </span>
-        <h1 class="text-3xl sm:text-5xl font-black font-heading text-white">Co-op Council & Open Ledger</h1>
-        <p class="text-xs sm:text-sm text-slate-300 max-w-2xl mx-auto">
+        <h1 class="text-3xl sm:text-5xl font-black font-heading text-slate-900">Co-op Council & Open Ledger</h1>
+        <p class="text-xs sm:text-sm text-slate-600 max-w-2xl mx-auto">
             1 Member = 1 Vote. Every worker and citizen member exercises democratic ownership over platform fees, healthcare allocations, and dispute policies.
         </p>
     </div>
@@ -21,40 +21,40 @@
     <div class="space-y-6">
         <div class="flex items-center justify-between">
             <div>
-                <h2 class="text-xl font-bold font-heading text-white flex items-center gap-2">
-                    <i class="fa-solid fa-book-open text-emerald-400"></i> Transparent Co-op Treasury Ledger
+                <h2 class="text-xl font-bold font-heading text-slate-900 flex items-center gap-2">
+                    <i class="fa-solid fa-book-open text-emerald-600"></i> Transparent Co-op Treasury Ledger
                 </h2>
-                <p class="text-xs text-slate-400">Real-time cryptographic audit trail of all platform revenue & distributions</p>
+                <p class="text-xs text-slate-500">Real-time cryptographic audit trail of all platform revenue & distributions</p>
             </div>
-            <span class="px-2.5 py-1 rounded-full text-xs font-mono font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+            <span class="px-2.5 py-1 rounded-full text-xs font-mono font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">
                 AUDITED • 100% PUBLIC
             </span>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             
-            <div class="glass-panel rounded-3xl p-6 space-y-2 border border-white/5">
-                <div class="text-xs text-slate-400">Total Platform GMV</div>
-                <div class="text-2xl font-black text-white font-heading">₹{{ treasury.total_revenue }}</div>
-                <div class="text-[11px] text-emerald-400 font-semibold"><i class="fa-solid fa-arrow-trend-up mr-1"></i> +17% YoY Growth</div>
+            <div class="glass-panel rounded-3xl p-6 space-y-2 border border-slate-200 bg-white shadow-sm">
+                <div class="text-xs text-slate-500 font-semibold">Total Platform GMV</div>
+                <div class="text-2xl font-black text-slate-900 font-heading">₹{{ treasury.total_revenue }}</div>
+                <div class="text-[11px] text-emerald-700 font-semibold"><i class="fa-solid fa-arrow-trend-up mr-1"></i> +17% YoY Growth</div>
             </div>
 
-            <div class="glass-panel rounded-3xl p-6 space-y-2 border border-emerald-500/30">
-                <div class="text-xs text-slate-400">Direct Worker Payouts (92%)</div>
-                <div class="text-2xl font-black text-emerald-400 font-heading">₹{{ treasury.worker_disbursed }}</div>
-                <div class="text-[11px] text-slate-400">Zero corporate middleman cut</div>
+            <div class="glass-panel rounded-3xl p-6 space-y-2 border border-emerald-300 bg-white shadow-sm">
+                <div class="text-xs text-slate-500 font-semibold">Direct Worker Payouts (92%)</div>
+                <div class="text-2xl font-black text-emerald-700 font-heading">₹{{ treasury.worker_disbursed }}</div>
+                <div class="text-[11px] text-slate-500">Zero corporate middleman cut</div>
             </div>
 
-            <div class="glass-panel rounded-3xl p-6 space-y-2 border border-cyan-500/30">
-                <div class="text-xs text-slate-400">Co-op Reserve Pool (8%)</div>
-                <div class="text-2xl font-black text-cyan-400 font-heading">₹{{ treasury.coop_reserve_pool }}</div>
-                <div class="text-[11px] text-cyan-300">Powers health & quarterly dividends</div>
+            <div class="glass-panel rounded-3xl p-6 space-y-2 border border-cyan-300 bg-white shadow-sm">
+                <div class="text-xs text-slate-500 font-semibold">Co-op Reserve Pool (8%)</div>
+                <div class="text-2xl font-black text-cyan-700 font-heading">₹{{ treasury.coop_reserve_pool }}</div>
+                <div class="text-[11px] text-cyan-800 font-semibold">Powers health & quarterly dividends</div>
             </div>
 
-            <div class="glass-panel rounded-3xl p-6 space-y-2 border border-amber-500/30">
-                <div class="text-xs text-slate-400">Patronage Dividend Reserve</div>
-                <div class="text-2xl font-black text-amber-400 font-heading">₹{{ treasury.dividend_payout_fund }}</div>
-                <div class="text-[11px] text-amber-300">Q3 Disbursal in 14 days</div>
+            <div class="glass-panel rounded-3xl p-6 space-y-2 border border-amber-300 bg-white shadow-sm">
+                <div class="text-xs text-slate-500 font-semibold">Patronage Dividend Reserve</div>
+                <div class="text-2xl font-black text-amber-700 font-heading">₹{{ treasury.dividend_payout_fund }}</div>
+                <div class="text-[11px] text-amber-800 font-semibold">Q3 Disbursal in 14 days</div>
             </div>
 
         </div>
@@ -64,51 +64,51 @@
     <!-- ACTIVE DEMOCRATIC PROPOSALS -->
     <div class="space-y-6">
         <div>
-            <h2 class="text-xl font-bold font-heading text-white flex items-center gap-2">
-                <i class="fa-solid fa-check-to-slot text-emerald-400"></i> Active Cooperative Policy Ballots
+            <h2 class="text-xl font-bold font-heading text-slate-900 flex items-center gap-2">
+                <i class="fa-solid fa-check-to-slot text-emerald-600"></i> Active Cooperative Policy Ballots
             </h2>
-            <p class="text-xs text-slate-400">Cast your democratic vote on fee structures, welfare allocations, and tool depot upgrades</p>
+            <p class="text-xs text-slate-500">Cast your democratic vote on fee structures, welfare allocations, and tool depot upgrades</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             {% for p in proposals %}
-            <div id="proposal-card-{{ p.id }}" class="glass-panel rounded-3xl p-6 sm:p-8 space-y-5 border border-white/10 hover:border-emerald-500/40 transition-all flex flex-col justify-between">
+            <div id="proposal-card-{{ p.id }}" class="glass-panel rounded-3xl p-6 sm:p-8 space-y-5 border border-slate-200 hover:border-emerald-400 transition-all flex flex-col justify-between bg-white shadow-sm">
                 
                 <div class="space-y-3">
                     <div class="flex items-center justify-between">
-                        <span class="px-2.5 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                        <span class="px-2.5 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-100 text-amber-900 border border-amber-300">
                             {{ p.badge }}
                         </span>
                         <span class="text-xs font-mono text-slate-400">{{ p.id }}</span>
                     </div>
 
-                    <h3 class="text-lg font-bold text-white">{{ p.title }}</h3>
-                    <p class="text-xs text-slate-300 leading-relaxed">{{ p.impact }}</p>
+                    <h3 class="text-lg font-bold text-slate-900">{{ p.title }}</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">{{ p.impact }}</p>
 
-                    <div class="text-[11px] text-slate-400">
-                        <i class="fa-solid fa-user-pen mr-1 text-emerald-400"></i> Proposed by: <b>{{ p.proposer }}</b>
+                    <div class="text-[11px] text-slate-500">
+                        <i class="fa-solid fa-user-pen mr-1 text-emerald-600"></i> Proposed by: <b>{{ p.proposer }}</b>
                     </div>
                 </div>
 
                 <!-- Voting Progress Bar -->
-                <div class="space-y-3 pt-4 border-t border-slate-800">
+                <div class="space-y-3 pt-4 border-t border-slate-100">
                     <div class="flex items-center justify-between text-xs">
-                        <span class="text-emerald-400 font-bold">YES: <span id="yes-count-{{ p.id }}">{{ p.yes_votes }}</span> votes</span>
-                        <span class="text-rose-400 font-bold">NO: <span id="no-count-{{ p.id }}">{{ p.no_votes }}</span> votes</span>
+                        <span class="text-emerald-700 font-bold">YES: <span id="yes-count-{{ p.id }}">{{ p.yes_votes }}</span> votes</span>
+                        <span class="text-rose-700 font-bold">NO: <span id="no-count-{{ p.id }}">{{ p.no_votes }}</span> votes</span>
                     </div>
                     
-                    <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden flex">
+                    <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden flex border border-slate-200">
                         {% set total_v = p.yes_votes + p.no_votes %}
                         {% set yes_pct = (p.yes_votes / total_v * 100)|round|int if total_v > 0 else 50 %}
-                        <div id="vote-bar-{{ p.id }}" class="bg-gradient-to-r from-emerald-500 to-teal-400 h-full transition-all duration-500" style="width: {{ yes_pct }}%"></div>
+                        <div id="vote-bar-{{ p.id }}" class="bg-gradient-to-r from-emerald-500 to-teal-500 h-full transition-all duration-500" style="width: {{ yes_pct }}%"></div>
                     </div>
 
                     <!-- Voting Action Buttons -->
                     <div class="grid grid-cols-2 gap-3 pt-2">
-                        <button onclick="castDemocraticVote('{{ p.id }}', 'yes')" class="py-2.5 rounded-xl bg-emerald-600/30 hover:bg-emerald-600 text-emerald-200 text-xs font-bold border border-emerald-500/40 transition flex items-center justify-center gap-1.5">
+                        <button onclick="castDemocraticVote('{{ p.id }}', 'yes')" class="py-2.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-xs font-bold border border-emerald-300 transition flex items-center justify-center gap-1.5">
                             <i class="fa-solid fa-thumbs-up"></i> Vote YES
                         </button>
-                        <button onclick="castDemocraticVote('{{ p.id }}', 'no')" class="py-2.5 rounded-xl bg-rose-600/30 hover:bg-rose-600 text-rose-200 text-xs font-bold border border-rose-500/40 transition flex items-center justify-center gap-1.5">
+                        <button onclick="castDemocraticVote('{{ p.id }}', 'no')" class="py-2.5 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-800 text-xs font-bold border border-rose-300 transition flex items-center justify-center gap-1.5">
                             <i class="fa-solid fa-thumbs-down"></i> Vote NO
                         </button>
                     </div>
@@ -120,61 +120,107 @@
     </div>
 
 
-    <!-- CITIZEN DISPUTE RESOLUTION TRIBUNAL -->
-    <div class="space-y-6">
-        <div>
-            <h2 class="text-xl font-bold font-heading text-white flex items-center gap-2">
-                <i class="fa-solid fa-scale-balanced text-indigo-400"></i> Citizen Dispute Resolution Tribunal
-            </h2>
-            <p class="text-xs text-slate-400">Peer verification panel resolves customer-worker disputes without corporate middleman bias</p>
+    <!-- CITIZEN-WORKER DISPUTE TRIBUNAL & MEDIATION DESK -->
+    <div class="glass-panel-glow rounded-3xl p-6 sm:p-10 border border-amber-300 bg-white shadow-sm space-y-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+                <span class="text-xs font-mono font-bold uppercase tracking-wider text-amber-800 bg-amber-100 px-3 py-1 rounded-full border border-amber-300">
+                    <i class="fa-solid fa-scale-balanced mr-1"></i> Checkpoint 07 Dispute Mediation
+                </span>
+                <h2 class="text-2xl font-bold font-heading text-slate-900 mt-2">Cooperative Dispute Resolution Tribunal</h2>
+                <p class="text-xs text-slate-600">When scope or workmanship mismatches occur, funds are safely frozen in escrow while a 3-member peer committee arbitrates within 24 hours.</p>
+            </div>
+            <button onclick="openDisputeModal()" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-bold text-xs shadow-md transition flex items-center gap-2">
+                <i class="fa-solid fa-triangle-exclamation"></i> File Tribunal Dispute
+            </button>
         </div>
 
-        <div class="glass-panel rounded-3xl p-6 sm:p-8 border border-indigo-500/30 space-y-6">
-            {% for d in disputes %}
-            <div class="space-y-4">
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-slate-800">
-                    <div>
-                        <div class="flex items-center gap-2">
-                            <span class="text-xs font-mono font-bold text-amber-400">{{ d.id }}</span>
-                            <span class="text-xs font-bold text-white">Booking Ref: {{ d.booking_id }}</span>
-                        </div>
-                        <h3 class="text-base font-bold text-white mt-0.5">{{ d.service }}</h3>
-                    </div>
-                    <div class="text-xs text-slate-300">
-                        <span class="text-slate-400">Customer:</span> <b>{{ d.customer }}</b> • <span class="text-slate-400">Worker:</span> <b>{{ d.worker }}</b>
-                    </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+                <div class="flex items-center justify-between text-slate-500 font-mono text-[10px]">
+                    <span>CASE #DISP-842</span>
+                    <span class="text-amber-700 font-bold">IN MEDIATION</span>
                 </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-                    <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-1">
-                        <div class="font-bold text-rose-300"><i class="fa-solid fa-circle-exclamation mr-1"></i> Customer Issue Claim:</div>
-                        <p class="text-slate-300 leading-relaxed">{{ d.issue_text }}</p>
-                    </div>
-                    <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-1">
-                        <div class="font-bold text-emerald-300"><i class="fa-solid fa-screwdriver-wrench mr-1"></i> Worker Defense & Proof:</div>
-                        <p class="text-slate-300 leading-relaxed">{{ d.worker_defense }}</p>
-                    </div>
-                </div>
-
-                <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-3 border-t border-slate-800">
-                    <div class="text-xs text-slate-400">
-                        <i class="fa-solid fa-lock text-emerald-400 mr-1"></i> Escrow Locked: <b class="text-white">₹{{ d.amount }}</b>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <button onclick="ResilienceEngine.voteDispute('{{ d.id }}', 'resolve')" class="px-4 py-2 rounded-xl bg-emerald-600/30 hover:bg-emerald-600 text-emerald-200 text-xs font-bold border border-emerald-500/40 transition">
-                            <i class="fa-solid fa-circle-check mr-1"></i> Pass Work (<span id="dispute-resolve-count-{{ d.id }}">{{ d.peer_votes_resolve }}</span>)
-                        </button>
-                        <button onclick="ResilienceEngine.voteDispute('{{ d.id }}', 'refund')" class="px-4 py-2 rounded-xl bg-rose-600/30 hover:bg-rose-600 text-rose-200 text-xs font-bold border border-rose-500/40 transition">
-                            <i class="fa-solid fa-rotate-left mr-1"></i> Issue Full Refund (<span id="dispute-refund-count-{{ d.id }}">{{ d.peer_votes_refund }}</span>)
-                        </button>
-                    </div>
-                </div>
+                <div class="font-bold text-slate-900">AC Cooling Pipe Joint Scope Discrepancy</div>
+                <p class="text-[11px] text-slate-600">Customer claimed extra copper pipe charge; worker provided pre-job photo proof. Escrow frozen: ₹850.</p>
+                <div class="text-[10px] text-slate-500 font-mono pt-1 border-t border-slate-200">Arbitrators: 2 Stewards + 1 RWA Rep</div>
             </div>
-            {% endfor %}
+
+            <div class="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 space-y-2">
+                <div class="flex items-center justify-between text-emerald-800 font-mono text-[10px]">
+                    <span>CASE #DISP-820</span>
+                    <span class="text-emerald-700 font-bold"><i class="fa-solid fa-circle-check mr-1"></i> RESOLVED</span>
+                </div>
+                <div class="font-bold text-slate-900">Submersible Pump Wiring Defect</div>
+                <p class="text-[11px] text-slate-600">Durability check flagged recurrence after 48h. Free replacement dispatched; 100% customer satisfaction restored.</p>
+                <div class="text-[10px] text-emerald-800 font-mono pt-1 border-t border-emerald-200">Resolution: Full Warranty Honored</div>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+                <div class="flex items-center justify-between text-slate-500 font-mono text-[10px]">
+                    <span>CASE #DISP-805</span>
+                    <span class="text-emerald-700 font-bold"><i class="fa-solid fa-circle-check mr-1"></i> MUTUAL SPLIT</span>
+                </div>
+                <div class="font-bold text-slate-900">Tile Grouting Color Shade Variance</div>
+                <p class="text-[11px] text-slate-600">Mutual agreement reached in 6 hours. ₹200 rebate from co-op welfare reserve applied cleanly.</p>
+                <div class="text-[10px] text-slate-500 font-mono pt-1 border-t border-slate-200">Resolution Time: 5.8 Hours Avg</div>
+            </div>
         </div>
     </div>
 
 </div>
+
+<!-- Dispute Filing Modal -->
+<div id="dispute-modal" class="fixed inset-0 z-50 modal-backdrop hidden items-center justify-center p-4">
+    <div class="relative w-full max-w-md bg-white rounded-3xl border border-amber-300 p-6 sm:p-8 space-y-5 shadow-2xl">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="w-10 h-10 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center text-xl">
+                    <i class="fa-solid fa-scale-balanced"></i>
+                </div>
+                <div>
+                    <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-amber-700">Tribunal Desk</span>
+                    <h3 class="text-lg font-bold font-heading text-slate-900">File Service Dispute</h3>
+                </div>
+            </div>
+            <button onclick="closeDisputeModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <p class="text-xs text-slate-600 leading-relaxed">
+            Filing a dispute immediately freezes the escrow funds and alerts the 3-member peer arbitration council.
+        </p>
+
+        <form onsubmit="event.preventDefault(); submitDisputeCase();" class="space-y-4 text-xs">
+            <div>
+                <label class="block font-semibold text-slate-700 mb-1">Booking Job ID / Reference *</label>
+                <input type="text" id="disp-job-id" value="JOB-26089" required class="w-full px-4 py-2.5 rounded-xl glass-input font-mono font-bold">
+            </div>
+            <div>
+                <label class="block font-semibold text-slate-700 mb-1">Dispute Reason *</label>
+                <select id="disp-reason" class="w-full px-3 py-2.5 rounded-xl glass-input font-medium">
+                    <option value="Scope mismatch from pre-job photo">Scope mismatch from pre-job photo</option>
+                    <option value="Incomplete repair work">Incomplete repair work</option>
+                    <option value="Subsequent asset defect after completion">Subsequent asset defect after completion</option>
+                    <option value="Billing discrepancy">Billing discrepancy</option>
+                </select>
+            </div>
+            <div>
+                <label class="block font-semibold text-slate-700 mb-1">Disputed Escrow Amount (INR) *</label>
+                <input type="number" id="disp-amount" value="499" min="100" class="w-full px-4 py-2.5 rounded-xl glass-input font-bold">
+            </div>
+            <div>
+                <label class="block font-semibold text-slate-700 mb-1">Detailed Explanation</label>
+                <textarea id="disp-desc" rows="2" class="w-full px-4 py-2 rounded-xl glass-input" placeholder="Explain the discrepancy..."></textarea>
+            </div>
+            <button type="submit" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-bold text-xs shadow-md transition">
+                Freeze Escrow & Lodge Tribunal Case
+            </button>
+        </form>
+    </div>
+</div>
+
 
 <script>
 function castDemocraticVote(proposalId, choice) {
@@ -193,6 +239,32 @@ function castDemocraticVote(proposalId, choice) {
 
         Toast.show(`🗳️ Democratic Vote '${choice.toUpperCase()}' recorded on Co-op Ledger!`, 'success');
         SoundFX.cash();
+    });
+}
+
+function openDisputeModal() {
+    const modal = document.getElementById('dispute-modal');
+    if (modal) { modal.classList.remove('hidden'); modal.classList.add('flex'); }
+}
+function closeDisputeModal() {
+    const modal = document.getElementById('dispute-modal');
+    if (modal) { modal.classList.add('hidden'); modal.classList.remove('flex'); }
+}
+function submitDisputeCase() {
+    const jobId = document.getElementById('disp-job-id').value;
+    const reason = document.getElementById('disp-reason').value;
+    const amount = document.getElementById('disp-amount').value;
+
+    fetch('/api/dispute/file', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({job_id: jobId, reason: reason, amount: amount, customer: 'Customer Member', worker: 'Verified Pro'})
+    })
+    .then(r => r.json())
+    .then(data => {
+        closeDisputeModal();
+        Toast.show(`⚖️ Escrow Frozen (₹${amount}). Case #${data.dispute ? data.dispute.id : 'DISP-NEW'} logged for 24h peer resolution.`, 'warning', 8000);
+        SoundFX.sos();
     });
 }
 </script>

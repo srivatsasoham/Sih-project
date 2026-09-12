@@ -1,5 +1,5 @@
 /**
- * SahiDeal - Resilience & Trust Checkpoint Simulation Engine
+ * Co-Work (पारस्परिक सहकारी) - Resilience & Trust Checkpoint Simulation Engine
  * Powers the 6 Real-World Failure Handlers (Slide 2) & 7-Checkpoints Stepper (Slide 3)
  */
 

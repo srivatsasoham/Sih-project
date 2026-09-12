@@ -1,7 +1,7 @@
 /**
- * SahiDeal (पारस्परिक सहकारी) - Real-Time Live Sync & State Engine
- * Enables 100% Real-Time Cross-Tab / Cross-Device Coordination between Customer & Worker
- * Uses BroadcastChannel + LocalStorage Events + REST API fallback
+ * Co-Work (पारस्परिक सहकारी) - Real-Time Live Sync & Cross-Device State Engine
+ * Enables 100% Real-Time Cross-Device & Cross-Tab Coordination between Customer & Worker
+ * Uses Server REST API Polling + BroadcastChannel + LocalStorage Events
  */
 
 const DEFAULT_SHADOW_AVATAR = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='%2364748b'%3E%3Crect width='100' height='100' fill='%230f172a'/%3E%3Cpath d='M50 48a18 18 0 1 0 0-36 18 18 0 0 0 0 36zm0 10c-20 0-36 12-36 28v6h72v-6c0-16-16-28-36-28z' fill='%23475569'/%3E%3C/svg%3E";
@@ -9,11 +9,13 @@ const DEFAULT_SHADOW_AVATAR = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.or
 const CoopSync = {
     channel: null,
     DEFAULT_AVATAR: DEFAULT_SHADOW_AVATAR,
+    pollingInterval: null,
+    lastKnownJobIds: new Set(),
     
-    // Default initial seed state if empty
+    // Default initial state
     state: {
-        activeRole: localStorage.getItem('sahideal_active_role') || null,
-        isWorkerOnline: localStorage.getItem('sahideal_worker_online') !== 'false',
+        activeRole: localStorage.getItem('cowork_active_role') || localStorage.getItem('sahideal_active_role') || null,
+        isWorkerOnline: (localStorage.getItem('cowork_worker_online') || localStorage.getItem('sahideal_worker_online')) !== 'false',
         customerUser: null,
         workerUser: {
             name: "Ramesh Kumar",
@@ -44,29 +46,36 @@ const CoopSync = {
         // Setup BroadcastChannel for Instant Cross-Tab Realtime Messaging
         if (typeof BroadcastChannel !== 'undefined') {
             try {
-                this.channel = new BroadcastChannel('sahideal_realtime_coop');
+                this.channel = new BroadcastChannel('cowork_realtime_coop');
                 this.channel.onmessage = (event) => {
                     this.handleIncomingEvent(event.data);
                 };
             } catch (e) {
-                console.warn("BroadcastChannel fallback to storage events");
+                console.warn("BroadcastChannel fallback to storage/REST sync");
             }
         }
 
         // Listen for storage changes across tabs
         window.addEventListener('storage', (e) => {
-            if (e.key === 'sahideal_app_state') {
+            if (e.key === 'cowork_app_state' || e.key === 'sahideal_app_state') {
                 this.loadState();
                 if (window.onCoopStateUpdated) {
                     window.onCoopStateUpdated(this.state);
                 }
             }
         });
+
+        // Initialize last known job IDs
+        this.state.activeJobs.forEach(j => this.lastKnownJobIds.add(j.id));
+
+        // Start Cross-Device Server REST API Polling (every 1.5 seconds)
+        this.pollServer();
+        this.pollingInterval = setInterval(() => this.pollServer(), 1500);
     },
 
     loadState() {
         try {
-            const saved = localStorage.getItem('sahideal_app_state');
+            const saved = localStorage.getItem('cowork_app_state') || localStorage.getItem('sahideal_app_state');
             if (saved) {
                 const parsed = JSON.parse(saved);
                 this.state = { ...this.state, ...parsed };
@@ -78,7 +87,7 @@ const CoopSync = {
 
     saveState() {
         try {
-            localStorage.setItem('sahideal_app_state', JSON.stringify(this.state));
+            localStorage.setItem('cowork_app_state', JSON.stringify(this.state));
             if (this.channel) {
                 this.channel.postMessage({ type: 'STATE_UPDATED', state: this.state });
             }
@@ -94,18 +103,96 @@ const CoopSync = {
         }
     },
 
+    // Cross-Device Server State Poller
+    async pollServer() {
+        try {
+            const res = await fetch('/api/jobs');
+            if (!res.ok) return;
+            const data = await res.json();
+            if (!data.success) return;
+
+            let hasChanges = false;
+            const prevActiveJobs = this.state.activeJobs || [];
+            const serverActiveJobs = data.activeJobs || [];
+            const serverCompletedJobs = data.completedJobs || [];
+
+            // Check for brand new incoming jobs (e.g. customer posted on PC, worker is on Mobile)
+            serverActiveJobs.forEach(serverJob => {
+                if (!this.lastKnownJobIds.has(serverJob.id) && serverJob.status === 'OPEN') {
+                    this.lastKnownJobIds.add(serverJob.id);
+                    // Incoming Gig Alarm for Worker
+                    if (this.state.isWorkerOnline) {
+                        if (typeof onWorkerJobReceived === 'function') {
+                            onWorkerJobReceived(serverJob);
+                        }
+                        if (typeof SoundFX !== 'undefined') {
+                            SoundFX.alarm();
+                        }
+                        if (typeof Toast !== 'undefined') {
+                            Toast.show(`🚨 INCOMING GIG ALARM: ${serverJob.serviceTitle} (₹${serverJob.workerPayout}) from ${serverJob.customerName}`, 'sos', 8000);
+                        }
+                    }
+                    hasChanges = true;
+                }
+            });
+
+            // Check for status changes on existing jobs
+            prevActiveJobs.forEach(localJob => {
+                const updatedServerJob = serverActiveJobs.find(j => j.id === localJob.id);
+                if (updatedServerJob) {
+                    if (localJob.status !== updatedServerJob.status) {
+                        hasChanges = true;
+                        if (updatedServerJob.status === 'ACCEPTED' && localJob.status === 'OPEN') {
+                            if (typeof onCustomerJobAccepted === 'function') onCustomerJobAccepted(updatedServerJob);
+                            if (typeof Toast !== 'undefined') Toast.show(`🚀 Worker ${updatedServerJob.workerName} has ACCEPTED your request! ETA: 12 Mins`, 'success', 6000);
+                            if (typeof SoundFX !== 'undefined') SoundFX.success();
+                        } else if (updatedServerJob.status === 'IN_PROGRESS' && localJob.status !== 'IN_PROGRESS') {
+                            if (typeof onCustomerJobStarted === 'function') onCustomerJobStarted(updatedServerJob);
+                            if (typeof Toast !== 'undefined') Toast.show(`⚡ Start OTP Verified! Pro ${updatedServerJob.workerName} started work.`, 'info');
+                        } else if (updatedServerJob.status === 'TIMEOUT' && localJob.status !== 'TIMEOUT') {
+                            if (typeof onCustomerJobTimeout === 'function') onCustomerJobTimeout(updatedServerJob);
+                        }
+                    }
+                } else {
+                    // Check if moved to completedJobs
+                    const completedServerJob = serverCompletedJobs.find(j => j.id === localJob.id);
+                    if (completedServerJob) {
+                        hasChanges = true;
+                        if (typeof onCustomerJobCompleted === 'function') onCustomerJobCompleted(completedServerJob);
+                        if (typeof Toast !== 'undefined') Toast.show(`✅ Task verified & completed! Escrow released to ${completedServerJob.workerName}.`, 'success', 8000);
+                        if (typeof SoundFX !== 'undefined') SoundFX.cash();
+                    }
+                }
+            });
+
+            // Sync full state from server
+            if (JSON.stringify(this.state.activeJobs) !== JSON.stringify(serverActiveJobs) ||
+                JSON.stringify(this.state.completedJobs) !== JSON.stringify(serverCompletedJobs)) {
+                this.state.activeJobs = serverActiveJobs;
+                this.state.completedJobs = serverCompletedJobs;
+                if (data.workerWallet) this.state.workerWallet = data.workerWallet;
+                this.saveState();
+                if (typeof renderWorkerRadar === 'function') renderWorkerRadar();
+                if (typeof renderWorkerWalletUI === 'function') renderWorkerWalletUI();
+            }
+
+        } catch (e) {
+            // Polling silently ignores network hiccups
+        }
+    },
+
     handleIncomingEvent(event) {
         const { type, payload } = event;
         this.loadState();
 
         if (type === 'JOB_POSTED') {
-            // If on Worker page and worker is ONLINE, sound alarm and update radar
+            this.lastKnownJobIds.add(payload.id);
             if (this.state.isWorkerOnline) {
                 if (typeof onWorkerJobReceived === 'function') {
                     onWorkerJobReceived(payload);
                 }
                 if (typeof SoundFX !== 'undefined') {
-                    SoundFX.alarm(); // Loud audio alert for active worker
+                    SoundFX.alarm();
                 }
                 if (typeof Toast !== 'undefined') {
                     Toast.show(`🚨 INCOMING GIG ALARM: ${payload.serviceTitle} (₹${payload.workerPayout}) from ${payload.customerName}`, 'sos', 8000);
@@ -113,7 +200,6 @@ const CoopSync = {
             }
         } 
         else if (type === 'JOB_ACCEPTED') {
-            // If on Customer page, transition immediately to Live GPS Tracking
             if (typeof onCustomerJobAccepted === 'function') {
                 onCustomerJobAccepted(payload);
             }
@@ -166,28 +252,49 @@ const CoopSync = {
     // Online / Offline & Role Session Management
     setWorkerOnline(isOnline) {
         this.state.isWorkerOnline = isOnline;
-        localStorage.setItem('sahideal_worker_online', isOnline ? 'true' : 'false');
+        localStorage.setItem('cowork_worker_online', isOnline ? 'true' : 'false');
         this.saveState();
         this.broadcast('WORKER_STATUS_CHANGED', { isOnline });
+
+        // Push to server
+        fetch('/api/worker/status', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ isOnline })
+        }).catch(() => {});
+
         return isOnline;
     },
 
     setCustomer(user) {
         this.state.customerUser = user;
         this.state.activeRole = 'customer';
-        localStorage.setItem('sahideal_active_role', 'customer');
+        localStorage.setItem('cowork_active_role', 'customer');
         this.saveState();
+
+        fetch('/api/customer/profile', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(user)
+        }).catch(() => {});
     },
 
     setWorker(user) {
         this.state.workerUser = user;
         this.state.activeRole = 'worker';
-        localStorage.setItem('sahideal_active_role', 'worker');
+        localStorage.setItem('cowork_active_role', 'worker');
         this.saveState();
+
+        fetch('/api/worker/profile', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(user)
+        }).catch(() => {});
     },
 
     logout() {
         this.state.activeRole = null;
+        localStorage.removeItem('cowork_active_role');
         localStorage.removeItem('sahideal_active_role');
         this.saveState();
         this.broadcast('USER_LOGGED_OUT', {});
@@ -200,6 +307,12 @@ const CoopSync = {
         this.state.workerUser.avatar = avatarDataUrl;
         this.saveState();
         this.broadcast('WORKER_AVATAR_UPDATED', { avatar: avatarDataUrl });
+
+        fetch('/api/worker/profile', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ avatar: avatarDataUrl })
+        }).catch(() => {});
     },
 
     getCustomer() {
@@ -215,19 +328,19 @@ const CoopSync = {
         const jobId = `GIG-${Math.floor(1000 + Math.random() * 9000)}`;
         const startOtp = `${Math.floor(1000 + Math.random() * 9000)}`;
         const completeOtp = `${Math.floor(1000 + Math.random() * 9000)}`;
-        const price = jobDetails.price || 599;
+        const price = jobDetails.price || 499;
         const workerPayout = Math.round(price * 0.92);
         const coopFee = price - workerPayout;
 
         const job = {
             id: jobId,
             serviceTitle: jobDetails.title,
-            category: jobDetails.category || "custom",
+            category: jobDetails.category || "plumbing",
             problemDescription: jobDetails.description || "Service requested via customer portal",
             customerName: jobDetails.customerName || (this.state.customerUser ? this.state.customerUser.name : "Valued Customer"),
             customerPhone: jobDetails.customerPhone || (this.state.customerUser ? this.state.customerUser.phone : "+91 98450 12345"),
             customerAddress: jobDetails.customerAddress || (this.state.customerUser ? this.state.customerUser.address : "Indiranagar, Bangalore"),
-            urgency: jobDetails.urgency || "Immediate (<20 mins)",
+            urgency: jobDetails.urgency || "⚡ Immediate (<20 mins)",
             price: price,
             workerPayout: workerPayout,
             coopFee: coopFee,
@@ -238,18 +351,24 @@ const CoopSync = {
             createdAtTimestamp: Date.now(),
             workerName: null,
             workerPhone: null,
+            workerTrade: null,
             workerAvatar: null,
             workPhotoProof: null,
             customerRating: null,
             customerReview: null
         };
 
-        // Add to state and save
+        this.lastKnownJobIds.add(job.id);
         this.state.activeJobs.unshift(job);
         this.saveState();
-
-        // Broadcast to all active worker tabs
         this.broadcast('JOB_POSTED', job);
+
+        // Push to server REST API for cross-device visibility
+        fetch('/api/jobs/post', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(job)
+        }).catch(err => console.warn("Failed to push job to server:", err));
 
         return job;
     },
@@ -275,8 +394,15 @@ const CoopSync = {
 
         this.state.activeJobs[jobIndex] = job;
         this.saveState();
-
         this.broadcast('JOB_ACCEPTED', job);
+
+        // Push acceptance to server REST API
+        fetch('/api/jobs/accept', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ job_id: jobId, worker })
+        }).catch(err => console.warn("Failed to push accept to server:", err));
+
         return { success: true, job };
     },
 
@@ -290,6 +416,12 @@ const CoopSync = {
             this.state.activeJobs[jobIndex] = job;
             this.saveState();
             this.broadcast('JOB_TIMEOUT', job);
+
+            fetch('/api/jobs/timeout', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ job_id: jobId })
+            }).catch(() => {});
         }
         return job;
     },
@@ -304,6 +436,13 @@ const CoopSync = {
         this.state.activeJobs[jobIndex] = job;
         this.saveState();
         this.broadcast('JOB_POSTED', job);
+
+        fetch('/api/jobs/retry', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ job_id: jobId })
+        }).catch(() => {});
+
         return job;
     },
 
@@ -320,8 +459,14 @@ const CoopSync = {
         job.startedAt = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
         this.state.activeJobs[jobIndex] = job;
         this.saveState();
-
         this.broadcast('JOB_STARTED', job);
+
+        fetch('/api/jobs/start-otp', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ job_id: jobId, otp: enteredOtp })
+        }).catch(() => {});
+
         return { success: true, job };
     },
 
@@ -329,8 +474,15 @@ const CoopSync = {
         const jobIndex = this.state.activeJobs.findIndex(j => j.id === jobId);
         if (jobIndex === -1) return false;
 
-        this.state.activeJobs[jobIndex].workPhotoProof = photoDataUrl || "https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=400&auto=format&fit=crop&q=80";
+        this.state.activeJobs[jobIndex].workPhotoProof = photoDataUrl || DEFAULT_SHADOW_AVATAR;
         this.saveState();
+
+        fetch('/api/jobs/photo-proof', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ job_id: jobId, photo: photoDataUrl })
+        }).catch(() => {});
+
         return true;
     },
 
@@ -365,8 +517,14 @@ const CoopSync = {
         this.state.completedJobs.unshift(job);
         this.state.activeJobs.splice(jobIndex, 1);
         this.saveState();
-
         this.broadcast('JOB_COMPLETED', job);
+
+        fetch('/api/jobs/complete-otp', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ job_id: jobId, otp: enteredOtp })
+        }).catch(() => {});
+
         return { success: true, job };
     },
 
@@ -379,6 +537,13 @@ const CoopSync = {
 
         this.saveState();
         this.broadcast('JOB_RATED', { jobId, rating, reviewText });
+
+        fetch('/api/jobs/rate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ job_id: jobId, rating, review: reviewText })
+        }).catch(() => {});
+
         return true;
     }
 };

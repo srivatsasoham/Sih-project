@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 from flask import Flask, render_template, request, jsonify, redirect, url_for, session
 
 app = Flask(__name__)
-app.secret_key = os.environ.get("SECRET_KEY", "sahideal-coop-sih-2026-secret-key")
+app.secret_key = os.environ.get("SECRET_KEY", "cowork-coop-sih-2026-secret-key")
 
 # -------------------------------------------------------------
 # Metadata & Hackathon Identification
@@ -13,7 +13,8 @@ app.secret_key = os.environ.get("SECRET_KEY", "sahideal-coop-sih-2026-secret-key
 PLATFORM_INFO = {
     "brand_name": "SahiDeal",
     "hindi_tagline": "पारस्परिक सहकारी",
-    "subtitle": "The worker-owned marketplace for trusted neighborhood services",
+    "tagline": "Transforming Informal Labour Through Accountable Commerce",
+    "subtitle": "The cooperative-owned local service network for accountable commerce",
     "problem_id": "26089",
     "problem_title": "Cooperative Gig Services Platform for Household & Community Services",
     "theme": "Agriculture, FoodTech & Rural Development / Software",
@@ -500,14 +501,45 @@ DEMO_USERS = {
         "name": "Ramesh Kumar Sharma",
         "role": "worker",
         "phone": "+91 98860 54321",
-        "email": "ramesh.electrician@coop.sahideal.in",
+        "email": "ramesh.electrician@coop.cowork.in",
         "trade": "Master Electrician & Solar Specialist",
-        "avatar": "https://images.unsplash.com/photo-1540569014015-19a7be504e3a?w=150&auto=format&fit=crop&q=80",
+        "avatar": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='%2364748b'%3E%3Crect width='100' height='100' fill='%230f172a'/%3E%3Cpath d='M50 48a18 18 0 1 0 0-36 18 18 0 0 0 0 36zm0 10c-20 0-36 12-36 28v6h72v-6c0-16-16-28-36-28z' fill='%23475569'/%3E%3C/svg%3E",
         "aadhaar_verified": True,
         "shares_owned": 142,
         "dividend_earned": 28400,
         "wallet_balance": 4850,
         "trust_score": 98
+    }
+}
+
+# -------------------------------------------------------------
+# Global Cross-Device Synchronized Cooperative State
+# -------------------------------------------------------------
+DEFAULT_SHADOW_AVATAR = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='%2364748b'%3E%3Crect width='100' height='100' fill='%230f172a'/%3E%3Cpath d='M50 48a18 18 0 1 0 0-36 18 18 0 0 0 0 36zm0 10c-20 0-36 12-36 28v6h72v-6c0-16-16-28-36-28z' fill='%23475569'/%3E%3C/svg%3E"
+
+GLOBAL_SYNC_STATE = {
+    "isWorkerOnline": True,
+    "activeJobs": [],
+    "completedJobs": [],
+    "workerUser": {
+        "name": "Ramesh Kumar",
+        "phone": "+91 98860 54321",
+        "trade": "Master Electrician & Plumber",
+        "experience": "8 Years",
+        "location": "Indiranagar (1.2 km radius)",
+        "avatar": DEFAULT_SHADOW_AVATAR
+    },
+    "customerUser": None,
+    "workerWallet": {
+        "balance": 4850,
+        "earningsToday": 0,
+        "totalJobs": 142,
+        "shares": 14,
+        "dividendsAccrued": 2840,
+        "transactions": [
+            { "id": "TXN-801", "title": "Full Home Electrical Safety Audit", "amount": 643, "fee": 56, "time": "Today, 2:30 PM", "customer": "Rahul V." },
+            { "id": "TXN-800", "title": "BLDC Fan Installation", "amount": 413, "fee": 36, "time": "Yesterday", "customer": "Meera K." }
+        ]
     }
 }
 
@@ -773,6 +805,215 @@ def worker_job_action():
 
     return jsonify({"success": False, "error": "Unknown action"}), 400
 
+# -------------------------------------------------------------
+# Cross-Device Real-Time Sync REST APIs (PC <-> Mobile)
+# -------------------------------------------------------------
+
+@app.route("/api/jobs", methods=["GET"])
+def get_sync_state():
+    return jsonify({
+        "success": True,
+        "activeJobs": GLOBAL_SYNC_STATE["activeJobs"],
+        "completedJobs": GLOBAL_SYNC_STATE["completedJobs"],
+        "isWorkerOnline": GLOBAL_SYNC_STATE["isWorkerOnline"],
+        "workerUser": GLOBAL_SYNC_STATE["workerUser"],
+        "customerUser": GLOBAL_SYNC_STATE["customerUser"],
+        "workerWallet": GLOBAL_SYNC_STATE["workerWallet"]
+    })
+
+@app.route("/api/jobs/post", methods=["POST"])
+def post_job_sync():
+    data = request.json or {}
+    job_id = data.get("id") or f"GIG-{random.randint(1000, 9999)}"
+    price = data.get("price", 499)
+    worker_payout = data.get("workerPayout", round(price * 0.92))
+    coop_fee = price - worker_payout
+
+    job = {
+        "id": job_id,
+        "serviceTitle": data.get("title") or data.get("serviceTitle", "Service Request"),
+        "category": data.get("category", "plumbing"),
+        "problemDescription": data.get("description") or data.get("problemDescription", "Customer request"),
+        "customerName": data.get("customerName", "Valued Customer"),
+        "customerPhone": data.get("customerPhone", "+91 98450 12345"),
+        "customerAddress": data.get("customerAddress", "Indiranagar, Bangalore"),
+        "urgency": data.get("urgency", "⚡ Immediate (<20 mins)"),
+        "price": price,
+        "workerPayout": worker_payout,
+        "coopFee": coop_fee,
+        "startOtp": data.get("startOtp") or f"{random.randint(1000, 9999)}",
+        "completeOtp": data.get("completeOtp") or f"{random.randint(1000, 9999)}",
+        "status": "OPEN",
+        "createdAt": datetime.now().strftime("%I:%M %p"),
+        "createdAtTimestamp": datetime.now().timestamp() * 1000,
+        "workerName": None,
+        "workerPhone": None,
+        "workerTrade": None,
+        "workerAvatar": None,
+        "workPhotoProof": None,
+        "customerRating": None,
+        "customerReview": None
+    }
+
+    # Add to activeJobs list at start
+    GLOBAL_SYNC_STATE["activeJobs"].insert(0, job)
+    return jsonify({"success": True, "job": job})
+
+@app.route("/api/jobs/accept", methods=["POST"])
+def accept_job_sync():
+    data = request.json or {}
+    job_id = data.get("job_id")
+    worker = data.get("worker") or GLOBAL_SYNC_STATE["workerUser"]
+
+    job = next((j for j in GLOBAL_SYNC_STATE["activeJobs"] if j["id"] == job_id), None)
+    if not job:
+        return jsonify({"success": False, "message": "Job not found"}), 404
+
+    if job["status"] != "OPEN":
+        return jsonify({"success": False, "message": "Task already accepted by another specialist!"}), 400
+
+    job["status"] = "ACCEPTED"
+    job["workerName"] = worker.get("name", "Co-op Specialist")
+    job["workerPhone"] = worker.get("phone", "+91 98860 54321")
+    job["workerTrade"] = worker.get("trade", "Master Specialist")
+    job["workerAvatar"] = worker.get("avatar", DEFAULT_SHADOW_AVATAR)
+    job["acceptedAt"] = datetime.now().strftime("%I:%M %p")
+    job["etaMinutes"] = 12
+
+    return jsonify({"success": True, "job": job})
+
+@app.route("/api/jobs/start-otp", methods=["POST"])
+def start_otp_sync():
+    data = request.json or {}
+    job_id = data.get("job_id")
+    otp = str(data.get("otp", "")).strip()
+
+    job = next((j for j in GLOBAL_SYNC_STATE["activeJobs"] if j["id"] == job_id), None)
+    if not job:
+        return jsonify({"success": False, "message": "Job not found"}), 404
+
+    if job["startOtp"] != otp:
+        return jsonify({"success": False, "message": "Invalid Start OTP! Ask customer for the 4-digit code shown on their screen."}), 400
+
+    job["status"] = "IN_PROGRESS"
+    job["startedAt"] = datetime.now().strftime("%I:%M %p")
+    return jsonify({"success": True, "job": job})
+
+@app.route("/api/jobs/photo-proof", methods=["POST"])
+def photo_proof_sync():
+    data = request.json or {}
+    job_id = data.get("job_id")
+    photo = data.get("photo", "")
+
+    job = next((j for j in GLOBAL_SYNC_STATE["activeJobs"] if j["id"] == job_id), None)
+    if not job:
+        return jsonify({"success": False, "message": "Job not found"}), 404
+
+    job["workPhotoProof"] = photo
+    return jsonify({"success": True, "job": job})
+
+@app.route("/api/jobs/complete-otp", methods=["POST"])
+def complete_otp_sync():
+    data = request.json or {}
+    job_id = data.get("job_id")
+    otp = str(data.get("otp", "")).strip()
+
+    job = next((j for j in GLOBAL_SYNC_STATE["activeJobs"] if j["id"] == job_id), None)
+    if not job:
+        return jsonify({"success": False, "message": "Job not found"}), 404
+
+    if job["completeOtp"] != otp:
+        return jsonify({"success": False, "message": "Invalid Completion OTP! Customer will provide this code after inspecting your work."}), 400
+
+    job["status"] = "COMPLETED"
+    job["completedAt"] = datetime.now().strftime("%I:%M %p")
+
+    # Update Wallet
+    payout = job.get("workerPayout", 459)
+    fee = job.get("coopFee", 40)
+    GLOBAL_SYNC_STATE["workerWallet"]["balance"] += payout
+    GLOBAL_SYNC_STATE["workerWallet"]["earningsToday"] += payout
+    GLOBAL_SYNC_STATE["workerWallet"]["totalJobs"] += 1
+    GLOBAL_SYNC_STATE["workerWallet"]["dividendsAccrued"] += fee
+
+    GLOBAL_SYNC_STATE["workerWallet"]["transactions"].insert(0, {
+        "id": f"TXN-{random.randint(1000, 9999)}",
+        "title": job["serviceTitle"],
+        "amount": payout,
+        "fee": fee,
+        "time": "Just Now",
+        "customer": job["customerName"]
+    })
+
+    # Move from active to completed
+    GLOBAL_SYNC_STATE["activeJobs"] = [j for j in GLOBAL_SYNC_STATE["activeJobs"] if j["id"] != job_id]
+    GLOBAL_SYNC_STATE["completedJobs"].insert(0, job)
+
+    return jsonify({"success": True, "job": job, "wallet": GLOBAL_SYNC_STATE["workerWallet"]})
+
+@app.route("/api/jobs/rate", methods=["POST"])
+def rate_job_sync():
+    data = request.json or {}
+    job_id = data.get("job_id")
+    rating = data.get("rating", 5)
+    review = data.get("review", "")
+
+    job = next((j for j in GLOBAL_SYNC_STATE["completedJobs"] if j["id"] == job_id), None)
+    if not job:
+        job = next((j for j in GLOBAL_SYNC_STATE["activeJobs"] if j["id"] == job_id), None)
+
+    if job:
+        job["customerRating"] = rating
+        job["customerReview"] = review
+        return jsonify({"success": True, "job": job})
+
+    return jsonify({"success": False, "message": "Job not found"}), 404
+
+@app.route("/api/jobs/timeout", methods=["POST"])
+def timeout_job_sync():
+    data = request.json or {}
+    job_id = data.get("job_id")
+    job = next((j for j in GLOBAL_SYNC_STATE["activeJobs"] if j["id"] == job_id), None)
+    if job and job["status"] == "OPEN":
+        job["status"] = "TIMEOUT"
+        return jsonify({"success": True, "job": job})
+    return jsonify({"success": False, "message": "Job not found or not open"}), 404
+
+@app.route("/api/jobs/retry", methods=["POST"])
+def retry_job_sync():
+    data = request.json or {}
+    job_id = data.get("job_id")
+    job = next((j for j in GLOBAL_SYNC_STATE["activeJobs"] if j["id"] == job_id), None)
+    if job:
+        job["status"] = "OPEN"
+        job["createdAtTimestamp"] = datetime.now().timestamp() * 1000
+        return jsonify({"success": True, "job": job})
+    return jsonify({"success": False, "message": "Job not found"}), 404
+
+@app.route("/api/worker/status", methods=["POST"])
+def set_worker_status_sync():
+    data = request.json or {}
+    is_online = data.get("isOnline", True)
+    GLOBAL_SYNC_STATE["isWorkerOnline"] = is_online
+    return jsonify({"success": True, "isOnline": is_online})
+
+@app.route("/api/worker/profile", methods=["POST"])
+def set_worker_profile_sync():
+    data = request.json or {}
+    if data:
+        GLOBAL_SYNC_STATE["workerUser"].update(data)
+    return jsonify({"success": True, "workerUser": GLOBAL_SYNC_STATE["workerUser"]})
+
+@app.route("/api/customer/profile", methods=["POST"])
+def set_customer_profile_sync():
+    data = request.json or {}
+    GLOBAL_SYNC_STATE["customerUser"] = data
+    return jsonify({"success": True, "customerUser": GLOBAL_SYNC_STATE["customerUser"]})
+
+# -------------------------------------------------------------
+# Resilience & Governance APIs
+# -------------------------------------------------------------
+
 @app.route("/api/resilience/ivr-simulate", methods=["POST"])
 def simulate_ivr_call():
     data = request.json or {}
@@ -781,10 +1022,10 @@ def simulate_ivr_call():
     service_type = data.get("service", "electrical")
 
     messages = {
-        "hi": "नमस्ते, सहीडील (SahiDeal) पारस्परिक सहकारी में आपका स्वागत है। आपके बिजली कार्य हेतु मास्टर इलेक्ट्रीशियन रमेश कुमार (1.2 किमी) को बुक कर दिया गया है। ओटीपी: 4819। कोई बिचौलिया शुल्क नहीं।",
-        "en": "Welcome to SahiDeal Cooperative. Your request for electrical service is confirmed. Master Pro Ramesh Kumar (1.2km away) has been dispatched. Start OTP: 4819.",
-        "kn": "ನಮಸ್ಕಾರ, ಸಹಿಡೀಲ್ ಸಹಕಾರಿ ಸೇವೆಗೆ ಸ್ವಾಗತ. ನಿಮ್ಮ ಎಲೆಕ್ಟ್ರಿಕಲ್ ಸೇವೆಗೆ ರಮೇಶ್ ಕುಮಾರ್ ನಿಯೋಜಿಸಲಾಗಿದೆ. OTP: 4819.",
-        "ta": "வணக்கம், சாஹிடீல் கூட்டுறவு சேவைக்கு நல்வரவு. உங்கள் மின்சார பணிக்கு ரமேஷ் குமார் நியமிக்கப்பட்டுள்ளார். OTP: 4819."
+        "hi": "नमस्ते, को-वर्क (Co-Work) पारस्परिक सहकारी में आपका स्वागत है। आपके बिजली कार्य हेतु मास्टर इलेक्ट्रीशियन रमेश कुमार (1.2 किमी) को बुक कर दिया गया है। ओटीपी: 4819। कोई बिचौलिया शुल्क नहीं।",
+        "en": "Welcome to Co-Work Cooperative. Your request for electrical service is confirmed. Master Pro Ramesh Kumar (1.2km away) has been dispatched. Start OTP: 4819.",
+        "kn": "ನಮಸ್ಕಾರ, ಕೋ-ವರ್ಕ್ ಸಹಕಾರಿ ಸೇವೆಗೆ ಸ್ವಾಗತ. ನಿಮ್ಮ ಎಲೆಕ್ಟ್ರಿಕಲ್ ಸೇವೆಗೆ ರಮೇಶ್ ಕುಮಾರ್ ನಿಯೋಜಿಸಲಾಗಿದೆ. OTP: 4819.",
+        "ta": "வணக்கம், கோ-வொர்க் கூட்டுறவு சேவைக்கு நல்வரவு. உங்கள் மின்சார பணிக்கு ரமேஷ் குமார் நியமிக்கப்பட்டுள்ளார். OTP: 4819."
     }
 
     sms_text = messages.get(language, messages["en"])
@@ -950,6 +1191,208 @@ def calculate_breakdown():
         },
         "extra_in_worker_pocket": round(extra_worker_income, 2),
         "percentage_gain_for_worker": f"+{round((extra_worker_income / corporate_worker_payout) * 100, 1)}%"
+    })
+
+# -------------------------------------------------------------
+# 7 Trust Checkpoints & Extended Co-Op APIs
+# -------------------------------------------------------------
+
+@app.route("/api/ekyc/verify", methods=["POST"])
+def verify_ekyc():
+    data = request.json or {}
+    aadhaar = data.get("aadhaar", "").replace(" ", "")
+    name = data.get("name", "Verified Member")
+    role = data.get("role", "customer")
+
+    is_valid = len(aadhaar) == 12 or aadhaar.isdigit() or len(aadhaar) >= 4
+    if not is_valid and aadhaar != "DEMO":
+        return jsonify({"success": False, "error": "Invalid 12-digit Aadhaar / e-KYC credentials"}), 400
+
+    ekyc_id = f"UIDAI-EKYC-{random.randint(100000, 999999)}"
+    return jsonify({
+        "success": True,
+        "ekyc_id": ekyc_id,
+        "name": name,
+        "role": role,
+        "status": "AADHAAR_EKYC_VERIFIED",
+        "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "verification_badge": "Government e-KYC Verified Co-op Member",
+        "message": f"e-KYC identity authorized for {name} ({role.upper()}) via DigiLocker/UIDAI Gateway."
+    })
+
+@app.route("/api/escrow/lock", methods=["POST"])
+def lock_escrow_payment():
+    data = request.json or {}
+    job_id = data.get("job_id", f"JOB-{random.randint(1000, 9999)}")
+    amount = float(data.get("amount", 499))
+    customer_name = data.get("customer_name", "Customer")
+    service_title = data.get("service_title", "General Maintenance")
+
+    worker_share = round(amount * 0.92, 2)
+    coop_reserve = round(amount * 0.08, 2)
+
+    escrow_record = {
+        "escrow_id": f"ESC-RZP-{random.randint(10000, 99999)}",
+        "job_id": job_id,
+        "customer": customer_name,
+        "service": service_title,
+        "total_amount": amount,
+        "worker_payout_92": worker_share,
+        "coop_reserve_8": coop_reserve,
+        "status": "FUNDS_LOCKED_IN_ESCROW",
+        "payment_gateway": "Razorpay Escrow Sandbox (Instant UPI/NetBanking)",
+        "locked_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    }
+
+    return jsonify({
+        "success": True,
+        "escrow": escrow_record,
+        "message": f"₹{amount} safely locked in Co-op Escrow via Razorpay. Worker payout guaranteed upon dual OTP verification."
+    })
+
+@app.route("/api/feedback/post-service", methods=["POST"])
+def post_service_feedback():
+    data = request.json or {}
+    job_id = data.get("job_id", "JOB-101")
+    durability_score = data.get("durability_rating", 5)
+    worker_skill_score = data.get("worker_skill_rating", 5)
+    asset_damage_reported = data.get("asset_damage", False)
+    notes = data.get("notes", "Repair holding strong! Excellent service.")
+
+    return jsonify({
+        "success": True,
+        "job_id": job_id,
+        "feedback_logged_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "durability_score": durability_score,
+        "worker_skill_score": worker_skill_score,
+        "asset_damage_reported": asset_damage_reported,
+        "trust_score_bonus": "+2 Co-op Trust Points awarded to worker ledger",
+        "message": "7-Day Post-Service validation saved to permanent Co-op quality ledger."
+    })
+
+@app.route("/api/community/bulk-book", methods=["POST"])
+def book_bulk_service():
+    data = request.json or {}
+    society_name = data.get("society_name", "Greenwood Residency RWA")
+    service_title = data.get("service_title", "Apartment Water Line Audit")
+    flats_count = int(data.get("flats_count", 25))
+    contact_person = data.get("contact_person", "RWA Secretary")
+    phone = data.get("phone", "+91 98450 00000")
+
+    base_price = 499
+    discounted_price = 375  # 25% off bulk rate
+    total_savings = (base_price - discounted_price) * flats_count
+    batch_id = f"RWA-BULK-{random.randint(1000, 9999)}"
+
+    return jsonify({
+        "success": True,
+        "batch_id": batch_id,
+        "society_name": society_name,
+        "service_title": service_title,
+        "flats_pooled": flats_count,
+        "discount_applied": "25% Bulk Co-op Tier",
+        "unit_price": discounted_price,
+        "total_society_savings": total_savings,
+        "status": "POD_ASSIGNED_DISPATCH_SCHEDULED",
+        "message": f"Bulk service order #{batch_id} registered for {society_name}! Dedicated Co-op worker pod scheduled."
+    })
+
+@app.route("/api/community/worker-pledge", methods=["POST"])
+def worker_pledge_slot():
+    data = request.json or {}
+    worker_name = data.get("worker_name", "Verified Master Pro")
+    campaign_id = data.get("campaign_id", "c1")
+    trade = data.get("trade", "Electrical")
+    slots = int(data.get("slots", 5))
+
+    return jsonify({
+        "success": True,
+        "pledge_id": f"PLG-{random.randint(1000, 9999)}",
+        "worker_name": worker_name,
+        "campaign_id": campaign_id,
+        "trade": trade,
+        "slots_pledged": slots,
+        "guaranteed_day_earnings": slots * 450,
+        "message": f"Worker slot confirmed for {worker_name}! Guaranteed volume day pay allocated."
+    })
+
+@app.route("/api/dispute/file", methods=["POST"])
+def file_dispute():
+    data = request.json or {}
+    job_id = data.get("job_id", "JOB-UNKNOWN")
+    customer = data.get("customer", "Customer")
+    worker = data.get("worker", "Worker")
+    reason = data.get("reason", "Verification mismatch / scope discrepancy")
+    amount = float(data.get("amount", 499))
+
+    dispute_case = {
+        "id": f"DISP-{random.randint(100, 999)}",
+        "job_id": job_id,
+        "customer": customer,
+        "worker": worker,
+        "reason": reason,
+        "amount": amount,
+        "status": "ESCROW_FROZEN_UNDER_COOP_REVIEW",
+        "tribunal_hearing_deadline": (datetime.now() + timedelta(hours=24)).strftime("%Y-%m-%d %H:%M:%S"),
+        "logged_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    }
+
+    return jsonify({
+        "success": True,
+        "dispute": dispute_case,
+        "message": f"Escrow frozen (₹{amount}). Case #{dispute_case['id']} logged to Co-op Tribunal ledger for 24h peer resolution."
+    })
+
+@app.route("/api/analytics/government", methods=["GET"])
+def get_government_impact_analytics():
+    return jsonify({
+        "success": True,
+        "niti_aayog_alignment": {
+            "gig_workers_projected_2030": "23.5 Million",
+            "informal_sector_base": "490 Million Tradespeople",
+            "coop_income_uplift_pct": "+28.4%",
+            "formal_social_security_coverage": "100% Co-op Reserve Funded"
+        },
+        "urban_impact": {
+            "congestion_reduction_pct": 28.5,
+            "hyperlocal_radius_avg_km": 1.4,
+            "emergency_priority_response_time_min": 11.2,
+            "local_economic_retention_pct": 92.0
+        },
+        "open_ledger": {
+            "total_active_tradespeople": 2840,
+            "active_escrow_balance_inr": 482950,
+            "coop_welfare_reserve_inr": 218400,
+            "completed_verified_gigs": 14280,
+            "dispute_rate_pct": 0.3
+        }
+    })
+
+@app.route("/api/analytics/gig-distribution", methods=["GET"])
+def get_gig_workforce_distribution():
+    sectors = [
+        {"sector": "Ecommerce", "workers_lakhs": 37.0, "icon": "fa-cart-shopping", "color": "emerald"},
+        {"sector": "Logistics", "workers_lakhs": 15.0, "icon": "fa-truck-fast", "color": "teal"},
+        {"sector": "BFSI", "workers_lakhs": 10.0, "icon": "fa-building-columns", "color": "cyan"},
+        {"sector": "Manufacturing", "workers_lakhs": 10.0, "icon": "fa-industry", "color": "blue"},
+        {"sector": "Retail", "workers_lakhs": 7.0, "icon": "fa-shop", "color": "indigo"},
+        {"sector": "Transportation", "workers_lakhs": 6.0, "icon": "fa-van-shuttle", "color": "violet"},
+        {"sector": "IT", "workers_lakhs": 5.0, "icon": "fa-laptop-code", "color": "purple"},
+        {"sector": "Healthcare", "workers_lakhs": 3.0, "icon": "fa-heart-pulse", "color": "rose"},
+        {"sector": "ITeS", "workers_lakhs": 3.0, "icon": "fa-headset", "color": "amber"},
+        {"sector": "Construction", "workers_lakhs": 3.0, "icon": "fa-helmet-safety", "color": "orange"},
+        {"sector": "Education", "workers_lakhs": 3.0, "icon": "fa-graduation-cap", "color": "emerald"},
+        {"sector": "Automotive", "workers_lakhs": 1.0, "icon": "fa-car", "color": "teal"},
+        {"sector": "Hospitality", "workers_lakhs": 0.8, "icon": "fa-hotel", "color": "cyan"},
+        {"sector": "Infrastructure", "workers_lakhs": 0.7, "icon": "fa-road", "color": "blue"},
+        {"sector": "Telecom", "workers_lakhs": 0.5, "icon": "fa-tower-cell", "color": "indigo"},
+        {"sector": "Power & Energy", "workers_lakhs": 0.3, "icon": "fa-bolt", "color": "amber"}
+    ]
+    return jsonify({
+        "success": True,
+        "source": "NITI Aayog 'Booming Gig and Platform Economy' Report & ILO Benchmarks",
+        "total_sectors": len(sectors),
+        "data": sectors
     })
 
 # -------------------------------------------------------------

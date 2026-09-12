@@ -1,71 +1,69 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="space-y-24 pb-20">
+<div class="space-y-16 pb-20">
 
     <!-- HERO SECTION & ROLE ENTRY GATEWAY -->
-    <section class="relative pt-8 pb-8 sm:pt-14 sm:pb-12 overflow-hidden">
+    <section class="relative pt-6 pb-6 sm:pt-10 sm:pb-10 overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center space-y-6 max-w-4xl mx-auto">
                 
                 <!-- Topic Pill -->
-                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900/90 border border-emerald-500/40 text-emerald-400 text-xs font-semibold shadow-lg shadow-emerald-500/10">
-                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-emerald-300 text-emerald-800 text-xs font-bold shadow-sm">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
                     <span>Smart India Hackathon 2026 • PS ID: 26089 • Team SIRA</span>
                 </div>
 
                 <!-- Main Hero Headline -->
-                <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black font-heading tracking-tight text-white leading-[1.1]">
-                    <span data-i18n="hero_title_1">Fair Work.</span>
-                    <span class="text-gradient-emerald" data-i18n="hero_title_2">Community Trust.</span><br>
-                    <span class="text-gradient-cyan-indigo" data-i18n="hero_title_3">Zero Exploitation.</span>
+                <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black font-heading tracking-tight text-slate-900 leading-[1.1]">
+                    <span>Fair Work.</span>
+                    <span class="text-gradient-emerald">Community Trust.</span><br>
+                    <span class="text-gradient-cyan-indigo">Accountable Commerce.</span>
                 </h1>
 
                 <!-- Subtitle -->
-                <p class="text-sm sm:text-base text-slate-300 max-w-3xl mx-auto leading-relaxed" data-i18n="hero_sub">
-                    <b>SahiDeal (पारस्परिक सहकारी)</b> is India's first worker-owned cooperative for household & community services. <b>92% direct worker take-home</b>, a simple <b>8% co-op fee</b> that funds health & dividends, and zero corporate middleman extraction.
+                <p class="text-sm sm:text-base text-slate-600 max-w-3xl mx-auto leading-relaxed">
+                    <b>SahiDeal (पारस्परिक सहकारी)</b> is India's first worker-owned cooperative network for household & community services. <b>92% direct worker take-home</b>, a simple <b>8% co-op fee</b> funding healthcare & dividends, and zero corporate middleman extraction.
                 </p>
 
                 <!-- DUAL ROLE SELECTION GATEWAY -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5 pt-2 text-left max-w-3xl mx-auto">
                     
                     <!-- Customer Portal Entry Card -->
-                    <div onclick="RoleGateway.openModal('customer')" class="glass-panel-role p-6 rounded-3xl cursor-pointer group border border-emerald-500/30 relative overflow-hidden">
-                        <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl group-hover:bg-emerald-500/20 transition-all"></div>
+                    <div onclick="RoleGateway.openModal('customer')" class="glass-panel-role p-6 rounded-3xl cursor-pointer group border border-emerald-300 relative overflow-hidden bg-white">
                         <div class="flex items-center gap-4 mb-3">
-                            <div class="w-12 h-12 rounded-2xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
+                            <div class="w-12 h-12 rounded-2xl bg-emerald-100 border border-emerald-300 text-emerald-700 flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
                                 <i class="fa-solid fa-user-check"></i>
                             </div>
                             <div>
-                                <span class="text-[10px] font-mono font-bold text-emerald-400 uppercase tracking-wider">Residents & Society</span>
-                                <h3 class="text-lg font-bold text-white group-hover:text-emerald-300 transition-colors">Login as Customer</h3>
+                                <span class="text-[10px] font-mono font-bold text-emerald-700 uppercase tracking-wider">Residents & Society</span>
+                                <h3 class="text-lg font-bold text-slate-900 group-hover:text-emerald-700 transition-colors">Login as Customer</h3>
                             </div>
                         </div>
-                        <p class="text-xs text-slate-300 leading-relaxed mb-4">
-                            Fill your details, post repair problems, track worker GPS in real-time, and release escrow with Start/End OTPs.
+                        <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                            Fill your details, post repair problems with photo proof, track worker GPS in real-time, and release escrow with Start/End OTPs.
                         </p>
-                        <div class="flex items-center justify-between text-xs font-semibold text-emerald-400 pt-2 border-t border-slate-800">
+                        <div class="flex items-center justify-between text-xs font-bold text-emerald-700 pt-2 border-t border-slate-100">
                             <span>Post Problem / Book Pro</span>
                             <i class="fa-solid fa-arrow-right group-hover:translate-x-1.5 transition-transform"></i>
                         </div>
                     </div>
 
                     <!-- Worker-Owner Portal Entry Card -->
-                    <div onclick="RoleGateway.openModal('worker')" class="glass-panel-role p-6 rounded-3xl cursor-pointer group border border-amber-500/30 relative overflow-hidden">
-                        <div class="absolute top-0 right-0 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl group-hover:bg-amber-500/20 transition-all"></div>
+                    <div onclick="RoleGateway.openModal('worker')" class="glass-panel-role p-6 rounded-3xl cursor-pointer group border border-amber-300 relative overflow-hidden bg-white">
                         <div class="flex items-center gap-4 mb-3">
-                            <div class="w-12 h-12 rounded-2xl bg-amber-500/20 border border-amber-500/40 text-amber-400 flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
+                            <div class="w-12 h-12 rounded-2xl bg-amber-100 border border-amber-300 text-amber-700 flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
                                 <i class="fa-solid fa-screwdriver-wrench"></i>
                             </div>
                             <div>
-                                <span class="text-[10px] font-mono font-bold text-amber-400 uppercase tracking-wider">Trades & Specialists</span>
-                                <h3 class="text-lg font-bold text-white group-hover:text-amber-300 transition-colors">Login as Worker-Owner</h3>
+                                <span class="text-[10px] font-mono font-bold text-amber-700 uppercase tracking-wider">Trades & Specialists</span>
+                                <h3 class="text-lg font-bold text-slate-900 group-hover:text-amber-700 transition-colors">Login as Worker-Owner</h3>
                             </div>
                         </div>
-                        <p class="text-xs text-slate-300 leading-relaxed mb-4">
+                        <p class="text-xs text-slate-600 leading-relaxed mb-4">
                             Fill your trade details, receive live radar tasks from customers, verify OTPs, upload photo proof, and get instant UPI pay.
                         </p>
-                        <div class="flex items-center justify-between text-xs font-semibold text-amber-400 pt-2 border-t border-slate-800">
+                        <div class="flex items-center justify-between text-xs font-bold text-amber-700 pt-2 border-t border-slate-100">
                             <span>Open Worker Radar</span>
                             <i class="fa-solid fa-arrow-right group-hover:translate-x-1.5 transition-transform"></i>
                         </div>
@@ -78,20 +76,47 @@
     </section>
 
 
+    <!-- OPEN COOPERATIVE LEDGER METRICS -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="glass-panel rounded-3xl p-5 border-l-4 border-l-emerald-500 bg-white">
+                <span class="text-[10px] font-mono font-bold text-slate-500 uppercase">Active Tradespeople</span>
+                <div class="text-2xl sm:text-3xl font-black font-heading text-slate-900 mt-1" id="ledger-active-workers">2,840</div>
+                <div class="text-[11px] text-emerald-700 font-semibold mt-1"><i class="fa-solid fa-circle-check mr-1"></i> 100% e-KYC Vetted</div>
+            </div>
+            <div class="glass-panel rounded-3xl p-5 border-l-4 border-l-cyan-500 bg-white">
+                <span class="text-[10px] font-mono font-bold text-slate-500 uppercase">Active Escrow Balance</span>
+                <div class="text-2xl sm:text-3xl font-black font-heading text-slate-900 mt-1" id="ledger-escrow-balance">₹4,82,950</div>
+                <div class="text-[11px] text-cyan-700 font-semibold mt-1"><i class="fa-solid fa-shield-halved mr-1"></i> Razorpay Milestone</div>
+            </div>
+            <div class="glass-panel rounded-3xl p-5 border-l-4 border-l-indigo-500 bg-white">
+                <span class="text-[10px] font-mono font-bold text-slate-500 uppercase">Co-op Reserve Fund</span>
+                <div class="text-2xl sm:text-3xl font-black font-heading text-slate-900 mt-1" id="ledger-reserve-fund">₹2,18,400</div>
+                <div class="text-[11px] text-indigo-700 font-semibold mt-1"><i class="fa-solid fa-heart-pulse mr-1"></i> Healthcare & Dividend</div>
+            </div>
+            <div class="glass-panel rounded-3xl p-5 border-l-4 border-l-amber-500 bg-white">
+                <span class="text-[10px] font-mono font-bold text-slate-500 uppercase">Completed Gigs</span>
+                <div class="text-2xl sm:text-3xl font-black font-heading text-slate-900 mt-1" id="ledger-completed-gigs">14,280</div>
+                <div class="text-[11px] text-amber-700 font-semibold mt-1"><i class="fa-solid fa-star mr-1"></i> 4.94 Avg Trust Score</div>
+            </div>
+        </div>
+    </section>
+
+
     <!-- CUSTOMER LIVE PROBLEM POSTING & REAL-TIME DISPATCH ENGINE -->
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
             
             <!-- Left: Problem Posting Form (7 Cols) -->
-            <div class="lg:col-span-7 glass-panel-glow rounded-3xl p-6 sm:p-8 border border-emerald-500/40 space-y-6">
+            <div class="lg:col-span-7 glass-panel-glow rounded-3xl p-6 sm:p-8 border border-emerald-300 space-y-6 bg-white">
                 
                 <div class="flex items-center justify-between">
                     <div>
-                        <span class="text-xs font-mono font-bold uppercase tracking-wider text-emerald-400">Live Customer Request Engine</span>
-                        <h2 class="text-2xl font-bold font-heading text-white">Post a Service Problem</h2>
-                        <p class="text-xs text-slate-300 mt-0.5">Your request will instantly ring all available verified workers on their radar.</p>
+                        <span class="text-xs font-mono font-bold uppercase tracking-wider text-emerald-700">Checkpoints 01-03 • Book, Match & Escrow</span>
+                        <h2 class="text-2xl font-bold font-heading text-slate-900">Post a Service Problem</h2>
+                        <p class="text-xs text-slate-600 mt-0.5">Your request will ring all available verified workers within 3km on their live radar.</p>
                     </div>
-                    <span class="w-10 h-10 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-lg">
+                    <span class="w-10 h-10 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-lg">
                         <i class="fa-solid fa-bullhorn"></i>
                     </span>
                 </div>
@@ -99,80 +124,92 @@
                 <form id="customer-problem-form" onsubmit="event.preventDefault(); postCustomerProblem();" class="space-y-4 text-xs">
                     
                     <div>
-                        <label class="block font-semibold text-slate-300 mb-1">What is the issue / service needed? *</label>
-                        <input type="text" id="post-job-title" required placeholder="e.g. Bathroom washbasin pipe leaking water & flooding floor" class="w-full px-4 py-3 rounded-xl glass-input text-xs sm:text-sm">
+                        <label class="block font-semibold text-slate-700 mb-1">What is the issue / service needed? *</label>
+                        <input type="text" id="post-job-title" required placeholder="e.g. Bathroom washbasin pipe leaking water & flooding floor" class="w-full px-4 py-3 rounded-xl glass-input text-xs sm:text-sm font-medium">
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label class="block font-semibold text-slate-300 mb-1">Service Category *</label>
-                            <select id="post-job-category" class="w-full px-3 py-2.5 rounded-xl glass-input text-xs">
-                                <option value="plumbing" class="bg-slate-900">🚰 Plumbing & Water Leak</option>
-                                <option value="electrical" class="bg-slate-900">⚡ Electrical & Short Circuit</option>
-                                <option value="appliances" class="bg-slate-900">❄️ AC & Appliance Repair</option>
-                                <option value="cleaning" class="bg-slate-900">🧹 Deep Cleaning & Sanitation</option>
-                                <option value="carpentry" class="bg-slate-900">🪚 Carpentry & Furniture</option>
-                                <option value="community" class="bg-slate-900">👵 Elder Assist & Care</option>
+                            <label class="block font-semibold text-slate-700 mb-1">Service Category *</label>
+                            <select id="post-job-category" class="w-full px-3 py-2.5 rounded-xl glass-input text-xs font-medium">
+                                <option value="plumbing">🚰 Plumbing & Water Leak</option>
+                                <option value="electrical">⚡ Electrical & Power</option>
+                                <option value="appliances">❄️ AC & Appliance Repair</option>
+                                <option value="cleaning">🧹 Deep Cleaning & Sanitation</option>
+                                <option value="carpentry">🪚 Carpentry & Repairs</option>
+                                <option value="community">👵 Elder Assist & Care</option>
                             </select>
                         </div>
                         <div>
-                            <label class="block font-semibold text-slate-300 mb-1">Urgency Preference</label>
-                            <select id="post-job-urgency" class="w-full px-3 py-2.5 rounded-xl glass-input text-xs">
-                                <option value="⚡ Immediate (<20 mins)" class="bg-slate-900">⚡ Immediate (< 20 mins dispatch)</option>
-                                <option value="📅 Today Evening (5:00 PM - 6:30 PM)" class="bg-slate-900">📅 Today Evening</option>
-                                <option value="📅 Tomorrow Morning" class="bg-slate-900">📅 Tomorrow Morning</option>
+                            <label class="block font-semibold text-slate-700 mb-1">Urgency Preference</label>
+                            <select id="post-job-urgency" class="w-full px-3 py-2.5 rounded-xl glass-input text-xs font-medium">
+                                <option value="⚡ Immediate (<20 mins)">⚡ Immediate (< 20 mins dispatch)</option>
+                                <option value="📅 Today Evening (5:00 PM - 6:30 PM)">📅 Today Evening</option>
+                                <option value="📅 Tomorrow Morning">📅 Tomorrow Morning</option>
                             </select>
                         </div>
                     </div>
 
                     <div>
-                        <label class="block font-semibold text-slate-300 mb-1">Detailed Description of the Problem</label>
-                        <textarea id="post-job-desc" rows="2" placeholder="Provide extra details like floor number, brand of appliance, or specific tools needed..." class="w-full px-4 py-2.5 rounded-xl glass-input text-xs"></textarea>
+                        <label class="block font-semibold text-slate-700 mb-1">Scope Pre-Validation & Description *</label>
+                        <textarea id="post-job-desc" rows="2" placeholder="Provide extra details like floor number, brand of appliance, or specific tools needed to eliminate hidden workload surprises..." class="w-full px-4 py-2.5 rounded-xl glass-input text-xs"></textarea>
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label class="block font-semibold text-slate-300 mb-1">Service Address / Location *</label>
+                            <label class="block font-semibold text-slate-700 mb-1">Service Address / Location *</label>
                             <input type="text" id="post-job-address" required placeholder="e.g. Flat 402, Palm Heights, Indiranagar, Bangalore" class="w-full px-4 py-2.5 rounded-xl glass-input text-xs">
                         </div>
                         <div>
-                            <label class="block font-semibold text-slate-300 mb-1">Your Name & Mobile Number *</label>
+                            <label class="block font-semibold text-slate-700 mb-1">Your Name & Mobile Number *</label>
                             <input type="text" id="post-job-customer-info" required placeholder="e.g. Srivatsa Soham (+91 98765 43210)" class="w-full px-4 py-2.5 rounded-xl glass-input text-xs">
                         </div>
                     </div>
 
-                    <!-- Transparent Pricing & Escrow Box -->
-                    <div class="p-4 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-2">
-                        <div class="flex items-center justify-between text-slate-300">
-                            <span>Estimated Service Bill (Escrow Protected):</span>
-                            <span class="text-base font-black text-white font-heading">₹499</span>
+                    <!-- Scope Photo Proof Upload -->
+                    <div>
+                        <label class="block font-semibold text-slate-700 mb-1"><i class="fa-solid fa-camera text-emerald-600 mr-1"></i> Pre-Job Problem Photo Proof (Scope Pre-Validation)</label>
+                        <div class="flex items-center gap-3">
+                            <input type="file" id="post-job-photo" accept="image/*" onchange="previewScopePhoto(this)" class="text-xs file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-emerald-100 file:text-emerald-800 hover:file:bg-emerald-200 cursor-pointer">
+                            <span id="scope-photo-status" class="text-[11px] text-slate-500 font-medium">Clear photo prevents scope disputes</span>
                         </div>
-                        <div class="flex items-center justify-between text-emerald-400 text-[11px] font-semibold">
-                            <span><i class="fa-solid fa-hand-holding-dollar mr-1"></i> Direct to Worker (92%):</span>
+                        <div id="scope-photo-preview-box" class="hidden mt-2">
+                            <img id="scope-photo-preview" src="" alt="Problem Preview" class="h-24 w-32 object-cover rounded-xl border border-emerald-300 shadow-sm">
+                        </div>
+                    </div>
+
+                    <!-- Transparent Pricing & Escrow Box -->
+                    <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+                        <div class="flex items-center justify-between text-slate-700">
+                            <span class="font-semibold">Estimated Service Bill (Escrow Protected):</span>
+                            <span class="text-base font-black text-slate-900 font-heading">₹499</span>
+                        </div>
+                        <div class="flex items-center justify-between text-emerald-700 text-[11px] font-bold">
+                            <span><i class="fa-solid fa-hand-holding-dollar mr-1"></i> Direct to Worker (92% Guaranteed):</span>
                             <span>₹459</span>
                         </div>
-                        <div class="flex items-center justify-between text-cyan-400 text-[11px] font-semibold">
-                            <span><i class="fa-solid fa-shield-heart mr-1"></i> Co-op Reserve & Dividend Pool (8%):</span>
+                        <div class="flex items-center justify-between text-indigo-700 text-[11px] font-bold">
+                            <span><i class="fa-solid fa-shield-heart mr-1"></i> Co-op Reserve & Welfare Pool (8%):</span>
                             <span>₹40</span>
                         </div>
                     </div>
 
-                    <button type="submit" id="btn-broadcast-job" class="w-full py-4 rounded-2xl bg-gradient-to-r from-emerald-600 via-teal-600 to-indigo-600 text-white font-bold text-sm shadow-xl shadow-emerald-600/30 hover:scale-[1.01] active:scale-95 transition-all flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-satellite-dish"></i> Broadcast Problem to Co-op Worker Network
+                    <button type="submit" id="btn-broadcast-job" class="w-full py-4 rounded-2xl bg-gradient-to-r from-emerald-600 via-teal-600 to-indigo-600 text-white font-bold text-sm shadow-md shadow-emerald-600/30 hover:scale-[1.01] active:scale-95 transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-satellite-dish"></i> Lock Escrow & Broadcast to Worker Radar
                     </button>
                 </form>
 
             </div>
 
             <!-- Right: Real-time Live Tracking & Status Board (5 Cols) -->
-            <div class="lg:col-span-5 flex flex-col justify-between glass-panel rounded-3xl p-6 sm:p-8 border border-white/10 space-y-6">
+            <div class="lg:col-span-5 flex flex-col justify-between glass-panel rounded-3xl p-6 sm:p-8 border border-slate-200 space-y-6 bg-white shadow-sm">
                 
                 <div class="flex items-center justify-between">
                     <div>
-                        <span class="text-xs font-mono font-bold uppercase tracking-wider text-cyan-400">7-Checkpoint Live Status</span>
-                        <h3 class="text-lg font-bold font-heading text-white">Active Booking Tracker</h3>
+                        <span class="text-xs font-mono font-bold uppercase tracking-wider text-cyan-700">7-Checkpoint Live Status</span>
+                        <h3 class="text-lg font-bold font-heading text-slate-900">Active Booking Tracker</h3>
                     </div>
-                    <span id="tracker-status-pill" class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-slate-800 text-slate-400 border border-slate-700">
+                    <span id="tracker-status-pill" class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-slate-100 text-slate-600 border border-slate-200">
                         No Active Request
                     </span>
                 </div>
@@ -182,11 +219,11 @@
                     
                     <!-- Idle State -->
                     <div id="track-state-idle" class="text-center py-10 space-y-3">
-                        <div class="w-16 h-16 mx-auto rounded-3xl bg-slate-800/80 border border-slate-700 flex items-center justify-center text-slate-500 text-2xl">
+                        <div class="w-16 h-16 mx-auto rounded-3xl bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-400 text-2xl">
                             <i class="fa-solid fa-route"></i>
                         </div>
-                        <p class="text-xs text-slate-400 max-w-xs mx-auto leading-relaxed">
-                            Fill the problem form on the left and click <b>Broadcast</b>. When a worker accepts, their live location, ETA, and Start OTP will appear here in real time!
+                        <p class="text-xs text-slate-600 max-w-xs mx-auto leading-relaxed font-medium">
+                            Fill the problem form on the left and click <b>Lock Escrow & Broadcast</b>. When a worker accepts, their live location, ETA, and Start OTP will appear here in real time!
                         </p>
                     </div>
 
@@ -195,18 +232,18 @@
                         <div class="relative w-20 h-20 mx-auto">
                             <div class="radar-sweep"></div>
                             <div class="w-20 h-20 radar-ring"></div>
-                            <i class="fa-solid fa-satellite-dish text-emerald-400 text-2xl absolute inset-0 flex items-center justify-center animate-bounce"></i>
+                            <i class="fa-solid fa-satellite-dish text-emerald-600 text-2xl absolute inset-0 flex items-center justify-center animate-bounce"></i>
                         </div>
                         <div>
-                            <h4 class="text-sm font-bold text-white">Broadcasting Request on Co-op Radar...</h4>
-                            <p class="text-xs text-slate-400 mt-1">Alert sent to nearby online specialists (&lt;3km). Waiting for single pro acceptance.</p>
+                            <h4 class="text-sm font-bold text-slate-900">Broadcasting Request on Co-op Radar...</h4>
+                            <p class="text-xs text-slate-600 mt-1">Alert sent to nearby online specialists (&lt;3km). Waiting for single pro acceptance.</p>
                         </div>
-                        <div class="p-3 rounded-xl bg-emerald-950/50 border border-emerald-500/30 text-xs text-emerald-300 font-mono space-y-1">
-                            <div>Searching nearby active pros: <b id="broadcast-timer-display" class="text-white text-sm font-bold">05:00</b></div>
-                            <div class="text-[10px] text-slate-400">Open <b>Worker Portal (worker.html)</b> in another tab to accept!</div>
+                        <div class="p-3 rounded-xl bg-emerald-50 border border-emerald-300 text-xs text-emerald-900 font-mono space-y-1">
+                            <div>Searching nearby active pros: <b id="broadcast-timer-display" class="text-slate-900 text-sm font-bold">05:00</b></div>
+                            <div class="text-[10px] text-slate-500">Open <b>Worker Portal (worker.html)</b> in another tab to accept!</div>
                         </div>
                         <div>
-                            <button type="button" onclick="testSimulateTimeout()" class="text-[10px] text-amber-400/80 hover:text-amber-300 underline cursor-pointer">
+                            <button type="button" onclick="testSimulateTimeout()" class="text-[10px] text-amber-700 hover:text-amber-800 underline cursor-pointer font-bold">
                                 ⚡ Test SIH Timeout Flow (Simulate 10s timer)
                             </button>
                         </div>
@@ -215,104 +252,106 @@
                     <!-- State 2: Worker Accepted & Live GPS Route Active -->
                     <div id="track-state-accepted" class="hidden space-y-4">
                         
-                        <div class="p-4 rounded-2xl bg-emerald-950/70 border border-emerald-500/50 space-y-3">
-                            <div class="flex items-center justify-between text-xs font-bold text-emerald-300">
+                        <div class="p-4 rounded-2xl bg-emerald-50 border border-emerald-300 space-y-3">
+                            <div class="flex items-center justify-between text-xs font-bold text-emerald-800">
                                 <span><i class="fa-solid fa-circle-check mr-1"></i> WORKER ASSIGNED & EN ROUTE</span>
-                                <span class="text-amber-300 font-mono" id="live-eta-countdown">ETA: 12 Mins</span>
+                                <span class="text-amber-700 font-mono font-bold" id="live-eta-countdown">ETA: 12 Mins</span>
                             </div>
 
                             <div class="flex items-center gap-3 pt-1">
-                                <img id="assigned-pro-avatar" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='%2364748b'%3E%3Crect width='100' height='100' fill='%230f172a'/%3E%3Cpath d='M50 48a18 18 0 1 0 0-36 18 18 0 0 0 0 36zm0 10c-20 0-36 12-36 28v6h72v-6c0-16-16-28-36-28z' fill='%23475569'/%3E%3C/svg%3E" alt="Worker" class="w-12 h-12 rounded-2xl object-cover border-2 border-emerald-400 bg-slate-900">
+                                <img id="assigned-pro-avatar" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='%2364748b'%3E%3Crect width='100' height='100' fill='%23f1f5f9'/%3E%3Cpath d='M50 48a18 18 0 1 0 0-36 18 18 0 0 0 0 36zm0 10c-20 0-36 12-36 28v6h72v-6c0-16-16-28-36-28z' fill='%2394a3b8'/%3E%3C/svg%3E" alt="Worker" class="w-12 h-12 rounded-2xl object-cover border-2 border-emerald-500 bg-slate-100">
                                 <div class="space-y-0.5 text-xs">
-                                    <div class="font-bold text-white text-sm" id="assigned-pro-name">Ramesh Kumar</div>
-                                    <div class="text-slate-300" id="assigned-pro-trade">Master Electrician & Plumber</div>
-                                    <div class="text-[11px] text-emerald-400 font-mono" id="assigned-pro-phone">+91 98860 54321</div>
+                                    <div class="font-bold text-slate-900 text-sm" id="assigned-pro-name">Ramesh Kumar</div>
+                                    <div class="text-slate-600" id="assigned-pro-trade">Master Electrician & Plumber</div>
+                                    <div class="text-[11px] text-emerald-700 font-mono font-bold" id="assigned-pro-phone">+91 98860 54321</div>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Live GPS Radar Visualizer -->
-                        <div class="h-36 rounded-2xl bg-slate-950 border border-slate-800 relative overflow-hidden flex items-center justify-center">
+                        <div class="h-36 rounded-2xl bg-slate-100 border border-slate-200 relative overflow-hidden flex items-center justify-center">
                             <div class="radar-sweep"></div>
                             <div class="w-16 h-16 radar-ring"></div>
                             <div class="w-32 h-32 radar-ring"></div>
                             <div class="relative z-10 text-center space-y-1">
-                                <i class="fa-solid fa-motorcycle text-emerald-400 text-xl animate-bounce"></i>
-                                <div class="text-xs font-bold text-white">Worker is 800m away</div>
-                                <div class="text-[10px] text-slate-400 font-mono">Moving via 100ft Road</div>
+                                <i class="fa-solid fa-motorcycle text-emerald-600 text-xl animate-bounce"></i>
+                                <div class="text-xs font-bold text-slate-900">Worker is 800m away</div>
+                                <div class="text-[10px] text-slate-500 font-mono">Moving via 100ft Road</div>
                             </div>
                         </div>
 
                         <!-- DUAL OTP DISPLAY FOR CUSTOMER -->
                         <div class="grid grid-cols-2 gap-3">
-                            <div class="p-3 rounded-2xl bg-indigo-950/70 border border-indigo-500/40 text-center space-y-1">
-                                <div class="text-[10px] text-indigo-300 font-bold uppercase">1. Start Job OTP</div>
-                                <div class="text-2xl font-black font-mono text-white" id="live-start-otp">4819</div>
-                                <div class="text-[10px] text-slate-400">Tell to worker on arrival</div>
+                            <div class="p-3 rounded-2xl bg-indigo-50 border border-indigo-200 text-center space-y-1">
+                                <div class="text-[10px] text-indigo-700 font-bold uppercase">1. Start Job OTP</div>
+                                <div class="text-2xl font-black font-mono text-indigo-900" id="live-start-otp">4819</div>
+                                <div class="text-[10px] text-slate-500 font-medium">Tell to worker on arrival</div>
                             </div>
-                            <div class="p-3 rounded-2xl bg-emerald-950/70 border border-emerald-500/40 text-center space-y-1">
-                                <div class="text-[10px] text-emerald-300 font-bold uppercase">2. Completion OTP</div>
-                                <div class="text-2xl font-black font-mono text-white" id="live-complete-otp">7392</div>
-                                <div class="text-[10px] text-slate-400">Give ONLY when job done</div>
+                            <div class="p-3 rounded-2xl bg-emerald-50 border border-emerald-200 text-center space-y-1">
+                                <div class="text-[10px] text-emerald-700 font-bold uppercase">2. Completion OTP</div>
+                                <div class="text-2xl font-black font-mono text-emerald-900" id="live-complete-otp">7392</div>
+                                <div class="text-[10px] text-slate-500 font-medium">Give ONLY when job done</div>
                             </div>
                         </div>
 
                     </div>
 
                     <!-- State 3: Work in Progress -->
-                    <div id="track-state-inprogress" class="hidden p-5 rounded-2xl bg-indigo-950/70 border border-indigo-500/50 text-center space-y-3">
-                        <div class="w-12 h-12 mx-auto rounded-full bg-indigo-500/20 text-indigo-400 flex items-center justify-center text-xl">
+                    <div id="track-state-inprogress" class="hidden p-5 rounded-2xl bg-indigo-50 border border-indigo-200 text-center space-y-3">
+                        <div class="w-12 h-12 mx-auto rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center text-xl">
                             <i class="fa-solid fa-screwdriver-wrench fa-spin"></i>
                         </div>
                         <div>
-                            <h4 class="text-sm font-bold text-white">Work in Progress!</h4>
-                            <p class="text-xs text-slate-300 mt-1">Worker verified Start OTP and is currently repairing your issue.</p>
+                            <h4 class="text-sm font-bold text-slate-900">Work in Progress!</h4>
+                            <p class="text-xs text-slate-600 mt-1">Worker verified Start OTP and is currently repairing your issue.</p>
                         </div>
-                        <div class="p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-amber-300 font-mono">
-                            Give Completion OTP: <b class="text-white" id="inprogress-complete-otp">7392</b> after inspection.
+                        <div class="p-2.5 rounded-xl bg-white border border-indigo-200 text-xs text-slate-800 font-mono font-bold">
+                            Give Completion OTP: <b class="text-indigo-700 text-sm" id="inprogress-complete-otp">7392</b> after inspection.
                         </div>
                     </div>
 
                     <!-- State 4: Completed & Rate Modal Trigger -->
-                    <div id="track-state-completed" class="hidden p-5 rounded-2xl bg-emerald-950/70 border border-emerald-500/50 text-center space-y-3">
-                        <div class="w-12 h-12 mx-auto rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xl">
+                    <div id="track-state-completed" class="hidden p-5 rounded-2xl bg-emerald-50 border border-emerald-300 text-center space-y-3">
+                        <div class="w-12 h-12 mx-auto rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-xl">
                             <i class="fa-solid fa-circle-check"></i>
                         </div>
                         <div>
-                            <h4 class="text-sm font-bold text-white">Job Successfully Completed!</h4>
-                            <p class="text-xs text-slate-300 mt-1">Photo proof submitted and Escrow payment settled directly to the worker.</p>
+                            <h4 class="text-sm font-bold text-slate-900">Job Successfully Completed!</h4>
+                            <p class="text-xs text-slate-600 mt-1">Photo proof submitted and Escrow payment settled directly to the worker (92%).</p>
                         </div>
-                        <button onclick="openRatingModal()" class="w-full py-3 rounded-xl bg-yellow-500 hover:bg-yellow-600 text-slate-950 font-bold text-xs shadow-lg transition">
-                            <i class="fa-solid fa-star mr-1"></i> Rate Worker & Submit Review
-                        </button>
+                        <div class="flex gap-2">
+                            <button onclick="openRatingModal()" class="flex-1 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 text-slate-900 font-bold text-xs shadow-md transition">
+                                <i class="fa-solid fa-star mr-1"></i> Rate Worker & Review
+                            </button>
+                            <button onclick="openPostServiceModal()" class="flex-1 py-3 rounded-xl bg-indigo-600 text-white font-bold text-xs shadow-md transition">
+                                <i class="fa-solid fa-clock-rotate-left mr-1"></i> 7-Day Durability Check
+                            </button>
+                        </div>
                     </div>
 
                     <!-- State 5: Timeout / No Workers Found within 5 Minutes -->
-                    <div id="track-state-timeout" class="hidden p-6 rounded-2xl bg-amber-950/70 border border-amber-500/50 text-center space-y-3">
-                        <div class="w-12 h-12 mx-auto rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center text-xl">
+                    <div id="track-state-timeout" class="hidden p-6 rounded-2xl bg-amber-50 border border-amber-300 text-center space-y-3">
+                        <div class="w-12 h-12 mx-auto rounded-full bg-amber-100 text-amber-700 flex items-center justify-center text-xl">
                             <i class="fa-solid fa-clock-rotate-left"></i>
                         </div>
                         <div>
-                            <h4 class="text-sm font-bold text-white font-heading">No Active Workers Found in 5 Mins</h4>
-                            <p class="text-xs text-slate-300 mt-1 leading-relaxed">
-                                All verified specialists within 3km are currently busy or offline. Please retry in a few moments or dispatch Emergency SOS.
+                            <h4 class="text-sm font-bold text-slate-900 font-heading">No Active Workers Found in 5 Mins</h4>
+                            <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+                                All verified specialists within 3km are currently busy or offline. Click below to retry broadcasting your request to nearby specialists.
                             </p>
                         </div>
-                        <div class="flex flex-col sm:flex-row gap-2 pt-2">
-                            <button onclick="retryActiveBroadcast()" class="flex-1 py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-slate-950 font-bold text-xs shadow-lg transition flex items-center justify-center gap-1.5">
-                                <i class="fa-solid fa-rotate-right"></i> Retry Broadcast Now
-                            </button>
-                            <button onclick="openSosModal()" class="py-3 px-4 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs shadow-lg transition flex items-center justify-center gap-1.5">
-                                <i class="fa-solid fa-bolt"></i> Emergency SOS
+                        <div class="pt-2">
+                            <button onclick="retryActiveBroadcast()" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold text-xs shadow-md transition flex items-center justify-center gap-1.5 hover:scale-[1.01] active:scale-95">
+                                <i class="fa-solid fa-rotate-right"></i> Retry Broadcast to Online Workers
                             </button>
                         </div>
                     </div>
 
                 </div>
 
-                <div class="pt-4 border-t border-slate-800 text-[11px] text-slate-400 flex items-center justify-between">
-                    <span><i class="fa-solid fa-lock text-emerald-400 mr-1"></i> 100% Escrow Protection</span>
-                    <span class="font-mono text-emerald-400">92% to Pro • 8% Co-op</span>
+                <div class="pt-4 border-t border-slate-200 text-[11px] text-slate-500 flex items-center justify-between font-medium">
+                    <span><i class="fa-solid fa-lock text-emerald-600 mr-1"></i> 100% Escrow Protection</span>
+                    <span class="font-mono text-emerald-700 font-bold">92% to Pro • 8% Co-op</span>
                 </div>
 
             </div>
@@ -321,19 +360,82 @@
     </section>
 
 
+    <!-- 7-DAY POST-SERVICE VALIDATION MODAL -->
+    <div id="post-service-modal" class="fixed inset-0 z-50 modal-backdrop hidden items-center justify-center p-4">
+        <div class="relative w-full max-w-md bg-white rounded-3xl border border-indigo-200 p-6 sm:p-8 space-y-5 shadow-2xl">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <div class="w-10 h-10 rounded-2xl bg-indigo-100 text-indigo-700 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-calendar-check"></i>
+                    </div>
+                    <div>
+                        <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-indigo-700">Checkpoint 07</span>
+                        <h3 class="text-lg font-bold font-heading text-slate-900">7-Day Repair Validation</h3>
+                    </div>
+                </div>
+                <button onclick="closePostServiceModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <p class="text-xs text-slate-600 leading-relaxed">
+                Automated durability feedback loop to verify if the repair held up over time and award long-term skill credibility points to the worker.
+            </p>
+
+            <form onsubmit="event.preventDefault(); submitPostServiceValidation();" class="space-y-4 text-xs">
+                <div>
+                    <label class="block font-semibold text-slate-700 mb-1">Repair Durability (1-5 Stars)</label>
+                    <select id="val-durability" class="w-full px-3 py-2 rounded-xl glass-input font-medium">
+                        <option value="5">⭐⭐⭐⭐⭐ Flawless (No recurring issues)</option>
+                        <option value="4">⭐⭐⭐⭐ Good (Minor adjustments needed)</option>
+                        <option value="3">⭐⭐⭐ Fair</option>
+                        <option value="1">⭐ Recurring leak / Failure</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block font-semibold text-slate-700 mb-1">Worker Skill Efficacy</label>
+                    <select id="val-skill" class="w-full px-3 py-2 rounded-xl glass-input font-medium">
+                        <option value="5">Mastery Grade (Professional tools & clean work)</option>
+                        <option value="4">Competent</option>
+                        <option value="2">Needs Training</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block font-semibold text-slate-700 mb-1">Any Subsequent Asset Damage?</label>
+                    <div class="flex items-center gap-4 pt-1">
+                        <label class="flex items-center gap-1.5 cursor-pointer text-slate-700 font-medium">
+                            <input type="radio" name="asset_damage" value="no" checked class="text-emerald-600"> No Damage
+                        </label>
+                        <label class="flex items-center gap-1.5 cursor-pointer text-slate-700 font-medium">
+                            <input type="radio" name="asset_damage" value="yes" class="text-rose-600"> Yes (Report to Tribunal)
+                        </label>
+                    </div>
+                </div>
+                <div>
+                    <label class="block font-semibold text-slate-700 mb-1">Verification Notes</label>
+                    <textarea id="val-notes" rows="2" placeholder="Repair is holding strong after 7 days..." class="w-full px-3 py-2 rounded-xl glass-input">Pipe seal intact, no moisture detected after 7 days. Excellent work.</textarea>
+                </div>
+                <button type="submit" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-indigo-600 to-sky-600 text-white font-bold shadow-md shadow-indigo-600/30 hover:scale-[1.01] active:scale-95 transition">
+                    Submit 7-Day Durability Validation
+                </button>
+            </form>
+        </div>
+    </div>
+
+
     <!-- RATING & REVIEW MODAL -->
     <div id="rating-modal" class="fixed inset-0 z-50 modal-backdrop hidden items-center justify-center p-4">
-        <div class="relative w-full max-w-md glass-panel rounded-3xl border border-yellow-500/40 p-6 sm:p-8 space-y-5 shadow-2xl">
+        <div class="relative w-full max-w-md bg-white rounded-3xl border border-amber-300 p-6 sm:p-8 space-y-5 shadow-2xl">
             <div class="text-center space-y-2">
-                <div class="w-12 h-12 mx-auto rounded-2xl bg-yellow-500/20 text-yellow-400 flex items-center justify-center text-2xl">
+                <div class="w-12 h-12 mx-auto rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center text-2xl">
                     <i class="fa-solid fa-star"></i>
                 </div>
-                <h3 class="text-lg font-bold font-heading text-white">Rate Your Experience</h3>
-                <p class="text-xs text-slate-300">Your rating directly influences the worker's cooperative trust score and dividend allocation.</p>
+                <h3 class="text-lg font-bold font-heading text-slate-900">Rate Your Experience</h3>
+                <p class="text-xs text-slate-600">Your rating directly influences the worker's cooperative trust score and dividend allocation.</p>
             </div>
 
             <!-- Star Selection -->
-            <div class="flex justify-center gap-3 text-2xl text-yellow-400 cursor-pointer" id="star-rating-container">
+            <div class="flex justify-center gap-3 text-2xl text-amber-400 cursor-pointer" id="star-rating-container">
                 <i class="fa-solid fa-star hover:scale-125 transition-transform" onclick="setRatingValue(1)"></i>
                 <i class="fa-solid fa-star hover:scale-125 transition-transform" onclick="setRatingValue(2)"></i>
                 <i class="fa-solid fa-star hover:scale-125 transition-transform" onclick="setRatingValue(3)"></i>
@@ -342,11 +444,11 @@
             </div>
 
             <div>
-                <label class="block text-xs font-semibold text-slate-300 mb-1">Feedback / Review Note</label>
+                <label class="block text-xs font-semibold text-slate-700 mb-1">Feedback / Review Note</label>
                 <textarea id="rating-review-text" rows="3" placeholder="Arrived on time, neatly resolved the leakage without mess!" class="w-full px-3 py-2 text-xs rounded-xl glass-input">Arrived in 10 mins, perfectly fixed the leak with high quality parts!</textarea>
             </div>
 
-            <button onclick="submitWorkerRating()" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-yellow-500 to-amber-600 text-slate-950 font-bold text-xs shadow-lg transition">
+            <button onclick="submitWorkerRating()" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 text-slate-900 font-bold text-xs shadow-md transition">
                 Submit Rating & Vouch for Pro
             </button>
         </div>
@@ -355,60 +457,322 @@
 
     <!-- SLIDE 3: ONE BOOKING. SEVEN TRUST CHECKPOINTS -->
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="glass-panel-glow rounded-3xl p-6 sm:p-10 border border-emerald-500/30 space-y-8">
+        <div class="glass-panel-glow rounded-3xl p-6 sm:p-10 border border-emerald-300 space-y-8 bg-white">
             <div class="text-center space-y-2 max-w-2xl mx-auto">
-                <span class="text-xs font-mono font-bold uppercase tracking-wider text-emerald-400 bg-emerald-950/60 px-3 py-1 rounded-full border border-emerald-500/30">
-                    <i class="fa-solid fa-shield-halved mr-1"></i> Slide 03 • Tech Stack & Workflow
+                <span class="text-xs font-mono font-bold uppercase tracking-wider text-emerald-800 bg-emerald-100 px-3 py-1 rounded-full border border-emerald-300">
+                    <i class="fa-solid fa-shield-halved mr-1"></i> Slide 03 • Core Execution Logic
                 </span>
-                <h2 class="text-2xl sm:text-4xl font-extrabold font-heading text-white">One Booking. Seven Trust Checkpoints.</h2>
-                <p class="text-xs sm:text-sm text-slate-300">
-                    The citizen sees a simple service journey; the platform handles matching, escrow, proof and cooperative settlement.
+                <h2 class="text-2xl sm:text-4xl font-extrabold font-heading text-slate-900">The 7 Trust Checkpoints Engine</h2>
+                <p class="text-xs sm:text-sm text-slate-600">
+                    The citizen sees a simple service journey; the cooperative architecture handles smart matching, escrow lock, proof hash and fair settlement.
                 </p>
             </div>
 
             <!-- 7 Steps Interactive Grid -->
             <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3 pt-4">
-                <div class="p-4 rounded-2xl bg-emerald-950/40 border border-emerald-500 text-center space-y-2">
-                    <div class="text-xs font-black font-mono text-emerald-400">01</div>
-                    <div class="w-10 h-10 mx-auto rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-lg"><i class="fa-solid fa-mobile-screen-button"></i></div>
-                    <div class="font-bold text-xs text-white">BOOK</div>
-                    <p class="text-[10px] text-slate-300">App / Custom Problem</p>
+                <div class="p-4 rounded-2xl bg-emerald-50 border border-emerald-300 text-center space-y-2 shadow-sm">
+                    <div class="text-xs font-black font-mono text-emerald-700">01</div>
+                    <div class="w-10 h-10 mx-auto rounded-xl bg-emerald-200 text-emerald-800 flex items-center justify-center text-lg"><i class="fa-solid fa-mobile-screen-button"></i></div>
+                    <div class="font-bold text-xs text-slate-900">BOOK</div>
+                    <p class="text-[10px] text-slate-600">e-KYC & Scope Proof</p>
                 </div>
-                <div class="p-4 rounded-2xl bg-slate-900/70 border border-white/10 text-center space-y-2">
-                    <div class="text-xs font-black font-mono text-cyan-400">02</div>
-                    <div class="w-10 h-10 mx-auto rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-lg"><i class="fa-solid fa-route"></i></div>
-                    <div class="font-bold text-xs text-white">MATCH</div>
-                    <p class="text-[10px] text-slate-300">Skill + GIS &lt;3km</p>
+                <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 text-center space-y-2 shadow-sm">
+                    <div class="text-xs font-black font-mono text-cyan-700">02</div>
+                    <div class="w-10 h-10 mx-auto rounded-xl bg-cyan-100 text-cyan-800 flex items-center justify-center text-lg"><i class="fa-solid fa-route"></i></div>
+                    <div class="font-bold text-xs text-slate-900">MATCH</div>
+                    <p class="text-[10px] text-slate-600">Skill + GIS &lt;3km</p>
                 </div>
-                <div class="p-4 rounded-2xl bg-slate-900/70 border border-white/10 text-center space-y-2">
-                    <div class="text-xs font-black font-mono text-indigo-400">03</div>
-                    <div class="w-10 h-10 mx-auto rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center text-lg"><i class="fa-solid fa-lock"></i></div>
-                    <div class="font-bold text-xs text-white">ESCROW</div>
-                    <p class="text-[10px] text-slate-300">Payment Held Neutrally</p>
+                <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 text-center space-y-2 shadow-sm">
+                    <div class="text-xs font-black font-mono text-indigo-700">03</div>
+                    <div class="w-10 h-10 mx-auto rounded-xl bg-indigo-100 text-indigo-800 flex items-center justify-center text-lg"><i class="fa-solid fa-lock"></i></div>
+                    <div class="font-bold text-xs text-slate-900">ESCROW</div>
+                    <p class="text-[10px] text-slate-600">Razorpay Lock</p>
                 </div>
-                <div class="p-4 rounded-2xl bg-slate-900/70 border border-white/10 text-center space-y-2">
-                    <div class="text-xs font-black font-mono text-amber-400">04</div>
-                    <div class="w-10 h-10 mx-auto rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-lg"><i class="fa-solid fa-satellite-dish"></i></div>
-                    <div class="font-bold text-xs text-white">TRACK</div>
-                    <p class="text-[10px] text-slate-300">Live Worker GPS</p>
+                <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 text-center space-y-2 shadow-sm">
+                    <div class="text-xs font-black font-mono text-amber-700">04</div>
+                    <div class="w-10 h-10 mx-auto rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center text-lg"><i class="fa-solid fa-satellite-dish"></i></div>
+                    <div class="font-bold text-xs text-slate-900">TRACK</div>
+                    <p class="text-[10px] text-slate-600">Live Worker Radar</p>
                 </div>
-                <div class="p-4 rounded-2xl bg-slate-900/70 border border-white/10 text-center space-y-2">
-                    <div class="text-xs font-black font-mono text-pink-400">05</div>
-                    <div class="w-10 h-10 mx-auto rounded-xl bg-pink-500/20 text-pink-400 flex items-center justify-center text-lg"><i class="fa-solid fa-camera-retro"></i></div>
-                    <div class="font-bold text-xs text-white">VERIFY</div>
-                    <p class="text-[10px] text-slate-300">Photo Proof + Dual OTP</p>
+                <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 text-center space-y-2 shadow-sm">
+                    <div class="text-xs font-black font-mono text-pink-700">05</div>
+                    <div class="w-10 h-10 mx-auto rounded-xl bg-pink-100 text-pink-800 flex items-center justify-center text-lg"><i class="fa-solid fa-camera-retro"></i></div>
+                    <div class="font-bold text-xs text-slate-900">VERIFY</div>
+                    <p class="text-[10px] text-slate-600">Photo + Dual OTP</p>
                 </div>
-                <div class="p-4 rounded-2xl bg-slate-900/70 border border-white/10 text-center space-y-2">
-                    <div class="text-xs font-black font-mono text-emerald-400">06</div>
-                    <div class="w-10 h-10 mx-auto rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-lg"><i class="fa-solid fa-money-bill-transfer"></i></div>
-                    <div class="font-bold text-xs text-white">SETTLE</div>
-                    <p class="text-[10px] text-slate-300">92% Pay + 8% Dividend</p>
+                <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 text-center space-y-2 shadow-sm">
+                    <div class="text-xs font-black font-mono text-emerald-700">06</div>
+                    <div class="w-10 h-10 mx-auto rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center text-lg"><i class="fa-solid fa-money-bill-transfer"></i></div>
+                    <div class="font-bold text-xs text-slate-900">SETTLE</div>
+                    <p class="text-[10px] text-slate-600">92% Direct Pay</p>
                 </div>
-                <div class="p-4 rounded-2xl bg-slate-900/70 border border-white/10 text-center space-y-2">
-                    <div class="text-xs font-black font-mono text-yellow-400">07</div>
-                    <div class="w-10 h-10 mx-auto rounded-xl bg-yellow-500/20 text-yellow-400 flex items-center justify-center text-lg"><i class="fa-solid fa-star"></i></div>
-                    <div class="font-bold text-xs text-white">RATE</div>
-                    <p class="text-[10px] text-slate-300">Trust Score Vouch</p>
+                <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 text-center space-y-2 shadow-sm">
+                    <div class="text-xs font-black font-mono text-yellow-700">07</div>
+                    <div class="w-10 h-10 mx-auto rounded-xl bg-yellow-100 text-yellow-800 flex items-center justify-center text-lg"><i class="fa-solid fa-calendar-check"></i></div>
+                    <div class="font-bold text-xs text-slate-900">VALIDATE</div>
+                    <p class="text-[10px] text-slate-600">7-Day Durability</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAIR EARNINGS CALCULATOR (8% vs 28% EXTRACTION) -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="glass-panel-glow rounded-3xl p-6 sm:p-10 border border-emerald-300 space-y-8 bg-white">
+            <div class="text-center space-y-2 max-w-3xl mx-auto">
+                <span class="text-xs font-mono font-bold uppercase tracking-wider text-emerald-800 bg-emerald-100 px-3 py-1 rounded-full border border-emerald-300">
+                    <i class="fa-solid fa-calculator mr-1"></i> Transparent Economics
+                </span>
+                <h2 class="text-2xl sm:text-4xl font-extrabold font-heading text-slate-900">Fair Earnings Calculator</h2>
+                <p class="text-xs sm:text-sm text-slate-600">
+                    See how much more money informal workers take home under SahiDeal's <b>8% cooperative fee</b> compared to traditional aggregators taking <b>25%–30%</b> commission.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <!-- Slider Input (5 Cols) -->
+                <div class="lg:col-span-5 space-y-6 p-6 rounded-2xl bg-slate-50 border border-slate-200">
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <label class="text-xs font-bold text-slate-700">Monthly Gross Service Bookings</label>
+                            <span class="text-lg font-black font-heading text-emerald-700" id="calc-display-gross">₹35,000</span>
+                        </div>
+                        <input type="range" id="calc-gross-input" min="10000" max="100000" step="1000" value="35000" oninput="updateEarningsCalculator(this.value)" class="w-full accent-emerald-600 cursor-pointer">
+                        <div class="flex justify-between text-[10px] text-slate-400 font-mono mt-1">
+                            <span>₹10,000/mo</span>
+                            <span>₹50,000/mo</span>
+                            <span>₹1,00,000/mo</span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3 pt-2 text-xs">
+                        <div class="p-3 rounded-xl bg-white border border-slate-200 flex items-center justify-between">
+                            <span class="text-slate-600 font-medium">Estimated Gigs per Month:</span>
+                            <b class="text-slate-900 font-mono" id="calc-gigs-count">~70 jobs</b>
+                        </div>
+                        <div class="p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-900">
+                            <div class="font-bold flex items-center gap-1.5 mb-0.5">
+                                <i class="fa-solid fa-circle-check text-emerald-600"></i> Additional Annual Take-Home:
+                            </div>
+                            <div class="text-2xl font-black font-heading text-emerald-700" id="calc-annual-gain">+₹84,000 / Year</div>
+                            <p class="text-[11px] text-slate-600 mt-1">Directly improves worker family savings, healthcare, and debt reduction.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Comparison Cards (7 Cols) -->
+                <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <!-- Corporate Aggregator -->
+                    <div class="p-5 rounded-2xl bg-rose-50/50 border border-rose-200 space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="text-[11px] font-bold text-rose-700 uppercase tracking-wider">Corporate Aggregator</span>
+                            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-100 text-rose-800">28% Cut</span>
+                        </div>
+                        <div>
+                            <div class="text-xs text-slate-500">Worker Monthly Take-Home:</div>
+                            <div class="text-2xl font-black font-heading text-rose-700" id="calc-corp-takehome">₹25,200</div>
+                        </div>
+                        <ul class="text-xs space-y-2 text-slate-600 border-t border-rose-100 pt-3">
+                            <li class="flex items-center gap-1.5 text-rose-800"><i class="fa-solid fa-xmark text-rose-600"></i> ₹9,800 lost in commission</li>
+                            <li class="flex items-center gap-1.5 text-rose-800"><i class="fa-solid fa-xmark text-rose-600"></i> No equity or dividends</li>
+                            <li class="flex items-center gap-1.5 text-rose-800"><i class="fa-solid fa-xmark text-rose-600"></i> Zero voice in platform rules</li>
+                        </ul>
+                    </div>
+
+                    <!-- SahiDeal Co-op -->
+                    <div class="p-5 rounded-2xl bg-emerald-50 border-2 border-emerald-400 space-y-4 relative shadow-sm">
+                        <div class="absolute -top-3 right-4 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-600 text-white shadow">
+                            CO-OP OWNED
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-[11px] font-bold text-emerald-800 uppercase tracking-wider">SahiDeal Model</span>
+                            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-200 text-emerald-900">8% Fee</span>
+                        </div>
+                        <div>
+                            <div class="text-xs text-slate-500">Worker Monthly Take-Home:</div>
+                            <div class="text-2xl font-black font-heading text-emerald-700" id="calc-coop-takehome">₹32,200</div>
+                        </div>
+                        <ul class="text-xs space-y-2 text-slate-700 border-t border-emerald-200 pt-3">
+                            <li class="flex items-center gap-1.5 text-emerald-800 font-semibold"><i class="fa-solid fa-check text-emerald-600"></i> Keeps 92% of every rupee</li>
+                            <li class="flex items-center gap-1.5 text-emerald-800 font-semibold"><i class="fa-solid fa-check text-emerald-600"></i> ₹5L Ayushman health cover</li>
+                            <li class="flex items-center gap-1.5 text-emerald-800 font-semibold"><i class="fa-solid fa-check text-emerald-600"></i> 1 Member = 1 Democratic Vote</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- GOVERNMENT & MACRO IMPACT ANALYTICS -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div>
+                    <span class="text-xs font-mono font-bold uppercase tracking-wider text-indigo-700 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-200">
+                        <i class="fa-solid fa-landmark mr-1"></i> Policy & Macro Alignment
+                    </span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold font-heading text-slate-900 mt-2">Government & Urban Impact Analytics</h2>
+                </div>
+                <div class="text-xs text-slate-500 font-mono">Aligned with NITI Aayog & ILO Guidelines</div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+                <div class="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm space-y-3">
+                    <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-black font-heading text-slate-900">23.5 Million</div>
+                        <div class="text-xs font-semibold text-indigo-700">Projected Gig Workers by 2030</div>
+                    </div>
+                    <p class="text-[11px] text-slate-600 leading-relaxed">
+                        NITI Aayog projects gig workforce expanding from 7.7M (2020) to 23.5M. SahiDeal provides the cooperative rails for sustainable social security.
+                    </p>
+                </div>
+
+                <div class="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm space-y-3">
+                    <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-car-tunnel"></i>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-black font-heading text-emerald-700">28.5% Less</div>
+                        <div class="text-xs font-semibold text-emerald-800">Urban Traffic Congestion</div>
+                    </div>
+                    <p class="text-[11px] text-slate-600 leading-relaxed">
+                        Hyperlocal dispatch within &lt;3km eliminates cross-city worker deadheading, cutting fuel consumption and urban carbon emissions.
+                    </p>
+                </div>
+
+                <div class="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm space-y-3">
+                    <div class="w-10 h-10 rounded-xl bg-cyan-100 text-cyan-700 flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-hand-holding-dollar"></i>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-black font-heading text-cyan-700">92% Retained</div>
+                        <div class="text-xs font-semibold text-cyan-800">Local Neighborhood Economy</div>
+                    </div>
+                    <p class="text-[11px] text-slate-600 leading-relaxed">
+                        Prevents capital flight to overseas holding corporations by circulating service fees directly back into local neighborhood households.
+                    </p>
+                </div>
+
+                <div class="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm space-y-3">
+                    <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-scale-balanced"></i>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-black font-heading text-amber-700">0.3% Low</div>
+                        <div class="text-xs font-semibold text-amber-800">Dispute & Escalation Rate</div>
+                    </div>
+                    <p class="text-[11px] text-slate-600 leading-relaxed">
+                        Scope pre-validation photos and dual OTP handshakes virtually eliminate billing disagreements, resolving edge cases via peer tribunal.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- GIG WORKFORCE DISTRIBUTION (16 SECTORS) -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="glass-panel rounded-3xl p-6 sm:p-10 border border-slate-200 bg-white shadow-sm space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div>
+                    <span class="text-xs font-mono font-bold uppercase tracking-wider text-emerald-800 bg-emerald-100 px-3 py-1 rounded-full border border-emerald-300">
+                        <i class="fa-solid fa-users mr-1"></i> 16 Sector Analysis
+                    </span>
+                    <h2 class="text-2xl font-bold font-heading text-slate-900 mt-2">Gig Workforce Distribution in India</h2>
+                    <p class="text-xs text-slate-600">Source: NITI Aayog 'Booming Gig and Platform Economy' Report & ILO Benchmarks (Values in Lakh Workers)</p>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="px-3 py-1 rounded-full text-xs font-bold bg-slate-100 text-slate-700 border border-slate-200">
+                        Total: 105.3 Lakhs
+                    </span>
+                </div>
+            </div>
+
+            <!-- 16 Sector Visual Grid -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3">
+                <div class="p-3 rounded-2xl bg-emerald-50 border border-emerald-200 text-center space-y-1">
+                    <i class="fa-solid fa-cart-shopping text-emerald-600 text-lg"></i>
+                    <div class="text-base font-black font-heading text-slate-900">37.0L</div>
+                    <div class="text-[10px] font-bold text-slate-600">Ecommerce</div>
+                </div>
+                <div class="p-3 rounded-2xl bg-teal-50 border border-teal-200 text-center space-y-1">
+                    <i class="fa-solid fa-truck-fast text-teal-600 text-lg"></i>
+                    <div class="text-base font-black font-heading text-slate-900">15.0L</div>
+                    <div class="text-[10px] font-bold text-slate-600">Logistics</div>
+                </div>
+                <div class="p-3 rounded-2xl bg-cyan-50 border border-cyan-200 text-center space-y-1">
+                    <i class="fa-solid fa-building-columns text-cyan-600 text-lg"></i>
+                    <div class="text-base font-black font-heading text-slate-900">10.0L</div>
+                    <div class="text-[10px] font-bold text-slate-600">BFSI</div>
+                </div>
+                <div class="p-3 rounded-2xl bg-blue-50 border border-blue-200 text-center space-y-1">
+                    <i class="fa-solid fa-industry text-blue-600 text-lg"></i>
+                    <div class="text-base font-black font-heading text-slate-900">10.0L</div>
+                    <div class="text-[10px] font-bold text-slate-600">Manufacturing</div>
+                </div>
+                <div class="p-3 rounded-2xl bg-indigo-50 border border-indigo-200 text-center space-y-1">
+                    <i class="fa-solid fa-shop text-indigo-600 text-lg"></i>
+                    <div class="text-base font-black font-heading text-slate-900">7.0L</div>
+                    <div class="text-[10px] font-bold text-slate-600">Retail</div>
+                </div>
+                <div class="p-3 rounded-2xl bg-violet-50 border border-violet-200 text-center space-y-1">
+                    <i class="fa-solid fa-van-shuttle text-violet-600 text-lg"></i>
+                    <div class="text-base font-black font-heading text-slate-900">6.0L</div>
+                    <div class="text-[10px] font-bold text-slate-600">Transport</div>
+                </div>
+                <div class="p-3 rounded-2xl bg-purple-50 border border-purple-200 text-center space-y-1">
+                    <i class="fa-solid fa-laptop-code text-purple-600 text-lg"></i>
+                    <div class="text-base font-black font-heading text-slate-900">5.0L</div>
+                    <div class="text-[10px] font-bold text-slate-600">IT / Handyman</div>
+                </div>
+                <div class="p-3 rounded-2xl bg-rose-50 border border-rose-200 text-center space-y-1">
+                    <i class="fa-solid fa-heart-pulse text-rose-600 text-lg"></i>
+                    <div class="text-base font-black font-heading text-slate-900">3.0L</div>
+                    <div class="text-[10px] font-bold text-slate-600">Healthcare</div>
+                </div>
+                <div class="p-3 rounded-2xl bg-amber-50 border border-amber-200 text-center space-y-1">
+                    <i class="fa-solid fa-headset text-amber-600 text-lg"></i>
+                    <div class="text-base font-black font-heading text-slate-900">3.0L</div>
+                    <div class="text-[10px] font-bold text-slate-600">ITeS / Voice</div>
+                </div>
+                <div class="p-3 rounded-2xl bg-orange-50 border border-orange-200 text-center space-y-1">
+                    <i class="fa-solid fa-helmet-safety text-orange-600 text-lg"></i>
+                    <div class="text-base font-black font-heading text-slate-900">3.0L</div>
+                    <div class="text-[10px] font-bold text-slate-600">Construction</div>
+                </div>
+                <div class="p-3 rounded-2xl bg-emerald-50 border border-emerald-200 text-center space-y-1">
+                    <i class="fa-solid fa-graduation-cap text-emerald-600 text-lg"></i>
+                    <div class="text-base font-black font-heading text-slate-900">3.0L</div>
+                    <div class="text-[10px] font-bold text-slate-600">Education</div>
+                </div>
+                <div class="p-3 rounded-2xl bg-teal-50 border border-teal-200 text-center space-y-1">
+                    <i class="fa-solid fa-car text-teal-600 text-lg"></i>
+                    <div class="text-base font-black font-heading text-slate-900">1.0L</div>
+                    <div class="text-[10px] font-bold text-slate-600">Automotive</div>
+                </div>
+                <div class="p-3 rounded-2xl bg-cyan-50 border border-cyan-200 text-center space-y-1">
+                    <i class="fa-solid fa-hotel text-cyan-600 text-lg"></i>
+                    <div class="text-base font-black font-heading text-slate-900">0.8L</div>
+                    <div class="text-[10px] font-bold text-slate-600">Hospitality</div>
+                </div>
+                <div class="p-3 rounded-2xl bg-blue-50 border border-blue-200 text-center space-y-1">
+                    <i class="fa-solid fa-road text-blue-600 text-lg"></i>
+                    <div class="text-base font-black font-heading text-slate-900">0.7L</div>
+                    <div class="text-[10px] font-bold text-slate-600">Infrastructure</div>
+                </div>
+                <div class="p-3 rounded-2xl bg-indigo-50 border border-indigo-200 text-center space-y-1">
+                    <i class="fa-solid fa-tower-cell text-indigo-600 text-lg"></i>
+                    <div class="text-base font-black font-heading text-slate-900">0.5L</div>
+                    <div class="text-[10px] font-bold text-slate-600">Telecom</div>
+                </div>
+                <div class="p-3 rounded-2xl bg-amber-50 border border-amber-200 text-center space-y-1">
+                    <i class="fa-solid fa-bolt text-amber-600 text-lg"></i>
+                    <div class="text-base font-black font-heading text-slate-900">0.3L</div>
+                    <div class="text-[10px] font-bold text-slate-600">Power & Energy</div>
                 </div>
             </div>
         </div>
@@ -417,6 +781,27 @@
 </div>
 
 <script>
+function updateEarningsCalculator(val) {
+    const gross = parseFloat(val);
+    document.getElementById('calc-display-gross').textContent = `₹${gross.toLocaleString('en-IN')}`;
+    
+    // Gigs estimate at ~500 avg
+    const gigs = Math.round(gross / 500);
+    document.getElementById('calc-gigs-count').textContent = `~${gigs} jobs`;
+
+    // Corp take-home (28% commission cut = 72% take-home)
+    const corpTakeHome = Math.round(gross * 0.72);
+    document.getElementById('calc-corp-takehome').textContent = `₹${corpTakeHome.toLocaleString('en-IN')}`;
+
+    // Coop take-home (8% fee = 92% take-home)
+    const coopTakeHome = Math.round(gross * 0.92);
+    document.getElementById('calc-coop-takehome').textContent = `₹${coopTakeHome.toLocaleString('en-IN')}`;
+
+    // Monthly difference & Annual gain
+    const monthlyGain = coopTakeHome - corpTakeHome;
+    const annualGain = monthlyGain * 12;
+    document.getElementById('calc-annual-gain').textContent = `+₹${annualGain.toLocaleString('en-IN')} / Year`;
+}
 let currentActiveJob = null;
 let selectedRating = 5;
 let searchTimerInterval = null;
@@ -467,7 +852,7 @@ function start5MinSearchTimer(initialSeconds = 300) {
             if (currentActiveJob && currentActiveJob.status === 'OPEN') {
                 CoopSync.timeoutCustomerJob(currentActiveJob.id);
                 updateCustomerTrackerUI('TIMEOUT', currentActiveJob);
-                Toast.show("⚠️ No active workers were found within 5 minutes. Please retry or dispatch Emergency SOS.", "error", 7000);
+                Toast.show("⚠️ No active workers were found within 5 minutes. Please click Retry to broadcast again.", "error", 7000);
                 SoundFX.sos();
             }
         }

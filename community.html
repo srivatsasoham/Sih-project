@@ -1,30 +1,29 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RWA Bulk Buying & Society Campaigns - SahiDeal | SIH 2026</title>
     
     <!-- Meta description for SIH Hackathon -->
-    <meta name="description" content="SahiDeal - India's First Worker-Owned Cooperative for Household & Community Services (Problem Statement ID: 26089, Team SIRA). 92% Direct Take-Home, 8% Co-op Fee, 7 Trust Checkpoints, Escrow Protection, and Democratic Governance.">
+    <meta name="description" content="SahiDeal - Transforming Informal Labour Through Accountable Commerce (Problem Statement ID: 26089, Team SIRA). 92% Direct Take-Home, 8% Co-op Fee, 7 Trust Checkpoints, Escrow Protection, and Democratic Governance.">
 
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
-            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
                         coop: {
-                            dark: '#070B13',
-                            card: '#0F172A',
+                            canvas: '#FFFFFF',
+                            subtle: '#F8FAFC',
                             emerald: '#10B981',
-                            teal: '#14B8A6',
-                            cyan: '#06B6D4',
-                            indigo: '#6366F1',
-                            amber: '#F59E0B',
-                            rose: '#F43F5E'
+                            teal: '#0D9488',
+                            cyan: '#0284C7',
+                            indigo: '#4F46E5',
+                            amber: '#D97706',
+                            rose: '#E11D48'
                         }
                     },
                     fontFamily: {
@@ -43,38 +42,41 @@
     <!-- Canvas Confetti for Celebrations -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
-    <!-- Custom Glassmorphism Styles -->
+    <!-- Custom Light Mode Styles -->
     <link rel="stylesheet" href="static/css/style.css">
 </head>
-<body class="bg-coop-dark text-slate-100 min-h-screen flex flex-col antialiased selection:bg-emerald-500 selection:text-white">
+<body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col antialiased selection:bg-emerald-500 selection:text-white">
 
     <!-- Background Ambience -->
     <div class="bg-mesh"></div>
     <div class="bg-grid-pattern"></div>
 
     <!-- Live Cooperative Live-Feed Banner -->
-    <div class="bg-slate-900/90 border-b border-slate-800 text-xs py-1.5 px-4 z-50">
+    <div class="bg-emerald-50 border-b border-emerald-200/80 text-xs py-1.5 px-4 z-50">
         <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
             <div class="flex items-center gap-2">
-                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 animate-pulse">
-                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 mr-1.5"></span> REAL-TIME SYNC ACTIVE
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300 animate-pulse">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-600 mr-1.5"></span> LIVE COOPERATIVE SYNC
                 </span>
-                <span id="live-feed-ticker" class="text-slate-300 transition-opacity duration-300 font-medium truncate max-w-md sm:max-w-xl">
-                    ⚡ Connected to Cooperative Realtime Dispatch Mesh (Cross-Tab Active)
+                <span id="live-feed-ticker" class="text-slate-700 transition-opacity duration-300 font-medium truncate max-w-md sm:max-w-xl">
+                    ⚡ SahiDeal Mesh Active • 92% Worker Direct Pay • Escrow Secured
                 </span>
             </div>
             
-            <div class="flex items-center gap-3 text-slate-400 text-[11px]">
-                <span class="hidden md:inline font-mono text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-500/30">
-                    <i class="fa-solid fa-award text-amber-400 mr-1"></i> SIH 2026 • PS ID: 26089 • Team SIRA
+            <div class="flex items-center gap-3 text-slate-600 text-[11px]">
+                <span class="hidden md:inline font-mono font-bold text-emerald-800 bg-emerald-100/90 px-2.5 py-0.5 rounded border border-emerald-300">
+                    <i class="fa-solid fa-award text-amber-600 mr-1"></i> SIH 2026 | PS ID: 26089 | Category: Software | Theme: Agriculture, FoodTech & Rural Development
                 </span>
-                <div class="flex items-center gap-1 bg-slate-800/90 px-2 py-0.5 rounded-md border border-slate-700">
-                    <i class="fa-solid fa-globe text-slate-400 text-[10px]"></i>
-                    <select id="lang-select" onchange="changeLanguage(this.value)" class="bg-transparent text-slate-200 text-xs focus:outline-none cursor-pointer">
-                        <option value="en" class="bg-slate-900 text-white">English</option>
-                        <option value="hi" class="bg-slate-900 text-white">हिंदी (Hindi)</option>
-                        <option value="kn" class="bg-slate-900 text-white">ಕನ್ನಡ (Kannada)</option>
-                        <option value="ta" class="bg-slate-900 text-white">தமிழ் (Tamil)</option>
+                <button onclick="openIvrDrawer()" class="px-2 py-0.5 rounded bg-white border border-emerald-300 text-emerald-700 font-bold hover:bg-emerald-50 transition flex items-center gap-1 shadow-sm">
+                    <i class="fa-solid fa-phone-volume text-xs text-emerald-600"></i> <span class="hidden sm:inline">Feature Phone</span> IVR
+                </button>
+                <div class="flex items-center gap-1 bg-white px-2 py-0.5 rounded-md border border-slate-300 shadow-sm">
+                    <i class="fa-solid fa-globe text-slate-500 text-[10px]"></i>
+                    <select id="lang-select" onchange="changeLanguage(this.value)" class="bg-transparent text-slate-800 text-xs font-semibold focus:outline-none cursor-pointer">
+                        <option value="en">English</option>
+                        <option value="hi">हिंदी (Hindi)</option>
+                        <option value="kn">ಕನ್ನಡ (Kannada)</option>
+                        <option value="ta">தமிழ் (Tamil)</option>
                     </select>
                 </div>
             </div>
@@ -82,88 +84,98 @@
     </div>
 
     <!-- Main Navigation Bar -->
-    <header class="sticky top-0 z-40 backdrop-blur-xl bg-coop-dark/85 border-b border-white/5">
+    <header class="sticky top-0 z-40 backdrop-blur-xl bg-white/95 border-b border-slate-200 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
                 
                 <!-- Logo & Brand -->
                 <a href="index.html" class="flex items-center gap-3 group">
-                    <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-emerald-600 via-teal-500 to-indigo-600 p-[1.5px] shadow-lg shadow-emerald-500/20 group-hover:shadow-emerald-500/40 transition-all duration-300">
-                        <div class="w-full h-full bg-coop-dark rounded-[14px] flex items-center justify-center">
-                            <i class="fa-solid fa-handshake-angle text-emerald-400 text-xl group-hover:scale-110 transition-transform"></i>
+                    <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-emerald-600 via-teal-500 to-indigo-600 p-[2px] shadow-md shadow-emerald-500/20 group-hover:shadow-emerald-500/40 transition-all duration-300">
+                        <div class="w-full h-full bg-white rounded-[14px] flex items-center justify-center">
+                            <i class="fa-solid fa-handshake-angle text-emerald-600 text-xl group-hover:scale-110 transition-transform"></i>
                         </div>
                     </div>
                     <div>
                         <div class="flex items-center gap-2">
-                            <span class="text-2xl font-black tracking-tight font-heading text-white">Sahi<span class="text-emerald-400">Deal</span></span>
-                            <span class="px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider rounded-md bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">पारस्परिक सहकारी</span>
+                            <span class="text-2xl font-black tracking-tight font-heading text-slate-900">Sahi<span class="text-emerald-600">Deal</span></span>
+                            <span class="px-2 py-0.5 text-[9px] font-extrabold uppercase tracking-wider rounded-md bg-emerald-100 text-emerald-800 border border-emerald-300">पारस्परिक सहकारी</span>
                         </div>
+                        <p class="text-[10px] text-slate-500 -mt-0.5 hidden sm:block font-medium">Transforming Informal Labour Through Accountable Commerce</p>
+                    </div>
+                </a>
                         <p class="text-[10px] text-slate-400 -mt-1 hidden sm:block">Cooperative Gig Services Platform for Household & Community Services</p>
                     </div>
                 </a>
 
-                <!-- Desktop Navigation Links -->
-                <nav class="hidden lg:flex items-center gap-1 bg-slate-900/70 p-1.5 rounded-2xl border border-white/5" id="main-nav-bar">
-                    <a id="nav-link-index" href="index.html" class="px-3.5 py-2 rounded-xl text-xs font-semibold transition-all bg-emerald-500 text-white shadow-lg shadow-emerald-500/20">
+                <!-- Desktop Navigation Links (with Green Highlight cursor support) -->
+                <nav class="hidden lg:flex items-center gap-1.5 bg-slate-100 p-1.5 rounded-2xl border border-slate-200" id="main-nav-bar">
+                    <a id="nav-link-index" href="index.html" class="px-3.5 py-2 rounded-xl text-xs font-semibold transition-all bg-emerald-600 text-white font-bold shadow-md shadow-emerald-600/30 scale-[1.02]">
                         <i class="fa-solid fa-house-chimney mr-1.5 text-xs"></i> <span data-i18n="nav_services">Customer Portal</span>
                     </a>
-                    <a id="nav-link-worker" href="worker.html" class="px-3.5 py-2 rounded-xl text-xs font-semibold transition-all text-slate-300 hover:text-white hover:bg-white/5">
+                    <a id="nav-link-worker" href="worker.html" class="px-3.5 py-2 rounded-xl text-xs font-semibold transition-all text-slate-700 hover:text-emerald-700 hover:bg-white">
                         <i class="fa-solid fa-screwdriver-wrench mr-1.5 text-xs"></i> <span data-i18n="nav_worker_hub">Worker-Owner Portal</span>
                     </a>
-                    <a id="nav-link-governance" href="governance.html" class="px-3.5 py-2 rounded-xl text-xs font-semibold transition-all text-slate-300 hover:text-white hover:bg-white/5">
+                    <a id="nav-link-governance" href="governance.html" class="px-3.5 py-2 rounded-xl text-xs font-semibold transition-all text-slate-700 hover:text-emerald-700 hover:bg-white">
                         <i class="fa-solid fa-check-to-slot mr-1.5 text-xs"></i> <span data-i18n="nav_governance">Co-op Council (Voting)</span>
                     </a>
-                    <a id="nav-link-community" href="community.html" class="px-3.5 py-2 rounded-xl text-xs font-semibold transition-all text-slate-300 hover:text-white hover:bg-white/5">
+                    <a id="nav-link-community" href="community.html" class="px-3.5 py-2 rounded-xl text-xs font-semibold transition-all text-slate-700 hover:text-emerald-700 hover:bg-white">
                         <i class="fa-solid fa-people-roof mr-1.5 text-xs"></i> <span data-i18n="nav_community">RWA Bulk Hub</span>
                     </a>
-                    <a id="nav-link-about" href="about.html" class="px-3.5 py-2 rounded-xl text-xs font-semibold transition-all text-slate-300 hover:text-white hover:bg-white/5">
+                    <a id="nav-link-about" href="about.html" class="px-3.5 py-2 rounded-xl text-xs font-semibold transition-all text-slate-700 hover:text-emerald-700 hover:bg-white">
                         <i class="fa-solid fa-lightbulb mr-1.5 text-xs"></i> SIH Pitch Deck
                     </a>
                 </nav>
 
-                <!-- Action Controls: Role Login Switcher & Emergency SOS -->
+                <!-- Action Controls: SOS Emergency Button + e-KYC + Role Login Switcher -->
                 <div class="flex items-center gap-2.5 relative">
                     
+                    <!-- Emergency SOS Safety Button -->
+                    <button onclick="openSosModal()" class="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-rose-50 border border-rose-300 text-rose-700 hover:bg-rose-100 text-xs font-bold transition shadow-sm" title="Trigger Safety Alert">
+                        <i class="fa-solid fa-shield-heart text-rose-600 animate-pulse"></i>
+                        <span class="hidden sm:inline">SOS Safety</span>
+                    </button>
+
+                    <!-- e-KYC Verification Button -->
+                    <button onclick="openEkycModal()" class="hidden md:flex items-center gap-1 px-3 py-2 rounded-xl bg-indigo-50 border border-indigo-200 text-indigo-700 hover:bg-indigo-100 text-xs font-bold transition shadow-sm" title="Government e-KYC Verification">
+                        <i class="fa-solid fa-id-card text-indigo-600"></i>
+                        <span>e-KYC</span>
+                    </button>
+
                     <!-- Dynamic User / Role Login Button with Dropdown -->
                     <div class="relative">
-                        <button onclick="RoleGateway.toggleRoleMenu()" class="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-800/90 border border-slate-700 hover:border-emerald-500/50 text-xs transition-all shadow-sm group">
-                            <span id="current-role-badge" class="font-bold text-emerald-400">
+                        <button onclick="RoleGateway.toggleRoleMenu()" class="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-slate-300 hover:border-emerald-500 text-xs transition-all shadow-sm group">
+                            <span id="current-role-badge" class="font-bold text-emerald-700">
                                 <i class="fa-solid fa-user mr-1"></i> Customer Mode
                             </span>
-                            <span class="text-slate-500 hidden sm:inline">|</span>
-                            <span id="current-user-name" class="text-slate-200 hidden sm:inline font-bold group-hover:text-white">Profile</span>
-                            <i class="fa-solid fa-chevron-down text-[10px] text-slate-400 group-hover:text-emerald-400 ml-0.5"></i>
+                            <span class="text-slate-400 hidden sm:inline">|</span>
+                            <span id="current-user-name" class="text-slate-800 hidden sm:inline font-bold group-hover:text-emerald-700">Profile</span>
+                            <i class="fa-solid fa-chevron-down text-[10px] text-slate-400 group-hover:text-emerald-600 ml-0.5"></i>
                         </button>
 
                         <!-- Role & Profile Dropdown Menu -->
-                        <div id="role-dropdown-menu" class="hidden absolute right-0 mt-2 w-56 glass-panel rounded-2xl border border-white/10 p-2 shadow-2xl z-50 space-y-1">
-                            <button onclick="RoleGateway.openModal(); RoleGateway.closeRoleMenu();" class="w-full text-left px-3 py-2 rounded-xl text-xs font-semibold text-slate-200 hover:bg-emerald-500/20 hover:text-emerald-300 transition flex items-center gap-2">
-                                <i class="fa-solid fa-user-pen text-emerald-400"></i> Edit Profile Details
+                        <div id="role-dropdown-menu" class="hidden absolute right-0 mt-2 w-60 bg-white rounded-2xl border border-slate-200 p-2 shadow-2xl z-50 space-y-1">
+                            <button onclick="RoleGateway.openModal(); RoleGateway.closeRoleMenu();" class="w-full text-left px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-emerald-50 hover:text-emerald-800 transition flex items-center gap-2">
+                                <i class="fa-solid fa-user-pen text-emerald-600"></i> Edit Profile Details
                             </button>
-                            <button onclick="RoleGateway.openModal('customer'); RoleGateway.closeRoleMenu();" class="w-full text-left px-3 py-2 rounded-xl text-xs font-semibold text-slate-200 hover:bg-emerald-500/20 hover:text-emerald-300 transition flex items-center gap-2">
-                                <i class="fa-solid fa-house-chimney text-cyan-400"></i> Switch to Customer Mode
+                            <button onclick="openEkycModal(); RoleGateway.closeRoleMenu();" class="w-full text-left px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-indigo-50 hover:text-indigo-800 transition flex items-center gap-2">
+                                <i class="fa-solid fa-id-card text-indigo-600"></i> Verify Aadhaar e-KYC
                             </button>
-                            <button onclick="RoleGateway.openModal('worker'); RoleGateway.closeRoleMenu();" class="w-full text-left px-3 py-2 rounded-xl text-xs font-semibold text-slate-200 hover:bg-emerald-500/20 hover:text-emerald-300 transition flex items-center gap-2">
-                                <i class="fa-solid fa-screwdriver-wrench text-amber-400"></i> Switch to Worker Mode
+                            <button onclick="RoleGateway.openModal('customer'); RoleGateway.closeRoleMenu();" class="w-full text-left px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-emerald-50 hover:text-emerald-800 transition flex items-center gap-2">
+                                <i class="fa-solid fa-house-chimney text-cyan-600"></i> Switch to Customer Mode
                             </button>
-                            <div class="border-t border-slate-800 pt-1">
-                                <button onclick="RoleGateway.logout()" class="w-full text-left px-3 py-2 rounded-xl text-xs font-semibold text-rose-400 hover:bg-rose-500/20 transition flex items-center gap-2">
+                            <button onclick="RoleGateway.openModal('worker'); RoleGateway.closeRoleMenu();" class="w-full text-left px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-amber-50 hover:text-amber-800 transition flex items-center gap-2">
+                                <i class="fa-solid fa-screwdriver-wrench text-amber-600"></i> Switch to Worker Mode
+                            </button>
+                            <div class="border-t border-slate-200 pt-1">
+                                <button onclick="RoleGateway.logout()" class="w-full text-left px-3 py-2 rounded-xl text-xs font-semibold text-rose-600 hover:bg-rose-50 transition flex items-center gap-2">
                                     <i class="fa-solid fa-arrow-right-from-bracket"></i> Log Out & Go Offline
                                 </button>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Emergency SOS Button -->
-                    <button onclick="openSosModal()" class="relative group px-3.5 py-2 rounded-xl bg-gradient-to-r from-rose-600 to-red-600 text-white text-xs font-bold shadow-lg shadow-rose-600/30 hover:shadow-rose-600/50 hover:scale-[1.02] active:scale-95 transition-all flex items-center gap-1.5">
-                        <span class="w-1.5 h-1.5 rounded-full bg-white animate-ping"></span>
-                        <i class="fa-solid fa-bolt"></i>
-                        <span class="hidden sm:inline" data-i18n="sos_btn">SOS 15-Min</span>
-                        <span class="sm:hidden">SOS</span>
-                    </button>
-
                     <!-- Mobile Menu Button -->
-                    <button onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="lg:hidden p-2 rounded-xl bg-slate-800 text-slate-300 hover:text-white border border-slate-700">
+                    <button onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="lg:hidden p-2 rounded-xl bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-300">
                         <i class="fa-solid fa-bars text-base"></i>
                     </button>
                 </div>
@@ -172,16 +184,20 @@
         </div>
 
         <!-- Mobile Menu Dropdown -->
-        <div id="mobile-menu" class="hidden lg:hidden bg-slate-900/95 border-b border-slate-800 px-4 py-4 space-y-2 backdrop-blur-xl">
-            <button onclick="RoleGateway.openModal(); document.getElementById('mobile-menu').classList.add('hidden')" class="w-full text-left px-4 py-2.5 rounded-xl text-xs font-bold bg-emerald-950/60 border border-emerald-500/40 text-emerald-300 mb-2">
+        <div id="mobile-menu" class="hidden lg:hidden bg-white border-b border-slate-200 px-4 py-4 space-y-2 shadow-lg">
+            <button onclick="RoleGateway.openModal(); document.getElementById('mobile-menu').classList.add('hidden')" class="w-full text-left px-4 py-2.5 rounded-xl text-xs font-bold bg-emerald-50 border border-emerald-300 text-emerald-800 mb-2">
                 <i class="fa-solid fa-user-pen mr-2"></i> Register / Change Profile Details
             </button>
-            <a id="mobile-nav-index" href="index.html" class="block px-4 py-2.5 rounded-xl text-sm font-medium text-slate-200 hover:bg-slate-800"><i class="fa-solid fa-house-chimney mr-2 text-emerald-400"></i> Customer Portal</a>
-            <a id="mobile-nav-worker" href="worker.html" class="block px-4 py-2.5 rounded-xl text-sm font-medium text-slate-200 hover:bg-slate-800"><i class="fa-solid fa-screwdriver-wrench mr-2 text-emerald-400"></i> Worker-Owner Portal</a>
-            <a id="mobile-nav-governance" href="governance.html" class="block px-4 py-2.5 rounded-xl text-sm font-medium text-slate-200 hover:bg-slate-800"><i class="fa-solid fa-check-to-slot mr-2 text-emerald-400"></i> Co-op Council & Voting</a>
-            <a id="mobile-nav-community" href="community.html" class="block px-4 py-2.5 rounded-xl text-sm font-medium text-slate-200 hover:bg-slate-800"><i class="fa-solid fa-people-roof mr-2 text-emerald-400"></i> RWA Bulk Hub</a>
-            <a id="mobile-nav-about" href="about.html" class="block px-4 py-2.5 rounded-xl text-sm font-medium text-slate-200 hover:bg-slate-800"><i class="fa-solid fa-lightbulb mr-2 text-emerald-400"></i> SIH Pitch Deck</a>
-            <button onclick="RoleGateway.logout(); document.getElementById('mobile-menu').classList.add('hidden')" class="w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold text-rose-400 hover:bg-rose-950/40"><i class="fa-solid fa-arrow-right-from-bracket mr-2"></i> Log Out & Go Offline</button>
+            <a id="mobile-nav-index" href="index.html" class="block px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-800 hover:bg-slate-100"><i class="fa-solid fa-house-chimney mr-2 text-emerald-600"></i> Customer Portal</a>
+            <a id="mobile-nav-worker" href="worker.html" class="block px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-800 hover:bg-slate-100"><i class="fa-solid fa-screwdriver-wrench mr-2 text-amber-600"></i> Worker-Owner Portal</a>
+            <a id="mobile-nav-governance" href="governance.html" class="block px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-800 hover:bg-slate-100"><i class="fa-solid fa-check-to-slot mr-2 text-indigo-600"></i> Co-op Council & Voting</a>
+            <a id="mobile-nav-community" href="community.html" class="block px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-800 hover:bg-slate-100"><i class="fa-solid fa-people-roof mr-2 text-teal-600"></i> RWA Bulk Hub</a>
+            <a id="mobile-nav-about" href="about.html" class="block px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-800 hover:bg-slate-100"><i class="fa-solid fa-lightbulb mr-2 text-amber-600"></i> SIH Pitch Deck</a>
+            <div class="pt-2 border-t border-slate-200 flex gap-2">
+                <button onclick="openSosModal(); document.getElementById('mobile-menu').classList.add('hidden')" class="flex-1 py-2 rounded-xl text-xs font-bold bg-rose-50 text-rose-700 border border-rose-300"><i class="fa-solid fa-shield-heart mr-1"></i> SOS Alert</button>
+                <button onclick="openEkycModal(); document.getElementById('mobile-menu').classList.add('hidden')" class="flex-1 py-2 rounded-xl text-xs font-bold bg-indigo-50 text-indigo-700 border border-indigo-200"><i class="fa-solid fa-id-card mr-1"></i> e-KYC</button>
+            </div>
+            <button onclick="RoleGateway.logout(); document.getElementById('mobile-menu').classList.add('hidden')" class="w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold text-rose-600 hover:bg-rose-50"><i class="fa-solid fa-arrow-right-from-bracket mr-2"></i> Log Out & Go Offline</button>
         </div>
     </header>
 
@@ -191,14 +207,22 @@
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
 
     <!-- COMMUNITY HEADER -->
-    <div class="glass-panel-glow rounded-3xl p-6 sm:p-10 border border-emerald-500/30 text-center space-y-3">
-        <span class="text-xs font-mono font-bold uppercase tracking-wider text-emerald-400 bg-emerald-950/60 px-3 py-1 rounded-full border border-emerald-500/30">
+    <div class="glass-panel-glow rounded-3xl p-6 sm:p-10 border border-emerald-300 text-center space-y-3 bg-white shadow-sm">
+        <span class="text-xs font-mono font-bold uppercase tracking-wider text-emerald-800 bg-emerald-100 px-3 py-1 rounded-full border border-emerald-300">
             <i class="fa-solid fa-people-roof mr-1"></i> Society Collective Purchasing
         </span>
-        <h1 class="text-3xl sm:text-5xl font-black font-heading text-white">RWA Community Bulk Hub</h1>
-        <p class="text-xs sm:text-sm text-slate-300 max-w-2xl mx-auto">
+        <h1 class="text-3xl sm:text-5xl font-black font-heading text-slate-900">RWA Community Bulk Hub</h1>
+        <p class="text-xs sm:text-sm text-slate-600 max-w-2xl mx-auto">
             Apartment societies pool recurring maintenance jobs (Solar deep clean, Water tank UV flush, AC tune-ups) to unlock <b>20%–30% group discounts</b> while providing worker pods guaranteed full-day volume work.
         </p>
+        <div class="flex justify-center gap-3 pt-2">
+            <button onclick="openLaunchCampaignModal()" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold text-xs shadow-md shadow-emerald-600/30 hover:scale-105 active:scale-95 transition flex items-center gap-2">
+                <i class="fa-solid fa-plus-circle"></i> Launch Society Bulk Drive
+            </button>
+            <button onclick="openWorkerPledgeModal()" class="px-5 py-2.5 rounded-xl bg-indigo-50 hover:bg-indigo-100 text-indigo-800 border border-indigo-200 font-bold text-xs transition flex items-center gap-2">
+                <i class="fa-solid fa-user-check"></i> Pro: Pledge Crew Slot
+            </button>
+        </div>
     </div>
 
 
@@ -206,60 +230,60 @@
     <div class="space-y-6">
         <div class="flex items-center justify-between">
             <div>
-                <h2 class="text-xl font-bold font-heading text-white flex items-center gap-2">
-                    <i class="fa-solid fa-layer-group text-emerald-400"></i> Live Society Bulk Drives
+                <h2 class="text-xl font-bold font-heading text-slate-900 flex items-center gap-2">
+                    <i class="fa-solid fa-layer-group text-emerald-600"></i> Live Society Bulk Drives
                 </h2>
-                <p class="text-xs text-slate-400">Pledge your flat to unlock the next volume discount tier for your community</p>
+                <p class="text-xs text-slate-500">Pledge your flat to unlock the next volume discount tier for your community</p>
             </div>
-            <span class="px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+            <span class="px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">
                 3 Active Drives
             </span>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
             
-            <div id="campaign-card-CAMP-01" class="glass-panel rounded-3xl p-6 border border-white/10 hover:border-emerald-500/40 transition-all flex flex-col justify-between space-y-6">
+            <div id="campaign-card-CAMP-01" class="glass-panel rounded-3xl p-6 border border-slate-200 hover:border-emerald-400 transition-all flex flex-col justify-between space-y-6 bg-white shadow-sm">
                 
                 <div class="space-y-4">
                     <div class="relative h-44 rounded-2xl overflow-hidden">
                         <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&amp;auto=format&amp;fit=crop&amp;q=80" alt="Palm Meadows Resident Welfare Association (RWA)" class="w-full h-full object-cover">
-                        <span class="absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-black bg-emerald-500 text-white shadow-lg">
+                        <span class="absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-black bg-emerald-600 text-white shadow-lg">
                             25% OFF TIER
                         </span>
-                        <span class="absolute bottom-3 left-3 px-2.5 py-1 rounded-lg text-[10px] font-bold bg-slate-900/90 text-slate-200 backdrop-blur-md">
-                            <i class="fa-solid fa-clock mr-1 text-amber-400"></i> 3 Days Left
+                        <span class="absolute bottom-3 left-3 px-2.5 py-1 rounded-lg text-[10px] font-bold bg-white/95 text-slate-800 backdrop-blur-md shadow border border-slate-200">
+                            <i class="fa-solid fa-clock mr-1 text-amber-500"></i> 3 Days Left
                         </span>
                     </div>
 
                     <div>
-                        <div class="text-[11px] font-mono text-emerald-400 font-bold"><i class="fa-solid fa-location-dot mr-1"></i> Whitefield, Bangalore</div>
-                        <h3 class="text-base font-bold text-white mt-1">Society-Wide Rooftop Solar &amp; Tank Deep Sanitation</h3>
-                        <div class="text-xs text-slate-300 mt-1">Palm Meadows Resident Welfare Association (RWA)</div>
+                        <div class="text-[11px] font-mono text-emerald-700 font-bold"><i class="fa-solid fa-location-dot mr-1"></i> Whitefield, Bangalore</div>
+                        <h3 class="text-base font-bold text-slate-900 mt-1">Society-Wide Rooftop Solar &amp; Tank Deep Sanitation</h3>
+                        <div class="text-xs text-slate-500 mt-1">Palm Meadows Resident Welfare Association (RWA)</div>
                     </div>
 
                     <!-- Progress Bar -->
                     <div class="space-y-1.5">
                         <div class="flex justify-between text-xs">
-                            <span class="text-slate-300"><b id="pledges-count-CAMP-01">44</b> / 50 Flats Pledged</span>
+                            <span class="text-slate-600"><b class="text-slate-900" id="pledges-count-CAMP-01">44</b> / 50 Flats Pledged</span>
                             
-                            <span class="text-emerald-400 font-bold" id="pledges-pct-CAMP-01">88%</span>
+                            <span class="text-emerald-700 font-bold" id="pledges-pct-CAMP-01">88%</span>
                         </div>
-                        <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
-                            <div id="pledges-bar-CAMP-01" class="bg-gradient-to-r from-emerald-500 to-teal-400 h-full transition-all duration-500" style="width: 88%"></div>
+                        <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden border border-slate-200">
+                            <div id="pledges-bar-CAMP-01" class="bg-gradient-to-r from-emerald-500 to-teal-500 h-full transition-all duration-500" style="width: 88%"></div>
                         </div>
                     </div>
 
                     <!-- Pricing Breakdown -->
-                    <div class="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800 text-xs space-y-1">
+                    <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs space-y-1">
                         <div class="flex justify-between">
-                            <span class="text-slate-400">Regular Unit Price:</span>
+                            <span class="text-slate-500">Regular Unit Price:</span>
                             <span class="line-through text-slate-400">₹1400</span>
                         </div>
-                        <div class="flex justify-between font-bold text-white">
+                        <div class="flex justify-between font-bold text-slate-900">
                             <span>Group Discount Price:</span>
-                            <span class="text-emerald-400 text-sm font-heading">₹1050</span>
+                            <span class="text-emerald-700 text-sm font-heading">₹1050</span>
                         </div>
-                        <div class="flex justify-between text-[11px] text-cyan-300 pt-1 border-t border-slate-800">
+                        <div class="flex justify-between text-[11px] text-cyan-800 font-semibold pt-1 border-t border-slate-200">
                             <span>Assigned Co-op Crew:</span>
                             <span>Whitefield Co-op Pod (6 Specialists)</span>
                         </div>
@@ -267,54 +291,54 @@
                 </div>
 
                 <!-- Pledge Button -->
-                <button onclick="pledgeForSociety('CAMP-01')" class="w-full py-3 rounded-xl bg-gradient-to-r from-emerald-600 via-teal-600 to-indigo-600 text-white font-bold text-xs shadow-lg shadow-emerald-600/30 hover:scale-[1.01] active:scale-95 transition-all flex items-center justify-center gap-2">
+                <button onclick="openPledgeModal('CAMP-01', 'Society-Wide Rooftop Solar &amp; Tank Deep Sanitation')" class="w-full py-3 rounded-xl bg-gradient-to-r from-emerald-600 via-teal-600 to-indigo-600 text-white font-bold text-xs shadow-md shadow-emerald-600/30 hover:scale-[1.01] active:scale-95 transition-all flex items-center justify-center gap-2">
                     <i class="fa-solid fa-hand-holding-hand"></i> Pledge Flat & Lock Discount
                 </button>
 
             </div>
             
-            <div id="campaign-card-CAMP-02" class="glass-panel rounded-3xl p-6 border border-white/10 hover:border-emerald-500/40 transition-all flex flex-col justify-between space-y-6">
+            <div id="campaign-card-CAMP-02" class="glass-panel rounded-3xl p-6 border border-slate-200 hover:border-emerald-400 transition-all flex flex-col justify-between space-y-6 bg-white shadow-sm">
                 
                 <div class="space-y-4">
                     <div class="relative h-44 rounded-2xl overflow-hidden">
                         <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&amp;auto=format&amp;fit=crop&amp;q=80" alt="Sobha Moonstone Apartment Community" class="w-full h-full object-cover">
-                        <span class="absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-black bg-emerald-500 text-white shadow-lg">
+                        <span class="absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-black bg-emerald-600 text-white shadow-lg">
                             20% OFF TIER
                         </span>
-                        <span class="absolute bottom-3 left-3 px-2.5 py-1 rounded-lg text-[10px] font-bold bg-slate-900/90 text-slate-200 backdrop-blur-md">
-                            <i class="fa-solid fa-clock mr-1 text-amber-400"></i> 1 Days Left
+                        <span class="absolute bottom-3 left-3 px-2.5 py-1 rounded-lg text-[10px] font-bold bg-white/95 text-slate-800 backdrop-blur-md shadow border border-slate-200">
+                            <i class="fa-solid fa-clock mr-1 text-amber-500"></i> 1 Days Left
                         </span>
                     </div>
 
                     <div>
-                        <div class="text-[11px] font-mono text-emerald-400 font-bold"><i class="fa-solid fa-location-dot mr-1"></i> Bellandur Outer Ring Road</div>
-                        <h3 class="text-base font-bold text-white mt-1">Pre-Monsoon Balcony Waterproofing &amp; Drain Shield</h3>
-                        <div class="text-xs text-slate-300 mt-1">Sobha Moonstone Apartment Community</div>
+                        <div class="text-[11px] font-mono text-emerald-700 font-bold"><i class="fa-solid fa-location-dot mr-1"></i> Bellandur Outer Ring Road</div>
+                        <h3 class="text-base font-bold text-slate-900 mt-1">Pre-Monsoon Balcony Waterproofing &amp; Drain Shield</h3>
+                        <div class="text-xs text-slate-500 mt-1">Sobha Moonstone Apartment Community</div>
                     </div>
 
                     <!-- Progress Bar -->
                     <div class="space-y-1.5">
                         <div class="flex justify-between text-xs">
-                            <span class="text-slate-300"><b id="pledges-count-CAMP-02">29</b> / 30 Flats Pledged</span>
+                            <span class="text-slate-600"><b class="text-slate-900" id="pledges-count-CAMP-02">29</b> / 30 Flats Pledged</span>
                             
-                            <span class="text-emerald-400 font-bold" id="pledges-pct-CAMP-02">97%</span>
+                            <span class="text-emerald-700 font-bold" id="pledges-pct-CAMP-02">97%</span>
                         </div>
-                        <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
-                            <div id="pledges-bar-CAMP-02" class="bg-gradient-to-r from-emerald-500 to-teal-400 h-full transition-all duration-500" style="width: 97%"></div>
+                        <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden border border-slate-200">
+                            <div id="pledges-bar-CAMP-02" class="bg-gradient-to-r from-emerald-500 to-teal-500 h-full transition-all duration-500" style="width: 97%"></div>
                         </div>
                     </div>
 
                     <!-- Pricing Breakdown -->
-                    <div class="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800 text-xs space-y-1">
+                    <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs space-y-1">
                         <div class="flex justify-between">
-                            <span class="text-slate-400">Regular Unit Price:</span>
+                            <span class="text-slate-500">Regular Unit Price:</span>
                             <span class="line-through text-slate-400">₹950</span>
                         </div>
-                        <div class="flex justify-between font-bold text-white">
+                        <div class="flex justify-between font-bold text-slate-900">
                             <span>Group Discount Price:</span>
-                            <span class="text-emerald-400 text-sm font-heading">₹760</span>
+                            <span class="text-emerald-700 text-sm font-heading">₹760</span>
                         </div>
-                        <div class="flex justify-between text-[11px] text-cyan-300 pt-1 border-t border-slate-800">
+                        <div class="flex justify-between text-[11px] text-cyan-800 font-semibold pt-1 border-t border-slate-200">
                             <span>Assigned Co-op Crew:</span>
                             <span>Bellandur Plumbing Guild</span>
                         </div>
@@ -322,54 +346,54 @@
                 </div>
 
                 <!-- Pledge Button -->
-                <button onclick="pledgeForSociety('CAMP-02')" class="w-full py-3 rounded-xl bg-gradient-to-r from-emerald-600 via-teal-600 to-indigo-600 text-white font-bold text-xs shadow-lg shadow-emerald-600/30 hover:scale-[1.01] active:scale-95 transition-all flex items-center justify-center gap-2">
+                <button onclick="openPledgeModal('CAMP-02', 'Pre-Monsoon Balcony Waterproofing &amp; Drain Shield')" class="w-full py-3 rounded-xl bg-gradient-to-r from-emerald-600 via-teal-600 to-indigo-600 text-white font-bold text-xs shadow-md shadow-emerald-600/30 hover:scale-[1.01] active:scale-95 transition-all flex items-center justify-center gap-2">
                     <i class="fa-solid fa-hand-holding-hand"></i> Pledge Flat & Lock Discount
                 </button>
 
             </div>
             
-            <div id="campaign-card-CAMP-03" class="glass-panel rounded-3xl p-6 border border-white/10 hover:border-emerald-500/40 transition-all flex flex-col justify-between space-y-6">
+            <div id="campaign-card-CAMP-03" class="glass-panel rounded-3xl p-6 border border-slate-200 hover:border-emerald-400 transition-all flex flex-col justify-between space-y-6 bg-white shadow-sm">
                 
                 <div class="space-y-4">
                     <div class="relative h-44 rounded-2xl overflow-hidden">
                         <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=600&amp;auto=format&amp;fit=crop&amp;q=80" alt="Green Glen Layout Villa Association" class="w-full h-full object-cover">
-                        <span class="absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-black bg-emerald-500 text-white shadow-lg">
+                        <span class="absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-black bg-emerald-600 text-white shadow-lg">
                             30% OFF TIER
                         </span>
-                        <span class="absolute bottom-3 left-3 px-2.5 py-1 rounded-lg text-[10px] font-bold bg-slate-900/90 text-slate-200 backdrop-blur-md">
-                            <i class="fa-solid fa-clock mr-1 text-amber-400"></i> 5 Days Left
+                        <span class="absolute bottom-3 left-3 px-2.5 py-1 rounded-lg text-[10px] font-bold bg-white/95 text-slate-800 backdrop-blur-md shadow border border-slate-200">
+                            <i class="fa-solid fa-clock mr-1 text-amber-500"></i> 5 Days Left
                         </span>
                     </div>
 
                     <div>
-                        <div class="text-[11px] font-mono text-emerald-400 font-bold"><i class="fa-solid fa-location-dot mr-1"></i> HSR Sector 2</div>
-                        <h3 class="text-base font-bold text-white mt-1">Comprehensive Air Conditioner Energy Optimization</h3>
-                        <div class="text-xs text-slate-300 mt-1">Green Glen Layout Villa Association</div>
+                        <div class="text-[11px] font-mono text-emerald-700 font-bold"><i class="fa-solid fa-location-dot mr-1"></i> HSR Sector 2</div>
+                        <h3 class="text-base font-bold text-slate-900 mt-1">Comprehensive Air Conditioner Energy Optimization</h3>
+                        <div class="text-xs text-slate-500 mt-1">Green Glen Layout Villa Association</div>
                     </div>
 
                     <!-- Progress Bar -->
                     <div class="space-y-1.5">
                         <div class="flex justify-between text-xs">
-                            <span class="text-slate-300"><b id="pledges-count-CAMP-03">65</b> / 60 Flats Pledged</span>
+                            <span class="text-slate-600"><b class="text-slate-900" id="pledges-count-CAMP-03">65</b> / 60 Flats Pledged</span>
                             
-                            <span class="text-emerald-400 font-bold" id="pledges-pct-CAMP-03">108%</span>
+                            <span class="text-emerald-700 font-bold" id="pledges-pct-CAMP-03">108%</span>
                         </div>
-                        <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
-                            <div id="pledges-bar-CAMP-03" class="bg-gradient-to-r from-emerald-500 to-teal-400 h-full transition-all duration-500" style="width: 108%"></div>
+                        <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden border border-slate-200">
+                            <div id="pledges-bar-CAMP-03" class="bg-gradient-to-r from-emerald-500 to-teal-500 h-full transition-all duration-500" style="width: 108%"></div>
                         </div>
                     </div>
 
                     <!-- Pricing Breakdown -->
-                    <div class="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800 text-xs space-y-1">
+                    <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs space-y-1">
                         <div class="flex justify-between">
-                            <span class="text-slate-400">Regular Unit Price:</span>
+                            <span class="text-slate-500">Regular Unit Price:</span>
                             <span class="line-through text-slate-400">₹999</span>
                         </div>
-                        <div class="flex justify-between font-bold text-white">
+                        <div class="flex justify-between font-bold text-slate-900">
                             <span>Group Discount Price:</span>
-                            <span class="text-emerald-400 text-sm font-heading">₹699</span>
+                            <span class="text-emerald-700 text-sm font-heading">₹699</span>
                         </div>
-                        <div class="flex justify-between text-[11px] text-cyan-300 pt-1 border-t border-slate-800">
+                        <div class="flex justify-between text-[11px] text-cyan-800 font-semibold pt-1 border-t border-slate-200">
                             <span>Assigned Co-op Crew:</span>
                             <span>HSR HVAC Collective</span>
                         </div>
@@ -377,7 +401,7 @@
                 </div>
 
                 <!-- Pledge Button -->
-                <button onclick="pledgeForSociety('CAMP-03')" class="w-full py-3 rounded-xl bg-gradient-to-r from-emerald-600 via-teal-600 to-indigo-600 text-white font-bold text-xs shadow-lg shadow-emerald-600/30 hover:scale-[1.01] active:scale-95 transition-all flex items-center justify-center gap-2">
+                <button onclick="openPledgeModal('CAMP-03', 'Comprehensive Air Conditioner Energy Optimization')" class="w-full py-3 rounded-xl bg-gradient-to-r from-emerald-600 via-teal-600 to-indigo-600 text-white font-bold text-xs shadow-md shadow-emerald-600/30 hover:scale-[1.01] active:scale-95 transition-all flex items-center justify-center gap-2">
                     <i class="fa-solid fa-hand-holding-hand"></i> Pledge Flat & Lock Discount
                 </button>
 
@@ -388,83 +412,319 @@
 
 </div>
 
+<!-- Pledge Flat Modal -->
+<div id="pledge-modal" class="fixed inset-0 z-50 modal-backdrop hidden items-center justify-center p-4">
+    <div class="relative w-full max-w-md bg-white rounded-3xl border border-emerald-300 p-6 sm:p-8 space-y-5 shadow-2xl">
+        <div class="flex items-center justify-between">
+            <div>
+                <span class="text-[10px] font-mono font-bold uppercase tracking-widest text-emerald-700">SahiDeal • Bulk Drive</span>
+                <h3 class="text-lg font-bold text-slate-900 font-heading" id="pledge-modal-title">Pledge Your Flat</h3>
+            </div>
+            <button onclick="closePledgeModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center transition">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <p class="text-xs text-slate-600 leading-relaxed">
+            Enter your flat/unit details to join this bulk drive. Once enough flats pledge, the group discount tier is unlocked for your entire society.
+        </p>
+
+        <div class="space-y-4">
+            <div>
+                <label class="block text-xs font-semibold text-slate-700 mb-1">Your Name *</label>
+                <input type="text" id="pledge-name" required placeholder="e.g. Ravi Sharma" class="w-full px-4 py-2.5 rounded-xl glass-input text-xs">
+            </div>
+            <div>
+                <label class="block text-xs font-semibold text-slate-700 mb-1">Flat / Unit Number *</label>
+                <input type="text" id="pledge-flat" required placeholder="e.g. Flat 402 - Tower B" class="w-full px-4 py-2.5 rounded-xl glass-input text-xs">
+            </div>
+            <div>
+                <label class="block text-xs font-semibold text-slate-700 mb-1">Phone Number</label>
+                <input type="tel" id="pledge-phone" placeholder="e.g. +91 98765 43210" class="w-full px-4 py-2.5 rounded-xl glass-input text-xs">
+            </div>
+        </div>
+
+        <div class="flex gap-3 mt-5">
+            <button onclick="closePledgeModal()" class="flex-1 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition">
+                Cancel
+            </button>
+            <button onclick="submitPledge()" class="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-xs font-bold shadow-md shadow-emerald-600/30 hover:scale-[1.01] active:scale-95 transition-all flex items-center justify-center gap-2">
+                <i class="fa-solid fa-hand-holding-hand"></i> Confirm Pledge
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Launch Society Campaign Modal -->
+<div id="launch-campaign-modal" class="fixed inset-0 z-50 modal-backdrop hidden items-center justify-center p-4">
+    <div class="relative w-full max-w-md bg-white rounded-3xl border border-emerald-300 p-6 sm:p-8 space-y-5 shadow-2xl">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="w-10 h-10 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-xl">
+                    <i class="fa-solid fa-people-roof"></i>
+                </div>
+                <div>
+                    <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-emerald-700">RWA Initiative</span>
+                    <h3 class="text-lg font-bold font-heading text-slate-900">Launch Bulk Drive</h3>
+                </div>
+            </div>
+            <button onclick="closeLaunchCampaignModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <form onsubmit="event.preventDefault(); submitLaunchCampaign();" class="space-y-4 text-xs">
+            <div>
+                <label class="block font-semibold text-slate-700 mb-1">Society / Apartment Name *</label>
+                <input type="text" id="campaign-society" required placeholder="e.g. Sobha Iris Apartments, Outer Ring Road" class="w-full px-4 py-2.5 rounded-xl glass-input">
+            </div>
+            <div>
+                <label class="block font-semibold text-slate-700 mb-1">Service Type *</label>
+                <select id="campaign-service" class="w-full px-3 py-2.5 rounded-xl glass-input font-medium">
+                    <option value="Solar Panel Deep Cleaning">Solar Photovoltaic Panel Ultrasonic Wash (25% Off)</option>
+                    <option value="Overhead Water Tank UV Disinfection">Overhead Water Tank UV Disinfection (30% Off)</option>
+                    <option value="Apartment AC Spring Tune-up">Split AC Multi-Flat Gas & Filter Tune-up (20% Off)</option>
+                    <option value="Pest Control Fogging">Society Compound & Drain Eco-Pest Fogging (35% Off)</option>
+                </select>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+                <div>
+                    <label class="block font-semibold text-slate-700 mb-1">Target Flats *</label>
+                    <input type="number" id="campaign-target-flats" value="25" min="5" max="500" class="w-full px-4 py-2.5 rounded-xl glass-input font-bold">
+                </div>
+                <div>
+                    <label class="block font-semibold text-slate-700 mb-1">Duration (Days)</label>
+                    <input type="number" id="campaign-days" value="7" min="1" max="30" class="w-full px-4 py-2.5 rounded-xl glass-input">
+                </div>
+            </div>
+            <button type="submit" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold text-xs shadow-md shadow-emerald-600/30 hover:scale-[1.01] active:scale-95 transition">
+                Publish Society Campaign
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- Worker Pledge Crew Slot Modal -->
+<div id="worker-pledge-modal" class="fixed inset-0 z-50 modal-backdrop hidden items-center justify-center p-4">
+    <div class="relative w-full max-w-md bg-white rounded-3xl border border-indigo-300 p-6 sm:p-8 space-y-5 shadow-2xl">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="w-10 h-10 rounded-2xl bg-indigo-100 text-indigo-700 flex items-center justify-center text-xl">
+                    <i class="fa-solid fa-users-gear"></i>
+                </div>
+                <div>
+                    <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-indigo-700">Worker-Owner Pod</span>
+                    <h3 class="text-lg font-bold font-heading text-slate-900">Claim Full-Day Slot</h3>
+                </div>
+            </div>
+            <button onclick="closeWorkerPledgeModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <p class="text-xs text-slate-600 leading-relaxed">
+            Worker pods can pledge to service an entire apartment society drive in one day, eliminating travel overhead and earning guaranteed volume pay.
+        </p>
+
+        <form onsubmit="event.preventDefault(); submitWorkerPledgeSlot();" class="space-y-4 text-xs">
+            <div>
+                <label class="block font-semibold text-slate-700 mb-1">Select Drive *</label>
+                <select id="worker-pledge-campaign" class="w-full px-3 py-2.5 rounded-xl glass-input font-medium">
+                    <option value="c1">Palm Meadows - Solar Panel Deep Cleaning</option>
+                    <option value="c2">Prestige Oasis - Overhead Tank UV Disinfection</option>
+                    <option value="c3">Brigade Millennium - Dual AC Spring Tune-up</option>
+                </select>
+            </div>
+            <div>
+                <label class="block font-semibold text-slate-700 mb-1">Number of Worker Pod Slots (4 units per pro)</label>
+                <input type="number" id="worker-pledge-slots" value="5" min="1" max="20" class="w-full px-4 py-2.5 rounded-xl glass-input font-bold">
+            </div>
+            <div class="p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-[11px] space-y-0.5">
+                <div class="font-bold"><i class="fa-solid fa-hand-holding-dollar mr-1"></i> Guaranteed Day Payout: ₹2,250</div>
+                <p>92% Direct take-home + zero cross-city commute.</p>
+            </div>
+            <button type="submit" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-indigo-600 to-sky-600 text-white font-bold text-xs shadow-md shadow-indigo-600/30 hover:scale-[1.01] active:scale-95 transition">
+                Confirm Crew Slot
+            </button>
+        </form>
+    </div>
+</div>
+
 <script>
-function pledgeForSociety(campaignId) {
+let _pledgeCampaignId = null;
+
+function openPledgeModal(campaignId, serviceTitle) {
+    _pledgeCampaignId = campaignId;
+    const modal = document.getElementById('pledge-modal');
+    const title = document.getElementById('pledge-modal-title');
+    if (title) title.textContent = 'Pledge for: ' + serviceTitle;
+
+    try {
+        const customer = CoopSync.getCustomer();
+        if (customer) {
+            if (customer.name) document.getElementById('pledge-name').value = customer.name;
+            if (customer.phone) document.getElementById('pledge-phone').value = customer.phone;
+        }
+    } catch(e) {}
+
+    if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+    }
+}
+
+function closePledgeModal() {
+    const modal = document.getElementById('pledge-modal');
+    if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+    }
+    _pledgeCampaignId = null;
+}
+
+function submitPledge() {
+    const campaignId = _pledgeCampaignId;
+    const flatNo = document.getElementById('pledge-flat').value.trim();
+    const name = document.getElementById('pledge-name').value.trim();
+    const phone = document.getElementById('pledge-phone').value.trim();
+
+    if (!flatNo || !name) {
+        Toast.show('⚠️ Please enter your name and flat number.', 'error');
+        return;
+    }
+
+    const btn = document.querySelector('#pledge-modal button[onclick="submitPledge()"]');
+    if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1"></i> Submitting...';
+    }
+
     fetch('/api/community/join', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({campaign_id: campaignId, flat_no: "Flat 402 - Palm Heights"})
-    }).then(r => r.json()).then(data => {
-        const countEl = document.getElementById(`pledges-count-${campaignId}`);
-        const pctEl = document.getElementById(`pledges-pct-${campaignId}`);
-        const barEl = document.getElementById(`pledges-bar-${campaignId}`);
+        body: JSON.stringify({ campaign_id: campaignId, flat_no: flatNo, name: name, phone: phone })
+    })
+    .then(r => r.json())
+    .then(data => {
+        closePledgeModal();
 
-        if (countEl && data.current_pledges) countEl.textContent = data.current_pledges;
-        if (pctEl && data.pct_reached) pctEl.textContent = `${data.pct_reached}%`;
-        if (barEl && data.pct_reached) barEl.style.width = `${data.pct_reached}%`;
+        if (data.success) {
+            const countEl = document.getElementById(`pledges-count-${campaignId}`);
+            const pctEl = document.getElementById(`pledges-pct-${campaignId}`);
+            const barEl = document.getElementById(`pledges-bar-${campaignId}`);
 
-        Toast.show(`🎉 Flat pledged! Society unlocked group discount tier for ${campaignId}.`, 'success');
-        SoundFX.cash();
+            if (countEl && data.current_pledges !== undefined) countEl.textContent = data.current_pledges;
+            if (pctEl && data.pct_reached !== undefined) pctEl.textContent = `${data.pct_reached}%`;
+            if (barEl && data.pct_reached !== undefined) barEl.style.width = `${data.pct_reached}%`;
+
+            Toast.show(`🎉 ${name}, your flat has been pledged! Group discount tier progressing for ${campaignId}.`, 'success');
+            if (typeof SoundFX !== 'undefined') SoundFX.cash();
+        } else {
+            Toast.show(`❌ ${data.error || 'Pledge failed. Please try again.'}`, 'error');
+        }
+    })
+    .catch(() => {
+        closePledgeModal();
+        Toast.show('❌ Network error. Please check your connection and try again.', 'error');
+    })
+    .finally(() => {
+        if (btn) {
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fa-solid fa-hand-holding-hand"></i> Confirm Pledge';
+        }
     });
+}
+
+function openLaunchCampaignModal() {
+    const modal = document.getElementById('launch-campaign-modal');
+    if (modal) { modal.classList.remove('hidden'); modal.classList.add('flex'); }
+}
+function closeLaunchCampaignModal() {
+    const modal = document.getElementById('launch-campaign-modal');
+    if (modal) { modal.classList.add('hidden'); modal.classList.remove('flex'); }
+}
+function submitLaunchCampaign() {
+    const society = document.getElementById('campaign-society').value;
+    const service = document.getElementById('campaign-service').value;
+    closeLaunchCampaignModal();
+    Toast.show(`🚀 Bulk drive for "${service}" at ${society} launched! Community link generated.`, "success", 7000);
+    SoundFX.success();
+}
+
+function openWorkerPledgeModal() {
+    const modal = document.getElementById('worker-pledge-modal');
+    if (modal) { modal.classList.remove('hidden'); modal.classList.add('flex'); }
+}
+function closeWorkerPledgeModal() {
+    const modal = document.getElementById('worker-pledge-modal');
+    if (modal) { modal.classList.add('hidden'); modal.classList.remove('flex'); }
+}
+function submitWorkerPledgeSlot() {
+    closeWorkerPledgeModal();
+    Toast.show(`🛠️ Crew slot reserved! Guaranteed volume schedule confirmed for your team.`, "success", 7000);
+    SoundFX.cash();
 }
 </script>
 
     </main>
 
     <!-- Global Footer -->
-    <footer class="bg-slate-950/90 border-t border-slate-800 py-12 text-slate-400 text-xs mt-16">
+    <footer class="bg-white border-t border-slate-200 py-12 text-slate-600 text-xs mt-16 shadow-inner">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div class="space-y-3">
                     <div class="flex items-center gap-2">
-                        <span class="text-xl font-black text-white font-heading">Sahi<span class="text-emerald-400">Deal</span></span>
-                        <span class="px-2 py-0.5 text-[9px] font-bold rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">पारस्परिक सहकारी</span>
+                        <span class="text-xl font-black text-slate-900 font-heading">Sahi<span class="text-emerald-600">Deal</span></span>
+                        <span class="px-2 py-0.5 text-[9px] font-bold rounded bg-emerald-100 text-emerald-800 border border-emerald-300">पारस्परिक सहकारी</span>
                     </div>
-                    <p class="text-[11px] leading-relaxed text-slate-400">
-                        The worker-owned marketplace for trusted neighborhood services. Developed for <b>Smart India Hackathon 2026</b> by <b>Team SIRA</b> (Problem Statement ID: 26089).
+                    <p class="text-[11px] leading-relaxed text-slate-600">
+                        <b>Transforming Informal Labour Through Accountable Commerce</b>. Developed for <b>Smart India Hackathon 2026</b> by <b>Team SIRA</b> (Problem Statement ID: 26089).
                     </p>
+                    <div class="text-[11px] font-bold text-emerald-700">
+                        Theme: Agriculture, FoodTech & Rural Development / Software
+                    </div>
                 </div>
                 <div>
-                    <h4 class="font-bold text-white text-xs uppercase tracking-wider mb-3">Core Platform</h4>
+                    <h4 class="font-bold text-slate-900 text-xs uppercase tracking-wider mb-3">Core Portals & Checkpoints</h4>
                     <ul class="space-y-2 text-[11px]">
-                        <li><a href="index.html" class="hover:text-emerald-400 transition">Customer Portal (Post Problem)</a></li>
-                        <li><a href="worker.html" class="hover:text-emerald-400 transition">Worker Radar & Live Gigs</a></li>
-                        <li><a href="governance.html" class="hover:text-emerald-400 transition">Democratic Voting & Open Ledger</a></li>
-                        <li><a href="community.html" class="hover:text-emerald-400 transition">RWA Bulk Buying Campaigns</a></li>
+                        <li><a href="index.html" class="hover:text-emerald-600 transition font-medium">Customer Portal (Post Problem)</a></li>
+                        <li><a href="worker.html" class="hover:text-emerald-600 transition font-medium">Worker Radar & Fee Transparency</a></li>
+                        <li><a href="governance.html" class="hover:text-emerald-600 transition font-medium">Democratic Voting & Open Ledger</a></li>
+                        <li><a href="community.html" class="hover:text-emerald-600 transition font-medium">RWA Bulk Buying & Society Hub</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="font-bold text-white text-xs uppercase tracking-wider mb-3">Trust & Security</h4>
+                    <h4 class="font-bold text-slate-900 text-xs uppercase tracking-wider mb-3">Trust & Security Framework</h4>
                     <ul class="space-y-2 text-[11px]">
-                        <li><span class="text-slate-300"><i class="fa-solid fa-shield-halved text-emerald-400 mr-1.5"></i> Razorpay Escrow Milestone</span></li>
-                        <li><span class="text-slate-300"><i class="fa-solid fa-key text-sky-400 mr-1.5"></i> Dual OTP Handshake (Start & End)</span></li>
-                        <li><span class="text-slate-300"><i class="fa-solid fa-camera text-indigo-400 mr-1.5"></i> Hash-Locked Work Photo Proof</span></li>
-                        <li><span class="text-slate-300"><i class="fa-solid fa-phone text-amber-400 mr-1.5"></i> Twilio IVR / SMS Fallback</span></li>
+                        <li><span class="text-slate-700 font-medium"><i class="fa-solid fa-shield-halved text-emerald-600 mr-1.5"></i> Razorpay Upfront Escrow Lock</span></li>
+                        <li><span class="text-slate-700 font-medium"><i class="fa-solid fa-key text-sky-600 mr-1.5"></i> Dual OTP Handshake (Start & End)</span></li>
+                        <li><span class="text-slate-700 font-medium"><i class="fa-solid fa-camera text-indigo-600 mr-1.5"></i> Live Camera Photo Proof Capture</span></li>
+                        <li><span class="text-slate-700 font-medium"><i class="fa-solid fa-phone-volume text-amber-600 mr-1.5"></i> Low-Connectivity SMS/IVR Fallback</span></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="font-bold text-white text-xs uppercase tracking-wider mb-3">Platform Economics</h4>
-                    <div class="p-3.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5 text-[11px]">
+                    <h4 class="font-bold text-slate-900 text-xs uppercase tracking-wider mb-3">Fair Platform Economics</h4>
+                    <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5 text-[11px]">
                         <div class="flex justify-between">
-                            <span>Worker Take-Home:</span>
-                            <span class="text-emerald-400 font-bold">92%</span>
+                            <span class="text-slate-600">Worker Take-Home Pay:</span>
+                            <span class="text-emerald-600 font-bold">92% Direct</span>
                         </div>
                         <div class="flex justify-between">
-                            <span>Co-op Reserve / Dividend:</span>
-                            <span class="text-cyan-400 font-bold">8%</span>
+                            <span class="text-slate-600">Co-op Welfare Reserve:</span>
+                            <span class="text-indigo-600 font-bold">8% Fund</span>
                         </div>
                         <div class="flex justify-between">
-                            <span>Corporate Middleman Cut:</span>
-                            <span class="text-rose-400 font-bold">0% (Zero)</span>
+                            <span class="text-slate-600">Corporate Middleman Cut:</span>
+                            <span class="text-rose-600 font-bold">0% (Zero)</span>
                         </div>
                     </div>
                 </div>
             </div>
             
-            <div class="pt-6 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px]">
+            <div class="pt-6 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px]">
                 <div>© 2026 SahiDeal Cooperative (Team SIRA). Smart India Hackathon. All Rights Reserved.</div>
                 <div class="flex items-center gap-4">
-                    <span class="text-slate-500">Statutory Multi-State Cooperative Society Act Aligned</span>
+                    <span class="text-slate-500 font-medium">Statutory Multi-State Cooperative Society Act Aligned</span>
                 </div>
             </div>
         </div>
@@ -473,51 +733,51 @@ function pledgeForSociety(campaignId) {
     <!-- Toast Notification Container -->
     <div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none max-w-sm w-full"></div>
 
-    <!-- USER REGISTRATION & LOGIN MODAL (Allows entering custom user details) -->
+    <!-- USER REGISTRATION & LOGIN MODAL -->
     <div id="role-auth-modal" class="fixed inset-0 z-50 modal-backdrop hidden items-center justify-center p-4">
-        <div class="relative w-full max-w-lg glass-panel rounded-3xl border border-emerald-500/40 p-6 sm:p-8 overflow-hidden shadow-2xl max-h-[90vh] overflow-y-auto">
+        <div class="relative w-full max-w-lg bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 overflow-hidden shadow-2xl max-h-[90vh] overflow-y-auto">
             <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-emerald-500 via-teal-500 to-indigo-600"></div>
 
             <!-- Header -->
             <div class="flex items-center justify-between mb-5">
                 <div>
-                    <span class="text-[10px] font-black uppercase tracking-widest text-emerald-400 font-mono">SIH 2026 • PS 26089</span>
-                    <h3 class="text-xl font-bold font-heading text-white">Login / Register Profile</h3>
+                    <span class="text-[10px] font-black uppercase tracking-widest text-emerald-700 font-mono">SIH 2026 • PS ID: 26089 • Team SIRA</span>
+                    <h3 class="text-xl font-bold font-heading text-slate-900">Login / Register Profile</h3>
                 </div>
-                <button onclick="RoleGateway.closeModal()" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition">
+                <button onclick="RoleGateway.closeModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800 flex items-center justify-center transition">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
 
             <!-- Role Selector Tabs -->
-            <div class="flex p-1 rounded-2xl bg-slate-900 border border-slate-800 mb-6">
-                <button id="tab-btn-customer" onclick="RoleGateway.switchTab('customer')" class="flex-1 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-emerald-500 text-white shadow-lg shadow-emerald-500/30 transition-all">
+            <div class="flex p-1 rounded-2xl bg-slate-100 border border-slate-200 mb-6">
+                <button id="tab-btn-customer" onclick="RoleGateway.switchTab('customer')" class="flex-1 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-emerald-600 text-white shadow-md transition-all">
                     <i class="fa-solid fa-user-check mr-1.5"></i> Customer (Book & Post)
                 </button>
-                <button id="tab-btn-worker" onclick="RoleGateway.switchTab('worker')" class="flex-1 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-slate-400 hover:text-white transition-all">
+                <button id="tab-btn-worker" onclick="RoleGateway.switchTab('worker')" class="flex-1 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:text-slate-900 transition-all">
                     <i class="fa-solid fa-screwdriver-wrench mr-1.5"></i> Worker-Owner (Accept)
                 </button>
             </div>
 
             <!-- View 1: Customer Registration & Login Form -->
             <form id="auth-view-customer" onsubmit="event.preventDefault(); RoleGateway.saveCustomCustomer();" class="space-y-4">
-                <p class="text-xs text-slate-300 leading-relaxed">
+                <p class="text-xs text-slate-600 leading-relaxed">
                     Fill in your details as a Customer to post repair problems, track assigned workers, and release escrow upon satisfaction.
                 </p>
                 <div>
-                    <label class="block text-xs font-semibold text-slate-300 mb-1">Your Full Name *</label>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Your Full Name *</label>
                     <input type="text" id="cust-reg-name" required placeholder="e.g. Srivatsa Soham" class="w-full px-4 py-2.5 rounded-xl glass-input text-xs sm:text-sm">
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold text-slate-300 mb-1">Mobile Phone Number *</label>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Mobile Phone Number *</label>
                     <input type="tel" id="cust-reg-phone" required placeholder="e.g. +91 98765 43210" class="w-full px-4 py-2.5 rounded-xl glass-input text-xs sm:text-sm">
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold text-slate-300 mb-1">Your Street / Society Address *</label>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Your Street / Society Address *</label>
                     <input type="text" id="cust-reg-address" required placeholder="e.g. Flat 304, Sobha Residency, Indiranagar, Bangalore" class="w-full px-4 py-2.5 rounded-xl glass-input text-xs sm:text-sm">
                 </div>
                 <div class="pt-2">
-                    <button type="submit" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold text-xs sm:text-sm shadow-lg shadow-emerald-600/30 hover:scale-[1.01] active:scale-95 transition-all flex items-center justify-center gap-2">
+                    <button type="submit" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold text-xs sm:text-sm shadow-md shadow-emerald-600/30 hover:scale-[1.01] active:scale-95 transition-all flex items-center justify-center gap-2">
                         <i class="fa-solid fa-arrow-right-to-bracket"></i> Login & Open Customer Portal
                     </button>
                 </div>
@@ -525,40 +785,40 @@ function pledgeForSociety(campaignId) {
 
             <!-- View 2: Worker Registration & Login Form -->
             <form id="auth-view-worker" onsubmit="event.preventDefault(); RoleGateway.saveCustomWorker();" class="space-y-4 hidden">
-                <p class="text-xs text-slate-300 leading-relaxed">
+                <p class="text-xs text-slate-600 leading-relaxed">
                     Fill in your trade details to receive live radar dispatches from customers, verify OTPs, and earn 92% direct instant UPI payouts.
                 </p>
                 <div>
-                    <label class="block text-xs font-semibold text-slate-300 mb-1">Your Full Name *</label>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Your Full Name *</label>
                     <input type="text" id="worker-reg-name" required placeholder="e.g. Ramesh Kumar" class="w-full px-4 py-2.5 rounded-xl glass-input text-xs sm:text-sm">
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold text-slate-300 mb-1">Mobile Phone Number *</label>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Mobile Phone Number *</label>
                     <input type="tel" id="worker-reg-phone" required placeholder="e.g. +91 98860 54321" class="w-full px-4 py-2.5 rounded-xl glass-input text-xs sm:text-sm">
                 </div>
                 <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <label class="block text-xs font-semibold text-slate-300 mb-1">Primary Trade / Skill *</label>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Primary Trade / Skill *</label>
                         <select id="worker-reg-trade" class="w-full px-3 py-2.5 rounded-xl glass-input text-xs">
-                            <option value="Master Electrician" class="bg-slate-900">⚡ Master Electrician</option>
-                            <option value="Hydro Plumber" class="bg-slate-900">🚰 Hydro Plumber</option>
-                            <option value="HVAC & AC Specialist" class="bg-slate-900">❄️ HVAC & AC Specialist</option>
-                            <option value="Deep Sanitation Lead" class="bg-slate-900">🧹 Deep Sanitation Lead</option>
-                            <option value="Precision Carpenter" class="bg-slate-900">🪚 Precision Carpenter</option>
-                            <option value="Elder & Home Care Pro" class="bg-slate-900">👵 Elder & Home Care Pro</option>
+                            <option value="Master Electrician">⚡ Master Electrician</option>
+                            <option value="Hydro Plumber">🚰 Hydro Plumber</option>
+                            <option value="HVAC & AC Specialist">❄️ HVAC & AC Specialist</option>
+                            <option value="Deep Sanitation Lead">🧹 Deep Sanitation Lead</option>
+                            <option value="Precision Carpenter">🪚 Precision Carpenter</option>
+                            <option value="Elder & Home Care Pro">👵 Elder & Home Care Pro</option>
                         </select>
                     </div>
                     <div>
-                        <label class="block text-xs font-semibold text-slate-300 mb-1">Experience</label>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Experience</label>
                         <input type="text" id="worker-reg-exp" placeholder="e.g. 8 Years" class="w-full px-3 py-2.5 rounded-xl glass-input text-xs">
                     </div>
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold text-slate-300 mb-1">Operating Location</label>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Operating Location</label>
                     <input type="text" id="worker-reg-loc" placeholder="e.g. Indiranagar & Whitefield (1.2 km radius)" class="w-full px-4 py-2.5 rounded-xl glass-input text-xs sm:text-sm">
                 </div>
                 <div class="pt-2">
-                    <button type="submit" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-amber-500 via-emerald-600 to-teal-600 text-white font-bold text-xs sm:text-sm shadow-lg shadow-emerald-600/30 hover:scale-[1.01] active:scale-95 transition-all flex items-center justify-center gap-2">
+                    <button type="submit" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-amber-600 via-emerald-600 to-teal-600 text-white font-bold text-xs sm:text-sm shadow-md shadow-emerald-600/30 hover:scale-[1.01] active:scale-95 transition-all flex items-center justify-center gap-2">
                         <i class="fa-solid fa-screwdriver-wrench"></i> Login & Open Worker Radar
                     </button>
                 </div>
@@ -567,68 +827,181 @@ function pledgeForSociety(campaignId) {
         </div>
     </div>
 
-    <!-- Emergency SOS Rapid Dispatch Modal -->
-    <div id="sos-modal" class="fixed inset-0 z-50 modal-backdrop hidden items-center justify-center p-4">
-        <div class="relative w-full max-w-lg glass-panel rounded-3xl border border-rose-500/40 p-6 sm:p-8 overflow-hidden">
-            <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-rose-500 via-amber-500 to-red-600 animate-pulse"></div>
+    <!-- e-KYC VERIFICATION MODAL -->
+    <div id="ekyc-modal" class="fixed inset-0 z-50 modal-backdrop hidden items-center justify-center p-4">
+        <div class="relative w-full max-w-md bg-white rounded-3xl border border-indigo-200 p-6 sm:p-8 shadow-2xl">
+            <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-indigo-500 via-sky-500 to-emerald-500"></div>
             
-            <div class="flex items-center justify-between mb-6">
-                <div class="flex items-center gap-3">
-                    <div class="w-12 h-12 rounded-2xl bg-rose-500/20 text-rose-400 border border-rose-500/30 flex items-center justify-center text-xl">
-                        <i class="fa-solid fa-truck-medical"></i>
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center gap-2">
+                    <div class="w-9 h-9 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center text-lg font-bold">
+                        <i class="fa-solid fa-fingerprint"></i>
                     </div>
                     <div>
-                        <h3 class="text-xl font-bold font-heading text-white">Emergency SOS Handyman</h3>
-                        <p class="text-xs text-rose-300">Cooperative Rapid Response Guaranteed &lt; 15 Mins</p>
+                        <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-indigo-700">Govt of India • UIDAI</span>
+                        <h3 class="text-lg font-bold text-slate-900">Authorized e-KYC Verification</h3>
                     </div>
                 </div>
-                <button onclick="closeSosModal()" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition">
+                <button onclick="closeEkycModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
 
-            <div class="space-y-4">
+            <p class="text-xs text-slate-600 mb-4 leading-relaxed">
+                Verify identity via Aadhaar / DigiLocker integration to unlock instant trusted badges, escrow protection, and Co-op member rights.
+            </p>
+
+            <form onsubmit="event.preventDefault(); submitEkyc();" class="space-y-4">
                 <div>
-                    <label class="block text-xs font-semibold text-slate-300 mb-1.5">What is the critical emergency?</label>
-                    <select id="sos-type" class="w-full px-4 py-3 rounded-xl glass-input text-sm">
-                        <option value="Severe Pipe Burst & Flooding" class="bg-slate-900">🚰 Severe Pipe Burst / Water Leak Flooding</option>
-                        <option value="Total Power Trip / Short Circuit" class="bg-slate-900">⚡ Total Power Trip / Sparking MCB</option>
-                        <option value="Elderly Medical Mobility Assistance" class="bg-slate-900">👵 Urgent Senior Citizen Assist / Bed Support</option>
-                        <option value="Broken Main Door Lock / Jammed" class="bg-slate-900">🔐 Locked Out / Broken Door Deadbolt</option>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Aadhaar Number / DigiLocker ID *</label>
+                    <input type="text" id="ekyc-aadhaar-input" required placeholder="XXXX XXXX 8842 (or enter demo)" maxlength="14" class="w-full px-4 py-2.5 rounded-xl glass-input text-xs sm:text-sm font-mono tracking-widest">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Member Name (As on Aadhaar)</label>
+                    <input type="text" id="ekyc-name-input" placeholder="e.g. Srivatsa Soham" class="w-full px-4 py-2.5 rounded-xl glass-input text-xs sm:text-sm">
+                </div>
+                
+                <div class="p-3 bg-indigo-50/70 rounded-xl border border-indigo-200 text-[11px] text-indigo-900 space-y-1">
+                    <div class="font-bold flex items-center gap-1.5"><i class="fa-solid fa-lock text-indigo-600"></i> Privacy & Data Protection:</div>
+                    <p>Encrypted using 256-bit SHA-256 tokens. No biometric or plain credentials stored.</p>
+                </div>
+
+                <div class="flex gap-2.5 pt-2">
+                    <button type="button" onclick="closeEkycModal()" class="flex-1 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition">
+                        Cancel
+                    </button>
+                    <button type="submit" id="ekyc-submit-btn" class="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-sky-600 text-white text-xs font-bold shadow-md shadow-indigo-600/30 hover:scale-[1.01] active:scale-95 transition flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-circle-check"></i> Authorize e-KYC
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- EMERGENCY SOS SAFETY MODAL -->
+    <div id="sos-modal" class="fixed inset-0 z-50 modal-backdrop hidden items-center justify-center p-4">
+        <div class="relative w-full max-w-md bg-white rounded-3xl border border-rose-300 p-6 sm:p-8 shadow-2xl">
+            <div class="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-rose-500 via-amber-500 to-rose-600"></div>
+
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center gap-2">
+                    <div class="w-10 h-10 rounded-2xl bg-rose-100 text-rose-600 flex items-center justify-center text-xl font-bold animate-bounce">
+                        <i class="fa-solid fa-shield-heart"></i>
+                    </div>
+                    <div>
+                        <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-rose-600">Priority Safety Sentinel</span>
+                        <h3 class="text-xl font-bold text-slate-900">Emergency SOS Alert</h3>
+                    </div>
+                </div>
+                <button onclick="closeSosModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <p class="text-xs text-slate-600 mb-4 leading-relaxed">
+                Clicking trigger will immediately broadcast your live GPS coordinates, active task logs, and alert signals to emergency contacts & the <b>Co-op Safety Rapid Response Guild</b>.
+            </p>
+
+            <div class="p-4 rounded-2xl bg-rose-50 border border-rose-200 space-y-2 text-xs text-rose-900 mb-5">
+                <div class="flex justify-between font-bold">
+                    <span><i class="fa-solid fa-location-crosshairs mr-1"></i> Current Location:</span>
+                    <span id="sos-gps-display" class="font-mono">12.9716° N, 77.5946° E</span>
+                </div>
+                <div class="flex justify-between">
+                    <span>Priority Response Target:</span>
+                    <span class="font-bold text-rose-700">< 12 mins dispatch</span>
+                </div>
+                <div class="flex justify-between">
+                    <span>Co-op Emergency Hotline:</span>
+                    <span class="font-mono font-bold text-slate-900">+91 1800-SAHI-HELP</span>
+                </div>
+            </div>
+
+            <div class="flex gap-3">
+                <button onclick="closeSosModal()" class="flex-1 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition">
+                    Cancel
+                </button>
+                <button onclick="triggerEmergencySos()" class="flex-1 py-3 rounded-xl bg-gradient-to-r from-rose-600 to-red-600 text-white text-xs font-bold shadow-lg shadow-rose-600/40 hover:scale-[1.02] active:scale-95 transition flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-tower-broadcast animate-ping"></i> Trigger SOS Now
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FEATURE PHONE SMS / IVR SIMULATION DRAWER -->
+    <div id="ivr-drawer" class="fixed inset-y-0 right-0 z-50 w-full max-w-md bg-white border-l border-slate-200 shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col">
+        <div class="p-6 border-b border-slate-200 flex items-center justify-between bg-emerald-50">
+            <div class="flex items-center gap-2.5">
+                <div class="w-10 h-10 rounded-2xl bg-emerald-600 text-white flex items-center justify-center text-lg shadow-md">
+                    <i class="fa-solid fa-phone-volume"></i>
+                </div>
+                <div>
+                    <h3 class="text-base font-bold text-slate-900 font-heading">Low-Connectivity IVR Fallback</h3>
+                    <p class="text-[11px] text-slate-600">Feature Phone Voice & SMS Simulator</p>
+                </div>
+            </div>
+            <button onclick="closeIvrDrawer()" class="w-8 h-8 rounded-full bg-white hover:bg-slate-200 text-slate-600 flex items-center justify-center border border-slate-300">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <div class="p-6 overflow-y-auto flex-grow space-y-6 text-xs">
+            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+                <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-emerald-700">Digital Inclusivity Feature</span>
+                <h4 class="font-bold text-slate-900 text-sm">Offline Voice IVR & SMS Protocol</h4>
+                <p class="text-slate-600 leading-relaxed text-[11px]">
+                    Enables users with standard 2G feature phones to dial <b>1800-SAHIDEAL</b> in regional languages (Hindi, Kannada, Tamil, English) to book verified local tradespeople without smartphone or internet.
+                </p>
+            </div>
+
+            <form onsubmit="event.preventDefault(); simulateIvrCall();" class="space-y-4">
+                <div>
+                    <label class="block font-semibold text-slate-700 mb-1">Mobile Phone Number</label>
+                    <input type="tel" id="ivr-phone-input" required value="+91 98450 12345" class="w-full px-4 py-2.5 rounded-xl glass-input font-mono">
+                </div>
+                <div>
+                    <label class="block font-semibold text-slate-700 mb-1">Language Dialect</label>
+                    <select id="ivr-lang-input" class="w-full px-3 py-2.5 rounded-xl glass-input font-medium">
+                        <option value="hi">हिंदी (Hindi)</option>
+                        <option value="en">English</option>
+                        <option value="kn">ಕನ್ನಡ (Kannada)</option>
+                        <option value="ta">தமிழ் (Tamil)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block font-semibold text-slate-700 mb-1">Service Type</label>
+                    <select id="ivr-service-input" class="w-full px-3 py-2.5 rounded-xl glass-input font-medium">
+                        <option value="electrical">⚡ Emergency Electrical Repair</option>
+                        <option value="plumbing">🚰 Hydro Pipeline Unclogging</option>
+                        <option value="appliances">❄️ AC & Refrigerator Fix</option>
                     </select>
                 </div>
 
-                <div>
-                    <label class="block text-xs font-semibold text-slate-300 mb-1.5">Your Exact Street & Apartment Address</label>
-                    <input type="text" id="sos-location" placeholder="e.g. Flat 402, Palm Heights, Indiranagar 100ft Road" class="w-full px-4 py-3 rounded-xl glass-input text-sm">
-                </div>
-
-                <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 flex items-center gap-3">
-                    <i class="fa-solid fa-hand-holding-dollar text-emerald-400 text-xl shrink-0"></i>
-                    <div class="text-xs text-slate-300">
-                        <span class="font-bold text-white">Zero Surge Pricing:</span> Standard transparent rate of ₹399 base. 92% goes instantly to the emergency responder pro.
-                    </div>
-                </div>
-
-                <div id="sos-status-box" class="hidden p-4 rounded-2xl bg-emerald-950/60 border border-emerald-500/40 space-y-2">
-                    <div class="flex items-center justify-between text-xs text-emerald-300 font-bold">
-                        <span><i class="fa-solid fa-circle-check mr-1"></i> Dispatched Rapid Pro</span>
-                        <span id="sos-pro-eta" class="text-amber-300 font-black">12 mins away</span>
-                    </div>
-                    <div class="flex items-center gap-3 pt-1">
-                        <div class="w-10 h-10 rounded-full bg-emerald-600/30 border border-emerald-500 flex items-center justify-center text-emerald-300 font-bold">
-                            <i class="fa-solid fa-user-gear"></i>
-                        </div>
-                        <div>
-                            <div id="sos-pro-name" class="text-sm font-bold text-white">Ramesh Kumar Sharma</div>
-                            <div id="sos-pro-role" class="text-xs text-slate-400">Master Certified Handyman • Aadhaar & Police Vetted</div>
-                        </div>
-                    </div>
-                </div>
-
-                <button id="btn-sos-dispatch" onclick="triggerEmergencySos()" class="w-full py-4 rounded-xl bg-gradient-to-r from-rose-600 via-red-600 to-rose-700 text-white font-bold tracking-wide shadow-lg shadow-rose-600/40 hover:shadow-rose-600/60 hover:scale-[1.01] active:scale-95 transition-all flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-satellite-dish"></i> Dispatch Nearest Co-op Handyman Now
+                <button type="submit" id="ivr-btn" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold shadow-md shadow-emerald-600/30 hover:scale-[1.01] active:scale-95 transition flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-phone-flip"></i> Simulate Inbound IVR Call & SMS
                 </button>
+            </form>
+
+            <div id="ivr-result-box" class="hidden p-4 rounded-2xl bg-emerald-50 border border-emerald-300 space-y-3">
+                <div class="flex items-center justify-between text-emerald-800 font-bold">
+                    <span><i class="fa-solid fa-sim-card mr-1"></i> Twilio IVR Simulation Output</span>
+                    <span class="text-[10px] font-mono bg-emerald-200 px-2 py-0.5 rounded">STATUS: 200 OK</span>
+                </div>
+                <div class="space-y-1">
+                    <div class="text-slate-600 text-[10px] font-semibold">Live Audio Visualizer:</div>
+                    <div class="flex items-center gap-1 h-6">
+                        <span class="audio-bar"></span>
+                        <span class="audio-bar"></span>
+                        <span class="audio-bar"></span>
+                        <span class="audio-bar"></span>
+                        <span class="audio-bar"></span>
+                        <span class="text-[11px] font-mono text-emerald-800 ml-2 font-bold">Synthesizing Speech...</span>
+                    </div>
+                </div>
+                <div class="p-3 bg-white rounded-xl border border-emerald-200 font-mono text-[11px] text-slate-800 space-y-1.5">
+                    <div class="font-bold text-emerald-700">SMS Script Dispatched:</div>
+                    <p id="ivr-sms-text" class="italic leading-relaxed"></p>
+                </div>
             </div>
         </div>
     </div>

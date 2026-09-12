@@ -1,5 +1,5 @@
 /**
- * SahiDeal (पारस्परिक सहकारी) - Core JavaScript Engine
+ * Co-Work (पारस्परिक सहकारी) - Core JavaScript Engine
  * Smart India Hackathon 2026 - Problem Statement ID: 26089
  * Handles Role Management, Custom Profile Registrations, Live Sync & Audio FX
  */
@@ -123,7 +123,7 @@ const Toast = {
     }
 };
 
-// Dynamic Navigation Active Highlight Engine
+// Dynamic Navigation Active Highlight Engine (Bright Emerald Green Pill Cursor)
 function highlightActiveNav() {
     const currentPath = window.location.pathname.toLowerCase();
     const currentHref = window.location.href.toLowerCase();
@@ -144,7 +144,7 @@ function highlightActiveNav() {
 
         if (el) {
             if (isActive) {
-                el.className = 'px-3.5 py-2 rounded-xl text-xs font-bold transition-all bg-emerald-500 text-white shadow-lg shadow-emerald-500/30 scale-[1.02]';
+                el.className = 'px-3.5 py-2 rounded-xl text-xs font-bold transition-all bg-emerald-500 text-white shadow-lg shadow-emerald-500/30 ring-2 ring-emerald-400/40 scale-[1.02]';
             } else {
                 el.className = 'px-3.5 py-2 rounded-xl text-xs font-semibold transition-all text-slate-300 hover:text-white hover:bg-white/5';
             }
@@ -162,7 +162,7 @@ function highlightActiveNav() {
 
 // Role Gateway & Profile Manager (Enforces Single Active Session)
 const RoleGateway = {
-    currentRole: localStorage.getItem('sahideal_active_role') || (window.location.href.includes('worker') ? 'worker' : 'customer'),
+    currentRole: localStorage.getItem('cowork_active_role') || localStorage.getItem('sahideal_active_role') || (window.location.href.includes('worker') ? 'worker' : 'customer'),
     
     init() {
         this.syncWithState();
@@ -248,7 +248,7 @@ const RoleGateway = {
         }
 
         this.currentRole = 'customer';
-        localStorage.setItem('sahideal_active_role', 'customer');
+        localStorage.setItem('cowork_active_role', 'customer');
         this.updateNavUI();
         this.closeModal();
 
@@ -285,7 +285,7 @@ const RoleGateway = {
         }
 
         this.currentRole = 'worker';
-        localStorage.setItem('sahideal_active_role', 'worker');
+        localStorage.setItem('cowork_active_role', 'worker');
         this.updateNavUI();
         this.closeModal();
 
@@ -304,6 +304,7 @@ const RoleGateway = {
             CoopSync.logout();
         }
         this.currentRole = null;
+        localStorage.removeItem('cowork_active_role');
         localStorage.removeItem('sahideal_active_role');
         this.updateNavUI();
         this.closeRoleMenu();
@@ -336,7 +337,7 @@ const RoleGateway = {
         
         let customer = (typeof CoopSync !== 'undefined') ? CoopSync.getCustomer() : null;
         let worker = (typeof CoopSync !== 'undefined') ? CoopSync.getWorker() : null;
-        const activeRole = localStorage.getItem('sahideal_active_role');
+        const activeRole = localStorage.getItem('cowork_active_role') || localStorage.getItem('sahideal_active_role');
 
         const isWorkerPage = window.location.href.includes('worker');
 
@@ -360,7 +361,6 @@ const TRANSLATIONS = {
         nav_worker_hub: "Worker-Owner Hub",
         nav_governance: "Co-op Council (Voting)",
         nav_community: "RWA Bulk Hub",
-        sos_btn: "SOS 15-Min Handyman",
         hero_title_1: "Fair Work.",
         hero_title_2: "Community Trust.",
         hero_title_3: "Zero Exploitation.",
@@ -371,7 +371,6 @@ const TRANSLATIONS = {
         nav_worker_hub: "श्रमिक-मालिक हब",
         nav_governance: "सहकारी परिषद (मतदान)",
         nav_community: "सोसायटी सामूहिक हब",
-        sos_btn: "आपातकालीन 15-मिनट मिस्त्री",
         hero_title_1: "उचित काम।",
         hero_title_2: "सामुदायिक विश्वास।",
         hero_title_3: "शून्य शोषण।",
@@ -382,7 +381,6 @@ const TRANSLATIONS = {
         nav_worker_hub: "ಕಾರ್ಮಿಕ ಮಾಲೀಕ ಪೋರ್ಟಲ್",
         nav_governance: "ಸಹಕಾರಿ ಮಂಡಳಿ",
         nav_community: "ಸೊಸೈಟಿ ಹಬ್",
-        sos_btn: "ತುರ್ತು 15-ನಿಮಿಷ ಕರಕುಶಲ",
         hero_title_1: "ನ್ಯಾಯಯುತ ಕೆಲಸ.",
         hero_title_2: "ಸಮುದಾಯ ನಂಬಿಕೆ.",
         hero_title_3: "ಶೂನ್ಯ ಶೋಷಣೆ.",
@@ -393,7 +391,6 @@ const TRANSLATIONS = {
         nav_worker_hub: "தொழிலாளர் போர்டல்",
         nav_governance: "கூட்டுறவு சபை",
         nav_community: "குடியிருப்பு சங்கம்",
-        sos_btn: "அவசர 15-நிமிட உதவி",
         hero_title_1: "நியாயமான வேலை.",
         hero_title_2: "சமூக நம்பிக்கை.",
         hero_title_3: "சுரண்டலற்ற தளம்.",
@@ -410,88 +407,6 @@ function changeLanguage(lang) {
         }
     });
     Toast.show(`Language switched to ${lang.toUpperCase()}`, 'info');
-}
-
-// Emergency SOS Modal Controller
-function openSosModal() {
-    const modal = document.getElementById('sos-modal');
-    if (modal) {
-        modal.classList.remove('hidden');
-        modal.classList.add('flex');
-        SoundFX.sos();
-    }
-}
-
-function closeSosModal() {
-    const modal = document.getElementById('sos-modal');
-    if (modal) {
-        modal.classList.add('hidden');
-        modal.classList.remove('flex');
-    }
-}
-
-let sosTimerInterval = null;
-
-function triggerEmergencySos() {
-    const btn = document.getElementById('btn-sos-dispatch');
-    const statusBox = document.getElementById('sos-status-box');
-    const type = document.getElementById('sos-type') ? document.getElementById('sos-type').value : "Emergency Pipe Burst";
-    const loc = document.getElementById('sos-location') ? document.getElementById('sos-location').value.trim() : "Indiranagar 100ft Road";
-
-    if (btn) {
-        btn.disabled = true;
-        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Dispatched Pro via Rapid GIS Radar...';
-    }
-
-    let customer = (typeof CoopSync !== 'undefined') ? CoopSync.getCustomer() : null;
-    if (!customer) {
-        customer = { name: "Citizen Member", phone: "+91 98450 12345", address: loc || "Indiranagar" };
-    }
-
-    if (typeof CoopSync !== 'undefined') {
-        CoopSync.postCustomerJob({
-            title: `🚨 EMERGENCY: ${type}`,
-            category: "emergency",
-            description: `Critical emergency response at ${loc || customer.address}. Immediate <15 min dispatch needed.`,
-            price: 399,
-            customerName: customer.name,
-            customerPhone: customer.phone,
-            customerAddress: loc || customer.address,
-            urgency: "⚡ Critical Emergency (<15 mins)"
-        });
-    }
-
-    setTimeout(() => {
-        if (statusBox) statusBox.classList.remove('hidden');
-        if (btn) {
-            btn.innerHTML = '<i class="fa-solid fa-phone-volume mr-1"></i> Call Dispatched Specialist (+91 98860 54321)';
-            btn.className = 'w-full py-4 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold tracking-wide shadow-lg shadow-emerald-600/40 hover:scale-[1.01] transition-all flex items-center justify-center gap-2';
-            btn.disabled = false;
-            btn.onclick = () => {
-                Toast.show("📞 Connecting emergency phone bridge to Ramesh Kumar...", "info");
-                window.open('tel:+919886054321');
-            };
-        }
-
-        // Start live 15-min countdown
-        let totalSeconds = 15 * 60;
-        const etaEl = document.getElementById('sos-pro-eta');
-        if (sosTimerInterval) clearInterval(sosTimerInterval);
-        sosTimerInterval = setInterval(() => {
-            totalSeconds--;
-            if (totalSeconds <= 0) {
-                clearInterval(sosTimerInterval);
-                if (etaEl) etaEl.textContent = "Arrived at Doorstep!";
-                return;
-            }
-            const mins = Math.floor(totalSeconds / 60);
-            const secs = totalSeconds % 60;
-            if (etaEl) etaEl.textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')} mins away`;
-        }, 1000);
-
-        Toast.show("🚨 Emergency SOS Handyman dispatched! Nearest cooperative responder notified.", "sos", 7000);
-        SoundFX.sos();
-    }, 600);
 }
 
 // Fair Calculator Controller (8% Co-op fee vs 28% Corporate cut)
