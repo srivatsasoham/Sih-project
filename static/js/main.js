@@ -180,7 +180,32 @@ const LanguageEngine = {
             tab_customer: "Customer (Book & Post)",
             tab_worker: "Worker-Owner (Accept)",
             title_ekyc: "Authorized e-KYC Verification",
-            title_sos: "Emergency SOS Alert"
+            title_sos: "Emergency SOS Alert",
+            // Page terms
+            cat_all: "All Services",
+            cat_ambulance: "Ambulance",
+            cat_medical: "Medical Help",
+            cat_agriculture: "Agriculture Delivery",
+            cat_foodtech: "Food Tech Services",
+            cat_electrical: "Electrical",
+            cat_plumbing: "Plumbing",
+            cat_cleaning: "Cleaning",
+            cat_appliances: "Appliances",
+            cat_carpentry: "Carpentry",
+            cat_community: "Community Care",
+            post_problem_btn: "Broadcast Problem to Radar",
+            find_pros_btn: "Find Nearby Pros",
+            instant_payout: "Instant UPI Disbursal",
+            durability_title: "7-Day Durability Protection & Guarantee",
+            durability_desc: "Zero-cost re-work if issue recurs within 7 days.",
+            report_issue_btn: "Report Durability / Workmanship Issue",
+            available_balance: "Available Co-op Balance",
+            today_earnings: "Today's Direct Earnings (92%)",
+            patronage_dividend: "Patronage Dividend Accrued",
+            welfare_cover: "Welfare & Health Safety Net",
+            file_dispute_btn: "File Tribunal Dispute",
+            vote_yes: "Vote YES",
+            vote_no: "Vote NO"
         },
         hi: {
             badge_live_sync: "लाइव सहकारी सिंक",
@@ -204,7 +229,32 @@ const LanguageEngine = {
             tab_customer: "ग्राहक (बुक और पोस्ट)",
             tab_worker: "श्रमिक-मालिक (स्वीकारें)",
             title_ekyc: "अधिकृत ई-केवाईसी सत्यापन",
-            title_sos: "आपातकालीन एसओएस चेतावनी"
+            title_sos: "आपातकालीन एसओएस चेतावनी",
+            // Page terms
+            cat_all: "सभी सेवाएं",
+            cat_ambulance: "एम्बुलेंस सेवा",
+            cat_medical: "चिकित्सा सहायता",
+            cat_agriculture: "कृषि वितरण",
+            cat_foodtech: "फूड टेक सेवाएं",
+            cat_electrical: "इलेक्ट्रिकल",
+            cat_plumbing: "प्लंबिंग",
+            cat_cleaning: "सफाई",
+            cat_appliances: "उपकरण मरम्मत",
+            cat_carpentry: "बढ़ईगीरी",
+            cat_community: "सामुदायिक देखभाल",
+            post_problem_btn: "रडार पर समस्या प्रसारित करें",
+            find_pros_btn: "निकटतम विशेषज्ञ खोजें",
+            instant_payout: "तत्काल यूपीआई भुगतान",
+            durability_title: "7-दिवसीय स्थायित्व सुरक्षा और गारंटी",
+            durability_desc: "7 दिनों के भीतर समस्या आने पर निःशुल्क पुनः सेवा।",
+            report_issue_btn: "स्थायित्व / कारीगरी समस्या दर्ज करें",
+            available_balance: "उपलब्ध सहकारी शेष राशि",
+            today_earnings: "आज की प्रत्यक्ष कमाई (92%)",
+            patronage_dividend: "संचित लाभांश",
+            welfare_cover: "कल्याण और स्वास्थ्य सुरक्षा कवर",
+            file_dispute_btn: "न्यायाधिकरण विवाद दर्ज करें",
+            vote_yes: "स्वीकार (हाँ)",
+            vote_no: "अस्वीकार (नहीं)"
         },
         kn: {
             badge_live_sync: "ಲೈವ್ ಸಹಕಾರಿ ಸಿಂಕ್",
@@ -228,7 +278,32 @@ const LanguageEngine = {
             tab_customer: "ಗ್ರಾಹಕ (ಬುಕ್ & ಪೋಸ್ಟ್)",
             tab_worker: "ಕಾರ್ಮಿಕ-ಮಾಲೀಕ (ಸ್ವೀಕರಿಸಿ)",
             title_ekyc: "ಪ್ರಾಧಿಕೃತ ಇ-ಕೆವೈಸಿ ಪರಿಶೀಲನೆ",
-            title_sos: "ತುರ್ತು ಎಸ್‌ಒಎಸ್ ಎಚ್ಚರಿಕೆ"
+            title_sos: "ತುರ್ತು ಎಸ್‌ಒಎಸ್ ಎಚ್ಚರಿಕೆ",
+            // Page terms
+            cat_all: "ಎಲ್ಲಾ ಸೇವೆಗಳು",
+            cat_ambulance: "ಆಂಬ್ಯುಲೆನ್ಸ್ ಸೇವೆ",
+            cat_medical: "ವೈದ್ಯಕೀಯ ನೆರವು",
+            cat_agriculture: "ಕೃಷಿ ವಿತರಣೆ",
+            cat_foodtech: "ಫುಡ್ ಟೆಕ್ ಸೇವೆಗಳು",
+            cat_electrical: "ವಿದ್ಯುತ್ ಸೇವೆ",
+            cat_plumbing: "ಪ್ಲಂಬಿಂಗ್ ಸೇವೆ",
+            cat_cleaning: "ಸ್ವಚ್ಛತೆ",
+            cat_appliances: "ಉಪಕರಣಗಳ ದುರಸ್ತಿ",
+            cat_carpentry: "ಬಡಗಿ ಕೆಲಸ",
+            cat_community: "ಸಮುದಾಯ ಕಾಳಜಿ",
+            post_problem_btn: "ರಾಡಾರ್‌ಗೆ ಸಮಸ್ಯೆಯನ್ನು ಪ್ರಸಾರ ಮಾಡಿ",
+            find_pros_btn: "ಹತ್ತಿರದ ತಜ್ಞರನ್ನು ಹುಡುಕಿ",
+            instant_payout: "ತಕ್ಷಣದ ಯುಪಿಐ ಪಾವತಿ",
+            durability_title: "7 ದಿನಗಳ ಬಾಳಿಕೆ ರಕ್ಷಣೆ ಮತ್ತು ಗ್ಯಾರಂಟಿ",
+            durability_desc: "7 ದಿನಗಳಲ್ಲಿ ಪುನರಾವರ್ತನೆಯಾದರೆ ಉಚಿತ ಮರು-ಕೆಲಸ.",
+            report_issue_btn: "ಬಾಳಿಕೆ / ಕೌಶಲ್ಯ ಸಮಸ್ಯೆಯನ್ನು ವರದಿ ಮಾಡಿ",
+            available_balance: "ಲಭ್ಯವಿರುವ ಸಹಕಾರಿ ಬಾಕಿ",
+            today_earnings: "ಇಂದಿನ ನೇರ ಗಳಿಕೆ (92%)",
+            patronage_dividend: "ಸಂಗ್ರಹವಾದ ಲಾಭಾಂಶ",
+            welfare_cover: "ಕ್ಷೇಮಾಭಿವೃದ್ಧಿ & ಆರೋಗ್ಯ ಸುರಕ್ಷತೆ",
+            file_dispute_btn: "ವಿವಾದ ಅರ್ಜಿ ಸಲ್ಲಿಸಿ",
+            vote_yes: "ಒಪ್ಪಿಗೆ (ಹೌದು)",
+            vote_no: "ತಿರಸ್ಕಾರ (ಇಲ್ಲ)"
         },
         ta: {
             badge_live_sync: "நேரலை கூட்டுறவு ஒத்திசைவு",
@@ -252,7 +327,32 @@ const LanguageEngine = {
             tab_customer: "வாடிக்கையாளர் (பதிவு)",
             tab_worker: "தொழிலாளர் (ஏற்றுக்கொள்)",
             title_ekyc: "அங்கீகரிக்கப்பட்ட இ-கேஒய்சி",
-            title_sos: "அவசர எஸ்ஓஎஸ் எச்சரிக்கை"
+            title_sos: "அவசர எஸ்ஓஎஸ் எச்சரிக்கை",
+            // Page terms
+            cat_all: "அனைத்து சேவைகள்",
+            cat_ambulance: "ஆம்புலன்ஸ் சேவை",
+            cat_medical: "மருத்துவ உதவி",
+            cat_agriculture: "விவசாய விநியோகம்",
+            cat_foodtech: "உணவு தொழில்நுட்ப சேவை",
+            cat_electrical: "மின்சார சேவை",
+            cat_plumbing: "குழாய் பழுது",
+            cat_cleaning: "துப்புரவு பணி",
+            cat_appliances: "சாதனங்கள் பழுது",
+            cat_carpentry: "மரவேலை",
+            cat_community: "சமூக பராமரிப்பு",
+            post_problem_btn: "ரேடாரில் சிக்கலை ஒளிபரப்பவும்",
+            find_pros_btn: "அருகிலுள்ள நிபுணர்களைக் கண்டறியவும்",
+            instant_payout: "உடனடி யுபிஐ பட்டுவாடா",
+            durability_title: "7 நாட்கள் உழைப்பு பாதுகாப்பு & உத்தரவாதம்",
+            durability_desc: "7 நாட்களுக்குள் சிக்கல் ஏற்பட்டால் இலவச மறுவேலை.",
+            report_issue_btn: "உழைப்பு அல்லது வேலைத்திறன் சிக்கலை பதிவு செய்க",
+            available_balance: "கூட்டுறவு கணக்கு இருப்பு",
+            today_earnings: "இன்றைய நேரடி வருவாய் (92%)",
+            patronage_dividend: "கூட்டுறவு பங்கு ஈவுத்தொகை",
+            welfare_cover: "நலவாழ்வு & மருத்துவ பாதுகாப்பு",
+            file_dispute_btn: "தீர்ப்பாயத்தில் புகார் பதிவு செய்",
+            vote_yes: "வாக்கு ஆம்",
+            vote_no: "வாக்கு இல்லை"
         }
     },
 
@@ -265,18 +365,36 @@ const LanguageEngine = {
     setLanguage(lang) {
         this.currentLang = lang;
         localStorage.setItem('sahideal_lang', lang);
+        const langSelect = document.getElementById('lang-select');
+        if (langSelect) langSelect.value = lang;
         this.applyLanguage(lang);
         Toast.show(`Language switched to ${lang.toUpperCase()}`, 'info', 2000);
     },
 
     applyLanguage(lang) {
+        document.documentElement.lang = lang;
         const dict = this.translations[lang] || this.translations.en;
+        
+        // 1. Update elements with explicit data-i18n attribute
         document.querySelectorAll('[data-i18n]').forEach(el => {
             const key = el.getAttribute('data-i18n');
             if (dict[key]) {
                 el.textContent = dict[key];
             }
         });
+
+        // 2. Map phrases across standard UI elements
+        const navIndex = document.getElementById('nav-index');
+        const navWorker = document.getElementById('nav-worker');
+        const navGov = document.getElementById('nav-governance');
+        const navComm = document.getElementById('nav-community');
+        const navAbout = document.getElementById('nav-about');
+
+        if (navIndex) navIndex.innerHTML = `<i class="fa-solid fa-house-chimney text-emerald-600 mr-1.5"></i> ${dict.nav_services}`;
+        if (navWorker) navWorker.innerHTML = `<i class="fa-solid fa-screwdriver-wrench text-amber-600 mr-1.5"></i> ${dict.nav_worker_hub}`;
+        if (navGov) navGov.innerHTML = `<i class="fa-solid fa-check-to-slot text-indigo-600 mr-1.5"></i> ${dict.nav_governance}`;
+        if (navComm) navComm.innerHTML = `<i class="fa-solid fa-people-roof text-teal-600 mr-1.5"></i> ${dict.nav_community}`;
+        if (navAbout) navAbout.innerHTML = `<i class="fa-solid fa-lightbulb text-amber-600 mr-1.5"></i> ${dict.nav_about}`;
     }
 };
 
@@ -410,6 +528,62 @@ const AuthOTP = {
         }
     }
 };
+
+let isWorkerCertVerified = false;
+
+async function verifyWorkerCertificate() {
+    const certInput = document.getElementById('worker-reg-cert');
+    const certName = certInput ? certInput.value.trim() : '';
+    if (!certName) {
+        Toast.show("Please enter your Company / Skill Certificate name.", "error");
+        return;
+    }
+
+    const btn = document.getElementById('btn-verify-cert');
+    if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1"></i> Verifying...';
+    }
+
+    try {
+        const res = await fetch('/api/worker/cert/upload', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ cert_name: certName, skills: certName })
+        });
+        const data = await res.json();
+        if (data.success) {
+            isWorkerCertVerified = true;
+            const badge = document.getElementById('cert-status-badge');
+            const feedback = document.getElementById('cert-feedback-msg');
+            if (badge) {
+                badge.className = 'text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-100 text-emerald-800';
+                badge.innerHTML = '<i class="fa-solid fa-circle-check mr-1"></i> VERIFIED';
+            }
+            if (feedback) {
+                feedback.innerHTML = `<span class="text-emerald-700 font-bold"><i class="fa-solid fa-certificate text-emerald-600 mr-1"></i> Skill Certificate '${certName}' verified by Co-op Council!</span>`;
+            }
+            if (btn) {
+                btn.className = 'px-3 py-2 rounded-lg bg-emerald-600 text-white text-xs font-bold shrink-0';
+                btn.innerHTML = '<i class="fa-solid fa-check"></i> Verified';
+            }
+            Toast.show(`🎉 Certificate '${certName}' successfully verified!`, 'success');
+            if (typeof SoundFX !== 'undefined') SoundFX.success();
+        } else {
+            Toast.show(data.error || "Certificate verification failed.", "error");
+            if (btn) {
+                btn.disabled = false;
+                btn.textContent = 'Verify Cert';
+            }
+        }
+    } catch (e) {
+        Toast.show("Error connecting to skill verification service.", "error");
+        if (btn) {
+            btn.disabled = false;
+            btn.textContent = 'Verify Cert';
+        }
+    }
+}
 
 // Role Gateway & Profile Manager (No Guest Accounts Enforcement)
 const RoleGateway = {
@@ -587,6 +761,14 @@ const RoleGateway = {
         localStorage.removeItem('cowork_active_role');
         localStorage.removeItem('cowork_app_state');
         localStorage.removeItem('sahideal_app_state');
+        localStorage.removeItem('sahideal_worker_user');
+        localStorage.removeItem('sahideal_customer_user');
+
+        if (typeof CoopSync !== 'undefined') {
+            CoopSync.state.customerUser = null;
+            CoopSync.state.workerUser = null;
+            CoopSync.saveState();
+        }
 
         this.updateNavUI();
         this.closeRoleMenu();
@@ -624,7 +806,7 @@ const RoleGateway = {
             }
         } else {
             if (badge) badge.innerHTML = '<i class="fa-solid fa-arrow-right-to-bracket text-emerald-600 mr-1.5"></i> Login / Register';
-            if (roleName) roleName.textContent = "Auth";
+            if (roleName) roleName.textContent = "Guest / Sign In";
             if (userPhone) userPhone.textContent = "Not Authenticated";
         }
     }
