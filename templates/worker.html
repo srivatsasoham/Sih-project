@@ -203,18 +203,24 @@
 
         <form onsubmit="event.preventDefault(); submitWorkerWithdrawal();" class="space-y-4 text-xs">
             <div>
-                <label class="block font-semibold text-slate-700 mb-1">Withdrawal Amount (INR) *</label>
-                <input type="number" id="withdraw-amount-input" value="4850" min="100" max="50000" class="w-full px-4 py-3 rounded-xl glass-input font-bold text-slate-900 text-base">
+                <div class="flex items-center justify-between mb-1">
+                    <label class="block font-semibold text-slate-700">Withdrawal Amount (INR) *</label>
+                    <button type="button" onclick="setFullWithdrawalAmount()" class="text-[11px] font-bold text-emerald-700 hover:underline">
+                        Withdraw All (<span id="quick-full-bal-label">₹4,850</span>)
+                    </button>
+                </div>
+                <input type="number" id="withdraw-amount-input" value="4850" min="1000" max="500000" class="w-full px-4 py-3 rounded-xl glass-input font-bold text-slate-900 text-base">
+                <p class="text-[10px] text-slate-500 mt-1"><i class="fa-solid fa-circle-info mr-1"></i> Minimum withdrawal limit: <b>₹1,000</b> (Cooperative Bylaw #4).</p>
             </div>
             <div>
                 <label class="block font-semibold text-slate-700 mb-1">Your UPI ID / VPA *</label>
-                <input type="text" id="withdraw-upi-id" value="ramesh.kumar@okhdfcbank" required placeholder="e.g. yourname@upi" class="w-full px-4 py-2.5 rounded-xl glass-input">
+                <input type="text" id="withdraw-upi-id" value="ramesh.kumar@okhdfcbank" required placeholder="e.g. yourname@okhdfcbank" class="w-full px-4 py-2.5 rounded-xl glass-input">
             </div>
             <div class="p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-[11px] space-y-1">
                 <div class="font-bold"><i class="fa-solid fa-bolt text-emerald-600 mr-1"></i> Instant IMPS/UPI Transfer</div>
-                <p>Funds will credit to your linked bank account within 5 seconds with zero transaction fees.</p>
+                <p>Funds will credit to your linked bank account within 5 seconds with zero transaction fees. Withdrawing full balance resets wallet to ₹0.</p>
             </div>
-            <button type="submit" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold text-xs shadow-md shadow-emerald-600/30 hover:scale-[1.01] active:scale-95 transition">
+            <button type="submit" id="btn-confirm-withdraw" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold text-xs shadow-md shadow-emerald-600/30 hover:scale-[1.01] active:scale-95 transition">
                 Confirm & Disburse to UPI
             </button>
         </form>
@@ -263,17 +269,17 @@
     </div>
 </div>
 
-<!-- TOOL LOAN MODAL -->
+<!-- TOOL BANK DEPOT RENTAL MODAL -->
 <div id="tool-loan-modal" class="fixed inset-0 z-50 modal-backdrop hidden items-center justify-center p-4">
-    <div class="relative w-full max-w-md bg-white rounded-3xl border border-indigo-300 p-6 sm:p-8 space-y-5 shadow-2xl">
+    <div class="relative w-full max-w-lg bg-white rounded-3xl border border-indigo-300 p-6 sm:p-8 space-y-5 shadow-2xl">
         <div class="flex items-center justify-between">
             <div class="flex items-center gap-2">
                 <div class="w-10 h-10 rounded-2xl bg-indigo-100 text-indigo-700 flex items-center justify-center text-xl">
                     <i class="fa-solid fa-toolbox"></i>
                 </div>
                 <div>
-                    <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-indigo-700">0% Interest Micro-Loan</span>
-                    <h3 class="text-lg font-bold font-heading text-slate-900">Tool Replacement Loan</h3>
+                    <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-indigo-700">0% Interest Co-op Depot</span>
+                    <h3 class="text-lg font-bold font-heading text-slate-900">Co-op Tool-Bank Checkout</h3>
                 </div>
             </div>
             <button onclick="closeToolLoanModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center">
@@ -281,22 +287,53 @@
             </button>
         </div>
 
-        <form onsubmit="event.preventDefault(); submitToolLoan();" class="space-y-4 text-xs">
+        <form onsubmit="event.preventDefault(); submitToolRental();" class="space-y-4 text-xs">
             <div>
-                <label class="block font-semibold text-slate-700 mb-1">Tool Required *</label>
-                <select id="tool-name" class="w-full px-3 py-2.5 rounded-xl glass-input font-medium">
-                    <option value="rotary_hammer">Bosch Rotary Hammer Drill & Bits (₹6,500)</option>
-                    <option value="digital_multimeter">Fluke Digital Multimeter & Clamp (₹4,200)</option>
-                    <option value="pipe_threader">Heavy Duty Pipe Wrench & Threader Kit (₹3,800)</option>
-                    <option value="ac_manifold">AC Manifold Gauge & Vacuum Pump (₹8,000)</option>
+                <label class="block font-semibold text-slate-700 mb-1">Select Specialized Tool / Diagnostic Kit *</label>
+                <select id="tool-select" onchange="updateToolRentalCost()" class="w-full px-3 py-2.5 rounded-xl glass-input font-medium">
+                    <option value="tool-01" data-rate="150" data-deposit="500">Bosch Heavy Rotary Hammer Drill 1100W — ₹150/day</option>
+                    <option value="tool-02" data-rate="250" data-deposit="1000">FLIR Infrared Thermal Diagnostic Camera — ₹250/day</option>
+                    <option value="tool-03" data-rate="200" data-deposit="800">Hydro-Jetting High-Pressure Pipeline Cleaner — ₹200/day</option>
+                    <option value="tool-04" data-rate="220" data-deposit="900">Sonic Sensor Concealed Leak Detector — ₹220/day</option>
+                    <option value="tool-05" data-rate="180" data-deposit="600">Industrial 140°C Dry Steam Sanitizer — ₹180/day</option>
+                    <option value="tool-06" data-rate="240" data-deposit="800">Digital HVAC Manifold Gauge & Vacuum Pump — ₹240/day</option>
+                    <option value="tool-07" data-rate="175" data-deposit="700">Cordless Precision Circular Track Saw — ₹175/day</option>
+                    <option value="tool-08" data-rate="300" data-deposit="1200">Automated First Responder Medical Kit — ₹300/day</option>
                 </select>
             </div>
-            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-600 text-[11px] space-y-1">
-                <div class="font-bold text-slate-800">Repayment Plan:</div>
-                <p>₹150 deducted per completed job from co-op balance until settled. 0% interest, 0% penalty.</p>
+
+            <div class="grid grid-cols-2 gap-3">
+                <div>
+                    <label class="block font-semibold text-slate-700 mb-1">Rental Duration (Days) *</label>
+                    <input type="number" id="tool-days" value="1" min="1" max="14" oninput="updateToolRentalCost()" class="w-full px-4 py-2.5 rounded-xl glass-input font-bold text-slate-900">
+                </div>
+                <div>
+                    <label class="block font-semibold text-slate-700 mb-1">Co-op Tool Depot Location</label>
+                    <input type="text" id="tool-location-display" value="Indiranagar Guild Hub #4" readonly class="w-full px-3 py-2.5 rounded-xl bg-slate-100 text-slate-600 font-medium">
+                </div>
             </div>
-            <button type="submit" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-indigo-600 to-teal-600 text-white font-bold text-xs shadow-md shadow-indigo-600/30 hover:scale-[1.01] active:scale-95 transition">
-                Approve & Disburse Tool Voucher
+
+            <!-- Cost Summary Box -->
+            <div class="p-4 rounded-2xl bg-indigo-50 border border-indigo-200 text-xs space-y-2">
+                <div class="flex justify-between items-center text-slate-700">
+                    <span>Daily Rate:</span>
+                    <span class="font-bold text-slate-900" id="tool-daily-rate-display">₹150 / day</span>
+                </div>
+                <div class="flex justify-between items-center text-slate-700">
+                    <span>Total Rental Deduction:</span>
+                    <span class="text-base font-black text-indigo-900 font-heading" id="tool-total-cost-display">₹150</span>
+                </div>
+                <div class="flex justify-between items-center text-slate-600 pt-1 border-t border-indigo-200 text-[11px]">
+                    <span>Your Current Balance:</span>
+                    <span class="font-bold text-emerald-700" id="tool-current-balance-display">₹4,850</span>
+                </div>
+                <div id="tool-balance-warning" class="hidden p-2 rounded-lg bg-rose-100 border border-rose-300 text-rose-800 text-[11px] font-bold">
+                    <i class="fa-solid fa-triangle-exclamation mr-1"></i> Insufficient Balance! Please complete gigs to rent this tool.
+                </div>
+            </div>
+
+            <button type="submit" id="btn-submit-tool-rental" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-indigo-600 to-teal-600 text-white font-bold text-xs shadow-md shadow-indigo-600/30 hover:scale-[1.01] active:scale-95 transition">
+                <i class="fa-solid fa-unlock-keyhole mr-1.5"></i> Deduct from Balance & Issue Depot Locker Code
             </button>
         </form>
     </div>
@@ -465,7 +502,7 @@ function updateWorkerStatusUI(isOnline) {
     }
 }
 
-function renderWorkerRadar() {
+async function renderWorkerRadar() {
     const container = document.getElementById('radar-gigs-container');
     const countBadge = document.getElementById('radar-live-count');
     if (!container) return;
@@ -494,11 +531,50 @@ function renderWorkerRadar() {
         return;
     }
 
+    // Check for active SOS emergencies
+    let sosHtml = '';
+    try {
+        const activeSosList = await CoopSync.getActiveSos();
+        if (activeSosList && activeSosList.length > 0) {
+            sosHtml = activeSosList.map(sos => `
+                <div id="sos-card-${sos.id}" class="glass-panel rounded-3xl p-6 border-2 border-rose-500 bg-rose-50/70 shadow-lg space-y-4 animate-pulse">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <span class="w-3 h-3 rounded-full bg-rose-600 animate-ping"></span>
+                            <span class="px-2.5 py-1 rounded-full text-xs font-mono font-black bg-rose-600 text-white shadow">
+                                🚨 HIGH PRIORITY SOS EMERGENCY
+                            </span>
+                        </div>
+                        <span class="text-xs font-mono text-rose-800 font-bold">${sos.id} • ${sos.status}</span>
+                    </div>
+
+                    <div class="space-y-1">
+                        <h3 class="text-lg font-black text-rose-950">${sos.emergency_type}</h3>
+                        <p class="text-xs text-rose-900 font-semibold"><i class="fa-solid fa-location-dot mr-1"></i> ${sos.location_text}</p>
+                        <p class="text-xs text-slate-700">Citizen: <b>${sos.user_name}</b> (${sos.phone})</p>
+                    </div>
+
+                    <div class="flex flex-wrap items-center gap-3 pt-2 border-t border-rose-200">
+                        <button onclick="respondToSosEmergency('${sos.id}', 'RESPONDING')" class="flex-1 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold shadow transition flex items-center justify-center gap-1.5">
+                            <i class="fa-solid fa-truck-medical"></i> Respond & En Route
+                        </button>
+                        <button onclick="respondToSosEmergency('${sos.id}', 'ARRIVED')" class="py-2.5 px-4 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold transition">
+                            <i class="fa-solid fa-location-crosshairs"></i> Mark Arrived
+                        </button>
+                        <button onclick="respondToSosEmergency('${sos.id}', 'RESOLVED')" class="py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition">
+                            <i class="fa-solid fa-check"></i> Mark Resolved
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+    } catch(e) {}
+
     const activeJobs = CoopSync.state.activeJobs || [];
     const openCount = activeJobs.filter(j => j.status === 'OPEN').length;
     if (countBadge) countBadge.textContent = `${activeJobs.length} Gigs on Radar (${openCount} New)`;
 
-    if (activeJobs.length === 0) {
+    if (activeJobs.length === 0 && !sosHtml) {
         container.innerHTML = `
             <div class="glass-panel rounded-3xl p-8 text-center space-y-3 border border-slate-200 bg-white">
                 <div class="w-14 h-14 mx-auto rounded-2xl bg-slate-100 flex items-center justify-center text-slate-400 text-xl">
@@ -513,7 +589,7 @@ function renderWorkerRadar() {
         return;
     }
 
-    container.innerHTML = activeJobs.map(job => {
+    const jobsHtml = activeJobs.map(job => {
         if (job.status === 'OPEN') {
             return `
                 <div id="radar-job-${job.id}" class="glass-panel rounded-3xl p-6 border-2 border-emerald-400 space-y-4 bg-white shadow-sm">
@@ -621,6 +697,21 @@ function renderWorkerRadar() {
             `;
         }
     }).join('');
+
+    container.innerHTML = (sosHtml ? sosHtml : '') + jobsHtml;
+}
+
+async function respondToSosEmergency(sosId, status) {
+    const res = await CoopSync.updateSosStatus(sosId, status);
+    if (res.success) {
+        Toast.show(`🚨 SOS Emergency Status updated to: ${status}`, status === 'RESOLVED' ? 'success' : 'warning');
+        if (status === 'RESOLVED') {
+            if (typeof SoundFX !== 'undefined') SoundFX.success();
+        } else {
+            if (typeof SoundFX !== 'undefined') SoundFX.alarm();
+        }
+        renderWorkerRadar();
+    }
 }
 
 function acceptLiveJob(jobId) {
@@ -922,21 +1013,124 @@ function renderWorkerWalletUI() {
     }
 }
 
+// Tool Depot Cost Calculator & Checkout
+function updateToolRentalCost() {
+    const select = document.getElementById('tool-select');
+    const daysInput = document.getElementById('tool-days');
+    const dailyRateDisplay = document.getElementById('tool-daily-rate-display');
+    const totalCostDisplay = document.getElementById('tool-total-cost-display');
+    const balanceDisplay = document.getElementById('tool-current-balance-display');
+    const warning = document.getElementById('tool-balance-warning');
+    const btnSubmit = document.getElementById('btn-submit-tool-rental');
+
+    if (!select || !daysInput) return;
+
+    const opt = select.options[select.selectedIndex];
+    const dailyRate = parseFloat(opt.getAttribute('data-rate') || 150);
+    const days = Math.max(1, parseInt(daysInput.value) || 1);
+    const total = dailyRate * days;
+    const currentBalance = CoopSync.state.workerWallet ? CoopSync.state.workerWallet.balance : 4850;
+
+    if (dailyRateDisplay) dailyRateDisplay.textContent = `₹${dailyRate} / day`;
+    if (totalCostDisplay) totalCostDisplay.textContent = `₹${total.toLocaleString('en-IN')}`;
+    if (balanceDisplay) balanceDisplay.textContent = `₹${currentBalance.toLocaleString('en-IN')}`;
+
+    if (total > currentBalance) {
+        if (warning) warning.classList.remove('hidden');
+        if (btnSubmit) {
+            btnSubmit.disabled = true;
+            btnSubmit.classList.add('opacity-50', 'cursor-not-allowed');
+        }
+    } else {
+        if (warning) warning.classList.add('hidden');
+        if (btnSubmit) {
+            btnSubmit.disabled = false;
+            btnSubmit.classList.remove('opacity-50', 'cursor-not-allowed');
+        }
+    }
+}
+
+async function submitToolRental() {
+    const select = document.getElementById('tool-select');
+    const daysInput = document.getElementById('tool-days');
+    if (!select || !daysInput) return;
+
+    const toolId = select.value;
+    const days = parseInt(daysInput.value) || 1;
+
+    const res = await CoopSync.rentTool(toolId, days);
+    if (res.success) {
+        closeToolLoanModal();
+        renderWorkerWalletUI();
+        Toast.show(`🎉 ${res.message || 'Tool rented successfully! Locker code generated.'}`, "success", 8000);
+        if (typeof SoundFX !== 'undefined') SoundFX.cash();
+    } else {
+        if (res.error_code === 'INSUFFICIENT_BALANCE') {
+            Toast.show(`❌ ${res.message}`, "error", 8000);
+        } else {
+            Toast.show(`❌ ${res.message || res.error || 'Failed to rent tool.'}`, "error");
+        }
+    }
+}
+
 // Withdrawal & Welfare Modal Triggers
 function openWithdrawModal() {
     const modal = document.getElementById('withdraw-modal');
+    const bal = CoopSync.state.workerWallet ? CoopSync.state.workerWallet.balance : 4850;
+    const input = document.getElementById('withdraw-amount-input');
+    const label = document.getElementById('quick-full-bal-label');
+
+    if (input) input.value = Math.max(1000, bal);
+    if (label) label.textContent = `₹${bal.toLocaleString('en-IN')}`;
+
     if (modal) { modal.classList.remove('hidden'); modal.classList.add('flex'); }
 }
+
 function closeWithdrawModal() {
     const modal = document.getElementById('withdraw-modal');
     if (modal) { modal.classList.add('hidden'); modal.classList.remove('flex'); }
 }
-function submitWorkerWithdrawal() {
-    const amt = document.getElementById('withdraw-amount-input').value;
-    const upi = document.getElementById('withdraw-upi-id').value;
-    closeWithdrawModal();
-    Toast.show(`💸 ₹${amt} successfully transferred to ${upi}! Bank UTR: ${Math.floor(100000000000 + Math.random()*900000000000)}`, "success", 7000);
-    SoundFX.cash();
+
+function setFullWithdrawalAmount() {
+    const bal = CoopSync.state.workerWallet ? CoopSync.state.workerWallet.balance : 4850;
+    const input = document.getElementById('withdraw-amount-input');
+    if (input) input.value = bal;
+}
+
+async function submitWorkerWithdrawal() {
+    const amtInput = document.getElementById('withdraw-amount-input');
+    const upiInput = document.getElementById('withdraw-upi-id');
+    const amt = parseFloat(amtInput ? amtInput.value : 0);
+    const upi = upiInput ? upiInput.value.trim() : '';
+
+    if (!upi) {
+        Toast.show("Please enter a valid UPI ID.", "error");
+        return;
+    }
+
+    const bal = CoopSync.state.workerWallet ? CoopSync.state.workerWallet.balance : 4850;
+
+    if (amt < 1000) {
+        Toast.show("❌ Minimum withdrawal amount is ₹1,000 as per Cooperative Bylaw.", "error", 6000);
+        return;
+    }
+
+    if (amt > bal) {
+        Toast.show(`❌ Insufficient balance! Your available balance is ₹${bal}.`, "error", 6000);
+        return;
+    }
+
+    const isFull = amt >= bal;
+    const res = await CoopSync.withdrawUpi(amt, isFull);
+
+    if (res.success) {
+        closeWithdrawModal();
+        renderWorkerWalletUI();
+        Toast.show(res.message || `💸 ₹${amt} successfully transferred to ${upi}!`, "success", 8000);
+        if (typeof SoundFX !== 'undefined') SoundFX.cash();
+    } else {
+        Toast.show(`❌ ${res.message || res.error || 'Failed to process withdrawal.'}`, "error", 7000);
+    }
 }
 
 function openWelfareClaimModal() {
@@ -947,25 +1141,36 @@ function closeWelfareClaimModal() {
     const modal = document.getElementById('welfare-claim-modal');
     if (modal) { modal.classList.add('hidden'); modal.classList.remove('flex'); }
 }
-function submitWelfareClaim() {
-    const amt = document.getElementById('claim-amount').value;
+
+async function submitWelfareClaim() {
+    const typeSelect = document.getElementById('claim-type');
+    const amtInput = document.getElementById('claim-amount');
+    const descInput = document.getElementById('claim-desc');
+
+    const claimType = typeSelect ? typeSelect.value : 'medical';
+    const amt = parseFloat(amtInput ? amtInput.value : 5000);
+    const desc = descInput ? descInput.value : 'Medical claim request';
+
+    const res = await CoopSync.submitWelfareClaim(claimType, amt, "Co-op Empanelled Hospital", desc);
     closeWelfareClaimModal();
-    Toast.show(`🏥 Health claim of ₹${amt} registered under Ayushman Co-op Pool! Committee review within 24 hours.`, "success", 7000);
-    SoundFX.success();
+
+    if (res.success) {
+        renderWorkerWalletUI();
+        Toast.show(res.message || `🏥 Health claim of ₹${amt} submitted and approved!`, "success", 8000);
+        if (typeof SoundFX !== 'undefined') SoundFX.cash();
+    } else {
+        Toast.show(`❌ ${res.message || res.error || 'Failed to file welfare claim.'}`, "error");
+    }
 }
 
 function openToolLoanModal() {
+    updateToolRentalCost();
     const modal = document.getElementById('tool-loan-modal');
     if (modal) { modal.classList.remove('hidden'); modal.classList.add('flex'); }
 }
 function closeToolLoanModal() {
     const modal = document.getElementById('tool-loan-modal');
     if (modal) { modal.classList.add('hidden'); modal.classList.remove('flex'); }
-}
-function submitToolLoan() {
-    closeToolLoanModal();
-    Toast.show(`🧰 Tool voucher approved! Collect your equipment at Indiranagar Co-op Depot #4.`, "success", 7000);
-    SoundFX.success();
 }
 
 // Global Callback when new gig posted in real-time

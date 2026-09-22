@@ -1,10 +1,11 @@
 /**
- * Co-Work (पारस्परिक सहकारी) - Core JavaScript Engine
+ * SahiDeal (पारस्परिक सहकारी) - Core JavaScript Engine
  * Smart India Hackathon 2026 - Problem Statement ID: 26089
- * Handles Role Management, Custom Profile Registrations, Live Sync & Audio FX
+ * Manages: Theme Engine (Light/Dark), Multilingual i18n, Phone OTP Auth,
+ * e-KYC, Emergency SOS Sentinel, Notifications & Sound FX
  */
 
-// Sound FX Engine using Web Audio API (zero external audio dependencies)
+// Sound FX Engine using Web Audio API
 const SoundFX = {
     ctx: null,
     init() {
@@ -47,23 +48,18 @@ const SoundFX = {
         this.playTone(880, 'sawtooth', 0.3, 440);
     },
     alarm() {
-        // Loud alternating multi-pulse alarm for incoming gig on active worker tab
-        this.playTone(1046.50, 'sawtooth', 0.18, 0);   // C6
-        this.playTone(880.00, 'sawtooth', 0.18, 180);  // A5
-        this.playTone(1046.50, 'sawtooth', 0.18, 360); // C6
-        this.playTone(880.00, 'sawtooth', 0.18, 540);  // A5
-        this.playTone(1174.66, 'sawtooth', 0.30, 720); // D6
+        this.playTone(1046.50, 'sawtooth', 0.18, 0);
+        this.playTone(880.00, 'sawtooth', 0.18, 180);
+        this.playTone(1046.50, 'sawtooth', 0.18, 360);
+        this.playTone(880.00, 'sawtooth', 0.18, 540);
+        this.playTone(1174.66, 'sawtooth', 0.30, 720);
     },
     cash() {
         this.playTone(987.77, 'sine', 0.1, 0);
         this.playTone(1318.51, 'sine', 0.25, 80);
         try {
             if (window.confetti) {
-                window.confetti({
-                    particleCount: 60,
-                    spread: 70,
-                    origin: { y: 0.8 }
-                });
+                window.confetti({ particleCount: 60, spread: 70, origin: { y: 0.8 } });
             }
         } catch(e) {}
     }
@@ -123,79 +119,323 @@ const Toast = {
     }
 };
 
-// Dynamic Navigation Active Highlight Engine (Bright Emerald Green Pill Cursor)
-function highlightActiveNav() {
-    const currentPath = window.location.pathname.toLowerCase();
-    const currentHref = window.location.href.toLowerCase();
+// Theme Engine (Strict Light Mode Default + Dynamic Dark Mode Toggle)
+const ThemeEngine = {
+    currentTheme: localStorage.getItem('sahideal_theme') || 'light',
 
-    // Map keywords to nav element IDs
-    const navItems = [
-        { id: 'nav-link-index', mobileId: 'mobile-nav-index', match: () => currentPath === '/' || currentPath.endsWith('index.html') || (!currentHref.includes('worker') && !currentHref.includes('governance') && !currentHref.includes('community') && !currentHref.includes('about')) },
-        { id: 'nav-link-worker', mobileId: 'mobile-nav-worker', match: () => currentHref.includes('worker') },
-        { id: 'nav-link-governance', mobileId: 'mobile-nav-governance', match: () => currentHref.includes('governance') },
-        { id: 'nav-link-community', mobileId: 'mobile-nav-community', match: () => currentHref.includes('community') },
-        { id: 'nav-link-about', mobileId: 'mobile-nav-about', match: () => currentHref.includes('about') }
-    ];
-
-    navItems.forEach(item => {
-        const el = document.getElementById(item.id);
-        const mobileEl = document.getElementById(item.mobileId);
-        const isActive = item.match();
-
-        if (el) {
-            if (isActive) {
-                el.className = 'px-3.5 py-2 rounded-xl text-xs font-bold transition-all bg-emerald-500 text-white shadow-lg shadow-emerald-500/30 ring-2 ring-emerald-400/40 scale-[1.02]';
-            } else {
-                el.className = 'px-3.5 py-2 rounded-xl text-xs font-semibold transition-all text-slate-300 hover:text-white hover:bg-white/5';
-            }
-        }
-
-        if (mobileEl) {
-            if (isActive) {
-                mobileEl.className = 'block px-4 py-2.5 rounded-xl text-sm font-bold bg-emerald-500 text-white shadow-md';
-            } else {
-                mobileEl.className = 'block px-4 py-2.5 rounded-xl text-sm font-medium text-slate-200 hover:bg-slate-800';
-            }
-        }
-    });
-}
-
-// Role Gateway & Profile Manager (Enforces Single Active Session)
-const RoleGateway = {
-    currentRole: localStorage.getItem('cowork_active_role') || localStorage.getItem('sahideal_active_role') || (window.location.href.includes('worker') ? 'worker' : 'customer'),
-    
     init() {
-        this.syncWithState();
-        this.updateNavUI();
-        highlightActiveNav();
+        this.applyTheme(this.currentTheme);
     },
 
-    syncWithState() {
-        if (typeof CoopSync !== 'undefined') {
-            const customer = CoopSync.getCustomer();
-            const worker = CoopSync.getWorker();
+    toggle() {
+        this.currentTheme = this.currentTheme === 'light' ? 'dark' : 'light';
+        localStorage.setItem('sahideal_theme', this.currentTheme);
+        this.applyTheme(this.currentTheme);
+        Toast.show(`Switched to ${this.currentTheme.toUpperCase()} theme`, 'info', 2000);
+    },
 
-            const custNameInput = document.getElementById('cust-reg-name');
-            const custPhoneInput = document.getElementById('cust-reg-phone');
-            const custAddrInput = document.getElementById('cust-reg-address');
+    applyTheme(theme) {
+        const root = document.documentElement;
+        const icon = document.getElementById('theme-icon');
+        const text = document.getElementById('theme-text');
 
-            if (customer) {
-                if (custNameInput) custNameInput.value = customer.name || "";
-                if (custPhoneInput) custPhoneInput.value = customer.phone || "";
-                if (custAddrInput) custAddrInput.value = customer.address || "";
+        if (theme === 'dark') {
+            root.classList.add('dark');
+            root.classList.remove('light');
+            if (icon) icon.className = 'fa-solid fa-sun text-amber-400 text-xs';
+            if (text) text.textContent = 'Light';
+        } else {
+            root.classList.remove('dark');
+            root.classList.add('light');
+            if (icon) icon.className = 'fa-solid fa-moon text-indigo-600 text-xs';
+            if (text) text.textContent = 'Dark';
+        }
+    }
+};
+
+// Multilingual i18n Translation Engine
+const LanguageEngine = {
+    currentLang: localStorage.getItem('sahideal_lang') || 'en',
+
+    translations: {
+        en: {
+            badge_live_sync: "LIVE COOPERATIVE SYNC",
+            tagline: "Transforming Informal Labour Through Accountable Commerce",
+            nav_services: "Customer Portal",
+            nav_worker_hub: "Worker-Owner Portal",
+            nav_governance: "Co-op Council (Voting)",
+            nav_community: "RWA Bulk Hub",
+            nav_about: "SIH Pitch Deck",
+            btn_sos: "SOS Safety",
+            btn_ekyc: "e-KYC",
+            role_customer: "Customer Mode",
+            role_worker: "Worker Mode",
+            menu_edit_profile: "Edit Profile Details",
+            menu_verify_ekyc: "Verify Aadhaar e-KYC",
+            menu_customer_mode: "Switch to Customer Mode",
+            menu_worker_mode: "Switch to Worker Mode",
+            menu_logout: "Log Out & Clear Session",
+            title_notifications: "Live Notifications",
+            title_auth: "Cooperative Authentication",
+            tab_customer: "Customer (Book & Post)",
+            tab_worker: "Worker-Owner (Accept)",
+            title_ekyc: "Authorized e-KYC Verification",
+            title_sos: "Emergency SOS Alert"
+        },
+        hi: {
+            badge_live_sync: "लाइव सहकारी सिंक",
+            tagline: "जवाबदेह वाणिज्य के माध्यम से अनौपचारिक श्रम का रूपांतरण",
+            nav_services: "ग्राहक पोर्टल",
+            nav_worker_hub: "श्रमिक-मालिक पोर्टल",
+            nav_governance: "सहकारी परिषद (मतदान)",
+            nav_community: "सोसायटी सामूहिक हब",
+            nav_about: "प्रस्तुति डेक",
+            btn_sos: "आपातकालीन सुरक्षा",
+            btn_ekyc: "ई-केवाईसी",
+            role_customer: "ग्राहक मोड",
+            role_worker: "श्रमिक मोड",
+            menu_edit_profile: "प्रोफ़ाइल संपादित करें",
+            menu_verify_ekyc: "आधार ई-केवाईसी सत्यापित करें",
+            menu_customer_mode: "ग्राहक मोड पर स्विच करें",
+            menu_worker_mode: "श्रमिक मोड पर स्विच करें",
+            menu_logout: "लॉग आउट और सत्र समाप्त",
+            title_notifications: "लाइव सूचनाएं",
+            title_auth: "सहकारी प्रमाणीकरण",
+            tab_customer: "ग्राहक (बुक और पोस्ट)",
+            tab_worker: "श्रमिक-मालिक (स्वीकारें)",
+            title_ekyc: "अधिकृत ई-केवाईसी सत्यापन",
+            title_sos: "आपातकालीन एसओएस चेतावनी"
+        },
+        kn: {
+            badge_live_sync: "ಲೈವ್ ಸಹಕಾರಿ ಸಿಂಕ್",
+            tagline: "ಉತ್ತರದಾಯಿತ್ವ ವಾಣಿಜ್ಯದ ಮೂಲಕ ಅನೌಪಚಾರಿಕ ಶ್ರಮ ಪರಿವರ್ತನೆ",
+            nav_services: "ಗ್ರಾಹಕ ಪೋರ್ಟಲ್",
+            nav_worker_hub: "ಕಾರ್ಮಿಕ ಮಾಲೀಕ ಪೋರ್ಟಲ್",
+            nav_governance: "ಸಹಕಾರಿ ಮಂಡಳಿ (ಮತದಾನ)",
+            nav_community: "ಸೊಸೈಟಿ ಹಬ್",
+            nav_about: "ಪಿಚ್ ಡೆಕ್",
+            btn_sos: "ತುರ್ತು ಸುರಕ್ಷತೆ",
+            btn_ekyc: "ಇ-ಕೆವೈಸಿ",
+            role_customer: "ಗ್ರಾಹಕ ಮೋಡ್",
+            role_worker: "ಕಾರ್ಮಿಕ ಮೋಡ್",
+            menu_edit_profile: "ಪ್ರೊಫೈಲ್ ತಿದ್ದುಪಡಿ",
+            menu_verify_ekyc: "ಆಧಾರ್ ಇ-ಕೆವೈಸಿ ಪರಿಶೀಲಿಸಿ",
+            menu_customer_mode: "ಗ್ರಾಹಕ ಮೋಡ್‌ಗೆ ಬದಲಾಯಿಸಿ",
+            menu_worker_mode: "ಕಾರ್ಮಿಕ ಮೋಡ್‌ಗೆ ಬದಲಾಯಿಸಿ",
+            menu_logout: "ಲಾಗ್ ಔಟ್ & ಸೆಷನ್ ತೆರವು",
+            title_notifications: "ಲೈವ್ ಅಧಿಸೂಚನೆಗಳು",
+            title_auth: "ಸಹಕಾರಿ ದೃಢೀಕರಣ",
+            tab_customer: "ಗ್ರಾಹಕ (ಬುಕ್ & ಪೋಸ್ಟ್)",
+            tab_worker: "ಕಾರ್ಮಿಕ-ಮಾಲೀಕ (ಸ್ವೀಕರಿಸಿ)",
+            title_ekyc: "ಪ್ರಾಧಿಕೃತ ಇ-ಕೆವೈಸಿ ಪರಿಶೀಲನೆ",
+            title_sos: "ತುರ್ತು ಎಸ್‌ಒಎಸ್ ಎಚ್ಚರಿಕೆ"
+        },
+        ta: {
+            badge_live_sync: "நேரலை கூட்டுறவு ஒத்திசைவு",
+            tagline: "பொறுப்பான வர்த்தகம் மூலம் முறைசாரா தொழிலாளர் மாற்றம்",
+            nav_services: "வாடிக்கையாளர் போர்டல்",
+            nav_worker_hub: "தொழிலாளர் போர்டல்",
+            nav_governance: "கூட்டுறவு சபை (வாக்கெடுப்பு)",
+            nav_community: "குடியிருப்பு சங்கம்",
+            nav_about: "விளக்கக் காட்சி",
+            btn_sos: "அவசர பாதுகாப்பு",
+            btn_ekyc: "இ-கேஒய்சி",
+            role_customer: "வாடிக்கையாளர் பயன்முறை",
+            role_worker: "தொழிலாளர் பயன்முறை",
+            menu_edit_profile: "சுயவிவரத்தைத் திருத்து",
+            menu_verify_ekyc: "ஆதார் இ-கேஒய்சி சரிபார்",
+            menu_customer_mode: "வாடிக்கையாளர் முறைக்கு மாறு",
+            menu_worker_mode: "தொழிலாளர் முறைக்கு மாறு",
+            menu_logout: "வெளியேறு & அமர்வை அழி",
+            title_notifications: "நேரலை அறிவிப்புகள்",
+            title_auth: "கூட்டுறவு அங்கீகாரம்",
+            tab_customer: "வாடிக்கையாளர் (பதிவு)",
+            tab_worker: "தொழிலாளர் (ஏற்றுக்கொள்)",
+            title_ekyc: "அங்கீகரிக்கப்பட்ட இ-கேஒய்சி",
+            title_sos: "அவசர எஸ்ஓஎஸ் எச்சரிக்கை"
+        }
+    },
+
+    init() {
+        const langSelect = document.getElementById('lang-select');
+        if (langSelect) langSelect.value = this.currentLang;
+        this.applyLanguage(this.currentLang);
+    },
+
+    setLanguage(lang) {
+        this.currentLang = lang;
+        localStorage.setItem('sahideal_lang', lang);
+        this.applyLanguage(lang);
+        Toast.show(`Language switched to ${lang.toUpperCase()}`, 'info', 2000);
+    },
+
+    applyLanguage(lang) {
+        const dict = this.translations[lang] || this.translations.en;
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (dict[key]) {
+                el.textContent = dict[key];
             }
+        });
+    }
+};
 
-            const workNameInput = document.getElementById('worker-reg-name');
-            const workPhoneInput = document.getElementById('worker-reg-phone');
-            const workTradeInput = document.getElementById('worker-reg-trade');
-            const workLocInput = document.getElementById('worker-reg-loc');
+// Phone OTP Authentication System
+const AuthOTP = {
+    isOtpSent: false,
+    isOtpVerified: false,
+    verifiedPhone: "",
 
-            if (worker) {
-                if (workNameInput) workNameInput.value = worker.name || "";
-                if (workPhoneInput) workPhoneInput.value = worker.phone || "";
-                if (workTradeInput && worker.trade) workTradeInput.value = worker.trade;
-                if (workLocInput && worker.location) workLocInput.value = worker.location;
+    async sendOtp() {
+        const phoneInput = document.getElementById('auth-phone-input');
+        const phone = phoneInput ? phoneInput.value.trim() : "";
+
+        if (!phone || phone.length < 10) {
+            Toast.show("Please enter a valid 10-digit mobile phone number.", "error");
+            return;
+        }
+
+        const btn = document.getElementById('btn-send-otp');
+        if (btn) {
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1"></i> Sending...';
+        }
+
+        try {
+            const res = await fetch('/api/auth/send-otp', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ phone })
+            });
+            const data = await res.json();
+
+            if (data.success) {
+                this.isOtpSent = true;
+                this.verifiedPhone = phone;
+
+                const otpRow = document.getElementById('otp-input-row');
+                const feedback = document.getElementById('otp-feedback-msg');
+                const statusBadge = document.getElementById('otp-status-badge');
+
+                if (otpRow) otpRow.classList.remove('hidden');
+                if (statusBadge) {
+                    statusBadge.className = 'text-[10px] font-bold px-2 py-0.5 rounded bg-blue-100 text-blue-800 animate-pulse';
+                    statusBadge.textContent = 'OTP DISPATCHED';
+                }
+                if (feedback) {
+                    feedback.innerHTML = `✅ 6-digit OTP sent to <b>${phone}</b>. Enter code below.` + (data.dev_hint_otp ? ` <span class="text-emerald-600 font-mono">(Dev Hint: <b>${data.dev_hint_otp}</b>)</span>` : '');
+                }
+
+                Toast.show(`OTP dispatched to ${phone} via SMS Gateway!`, 'success');
+                SoundFX.pop();
+
+                if (btn) {
+                    btn.disabled = false;
+                    btn.textContent = 'Resend OTP';
+                }
+            } else {
+                Toast.show(data.error || "Failed to send OTP.", "error");
+                if (btn) {
+                    btn.disabled = false;
+                    btn.textContent = 'Send OTP';
+                }
             }
+        } catch (e) {
+            Toast.show("Error connecting to auth server.", "error");
+            if (btn) {
+                btn.disabled = false;
+                btn.textContent = 'Send OTP';
+            }
+        }
+    },
+
+    async verifyOtp() {
+        const phone = this.verifiedPhone || (document.getElementById('auth-phone-input') ? document.getElementById('auth-phone-input').value.trim() : "");
+        const otpInput = document.getElementById('auth-otp-input');
+        const otp = otpInput ? otpInput.value.trim() : "";
+
+        if (!otp || otp.length < 4) {
+            Toast.show("Please enter the received OTP code.", "error");
+            return;
+        }
+
+        const btn = document.getElementById('btn-verify-otp');
+        if (btn) {
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1"></i> Verifying...';
+        }
+
+        try {
+            const res = await fetch('/api/auth/verify-otp', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ phone, otp })
+            });
+            const data = await res.json();
+
+            if (data.success) {
+                this.isOtpVerified = true;
+                const statusBadge = document.getElementById('otp-status-badge');
+                const feedback = document.getElementById('otp-feedback-msg');
+
+                if (statusBadge) {
+                    statusBadge.className = 'text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-100 text-emerald-800';
+                    statusBadge.innerHTML = '<i class="fa-solid fa-circle-check mr-1"></i> PHONE VERIFIED';
+                }
+                if (feedback) {
+                    feedback.innerHTML = `<span class="text-emerald-600 font-bold"><i class="fa-solid fa-circle-check mr-1"></i> Phone number ${phone} successfully verified!</span>`;
+                }
+
+                Toast.show("🎉 Phone number verified! You can now submit registration/login.", "success");
+                SoundFX.success();
+
+                if (btn) {
+                    btn.disabled = true;
+                    btn.className = 'px-4 py-2 rounded-xl bg-emerald-600 text-white text-xs font-bold shrink-0';
+                    btn.innerHTML = '<i class="fa-solid fa-check"></i> Verified';
+                }
+            } else {
+                Toast.show(data.error || "Invalid OTP code.", "error");
+                if (btn) {
+                    btn.disabled = false;
+                    btn.textContent = 'Verify OTP';
+                }
+            }
+        } catch (e) {
+            Toast.show("Error verifying OTP.", "error");
+            if (btn) {
+                btn.disabled = false;
+                btn.textContent = 'Verify OTP';
+            }
+        }
+    }
+};
+
+// Role Gateway & Profile Manager (No Guest Accounts Enforcement)
+const RoleGateway = {
+    currentRole: localStorage.getItem('sahideal_active_role') || (window.location.href.includes('worker') ? 'worker' : 'customer'),
+    activeUser: null,
+
+    async init() {
+        await this.fetchCurrentUser();
+        this.updateNavUI();
+    },
+
+    async fetchCurrentUser() {
+        try {
+            const res = await fetch('/api/auth/me');
+            if (res.ok) {
+                const data = await res.json();
+                if (data.authenticated && data.user) {
+                    this.activeUser = data.user;
+                    this.currentRole = data.user.role;
+                    localStorage.setItem('sahideal_active_role', data.user.role);
+                } else {
+                    this.activeUser = null;
+                }
+            }
+        } catch (e) {
+            console.warn("Could not fetch user session:", e);
         }
     },
 
@@ -225,221 +465,349 @@ const RoleGateway = {
         const viewWork = document.getElementById('auth-view-worker');
 
         if (tab === 'worker') {
-            if (tabWork) tabWork.className = 'flex-1 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-emerald-500 text-white shadow-lg shadow-emerald-500/30 transition-all';
-            if (tabCust) tabCust.className = 'flex-1 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-slate-400 hover:text-white transition-all';
+            if (tabWork) tabWork.className = 'flex-1 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-emerald-600 text-white shadow-md transition-all';
+            if (tabCust) tabCust.className = 'flex-1 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-slate-600 dark:text-slate-400 hover:text-slate-900 transition-all';
             if (viewWork) viewWork.classList.remove('hidden');
             if (viewCust) viewCust.classList.add('hidden');
         } else {
-            if (tabCust) tabCust.className = 'flex-1 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-emerald-500 text-white shadow-lg shadow-emerald-500/30 transition-all';
-            if (tabWork) tabWork.className = 'flex-1 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-slate-400 hover:text-white transition-all';
+            if (tabCust) tabCust.className = 'flex-1 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-emerald-600 text-white shadow-md transition-all';
+            if (tabWork) tabWork.className = 'flex-1 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-slate-600 dark:text-slate-400 hover:text-slate-900 transition-all';
             if (viewCust) viewCust.classList.remove('hidden');
             if (viewWork) viewWork.classList.add('hidden');
         }
     },
 
-    saveCustomCustomer() {
-        const name = document.getElementById('cust-reg-name').value.trim() || "Customer Member";
-        const phone = document.getElementById('cust-reg-phone').value.trim() || "+91 98765 43210";
-        const address = document.getElementById('cust-reg-address').value.trim() || "Indiranagar, Bangalore";
+    async submitCustomerAuth() {
+        const name = document.getElementById('cust-reg-name').value.trim();
+        const phone = AuthOTP.verifiedPhone || (document.getElementById('auth-phone-input') ? document.getElementById('auth-phone-input').value.trim() : "");
+        const address = document.getElementById('cust-reg-address').value.trim();
+        const aadhaar = document.getElementById('cust-reg-aadhaar') ? document.getElementById('cust-reg-aadhaar').value.trim() : "";
 
-        const user = { role: 'customer', name, phone, address };
-        if (typeof CoopSync !== 'undefined') {
-            CoopSync.setCustomer(user);
+        if (!name) {
+            Toast.show("Please enter your full name.", "error");
+            return;
         }
 
-        this.currentRole = 'customer';
-        localStorage.setItem('cowork_active_role', 'customer');
-        this.updateNavUI();
-        this.closeModal();
+        if (!phone || !AuthOTP.isOtpVerified) {
+            Toast.show("Please complete Phone OTP verification first.", "error");
+            return;
+        }
 
-        Toast.show(`👋 Welcome, ${name}! Logged in as Customer. You can now post repair requests.`, 'success');
-        SoundFX.success();
+        try {
+            const res = await fetch('/api/auth/register-login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ role: 'customer', name, phone, address, aadhaar })
+            });
+            const data = await res.json();
 
-        setTimeout(() => {
-            if (!window.location.href.includes('index') && window.location.pathname !== '/' && !window.location.href.endsWith('/')) {
-                window.location.href = 'index.html';
+            if (data.success) {
+                this.activeUser = data.user;
+                this.currentRole = 'customer';
+                localStorage.setItem('sahideal_active_role', 'customer');
+                this.updateNavUI();
+                this.closeModal();
+
+                Toast.show(`👋 Welcome, ${name}! Logged in as Customer.`, 'success');
+                SoundFX.success();
+
+                setTimeout(() => {
+                    if (!window.location.href.includes('index') && window.location.pathname !== '/') {
+                        window.location.href = '/';
+                    }
+                }, 600);
+            } else {
+                Toast.show(data.error || "Authentication failed.", "error");
             }
-        }, 500);
+        } catch (e) {
+            Toast.show("Error connecting to authentication service.", "error");
+        }
     },
 
-    saveCustomWorker() {
-        const name = document.getElementById('worker-reg-name').value.trim() || "Worker-Owner";
-        const phone = document.getElementById('worker-reg-phone').value.trim() || "+91 98860 54321";
+    async submitWorkerAuth() {
+        const name = document.getElementById('worker-reg-name').value.trim();
+        const phone = AuthOTP.verifiedPhone || (document.getElementById('auth-phone-input') ? document.getElementById('auth-phone-input').value.trim() : "");
         const trade = document.getElementById('worker-reg-trade').value;
-        const exp = document.getElementById('worker-reg-exp') ? document.getElementById('worker-reg-exp').value.trim() : "8 Years";
+        const exp = document.getElementById('worker-reg-exp') ? document.getElementById('worker-reg-exp').value.trim() : "5 Years";
         const location = document.getElementById('worker-reg-loc') ? document.getElementById('worker-reg-loc').value.trim() : "Indiranagar";
+        const certName = document.getElementById('worker-reg-cert') ? document.getElementById('worker-reg-cert').value.trim() : "PMKVY RPL Level 4";
 
-        const existingWorker = (typeof CoopSync !== 'undefined') ? CoopSync.getWorker() : null;
-        const user = {
-            role: 'worker',
-            name,
-            phone,
-            trade,
-            experience: exp,
-            location,
-            avatar: (existingWorker && existingWorker.avatar) ? existingWorker.avatar : (typeof CoopSync !== 'undefined' ? CoopSync.DEFAULT_AVATAR : "")
-        };
-
-        if (typeof CoopSync !== 'undefined') {
-            CoopSync.setWorker(user);
+        if (!name) {
+            Toast.show("Please enter your full name.", "error");
+            return;
         }
 
-        this.currentRole = 'worker';
-        localStorage.setItem('cowork_active_role', 'worker');
-        this.updateNavUI();
-        this.closeModal();
+        if (!phone || !AuthOTP.isOtpVerified) {
+            Toast.show("Please complete Phone OTP verification first.", "error");
+            return;
+        }
 
-        Toast.show(`⚡ Welcome, ${name} (${trade})! Worker Radar is active. You will receive live gig dispatches.`, 'success');
-        SoundFX.cash();
+        try {
+            const res = await fetch('/api/auth/register-login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    role: 'worker', name, phone, trade, experience: exp,
+                    location, cert_name: certName
+                })
+            });
+            const data = await res.json();
 
-        setTimeout(() => {
-            if (!window.location.href.includes('worker')) {
-                window.location.href = 'worker.html';
+            if (data.success) {
+                this.activeUser = data.user;
+                this.currentRole = 'worker';
+                localStorage.setItem('sahideal_active_role', 'worker');
+                this.updateNavUI();
+                this.closeModal();
+
+                Toast.show(`⚡ Welcome, ${name} (${trade})! Worker Radar is active.`, 'success');
+                SoundFX.cash();
+
+                setTimeout(() => {
+                    if (!window.location.href.includes('worker')) {
+                        window.location.href = '/worker';
+                    }
+                }, 600);
+            } else {
+                Toast.show(data.error || "Authentication failed.", "error");
             }
-        }, 500);
+        } catch (e) {
+            Toast.show("Error connecting to authentication service.", "error");
+        }
     },
 
-    logout() {
-        if (typeof CoopSync !== 'undefined') {
-            CoopSync.logout();
-        }
+    async logout() {
+        try {
+            await fetch('/api/auth/logout', { method: 'POST' });
+        } catch (e) {}
+
+        this.activeUser = null;
         this.currentRole = null;
-        localStorage.removeItem('cowork_active_role');
         localStorage.removeItem('sahideal_active_role');
+        localStorage.removeItem('cowork_active_role');
+        localStorage.removeItem('cowork_app_state');
+        localStorage.removeItem('sahideal_app_state');
+
         this.updateNavUI();
         this.closeRoleMenu();
-        Toast.show("🔒 Logged out successfully. You are now in guest mode.", "info");
+        Toast.show("🔒 Logged out cleanly. Session and cached identity destroyed.", "info");
         SoundFX.pop();
+
         setTimeout(() => {
-            if (window.location.href.includes('worker')) {
-                window.location.href = 'index.html';
-            }
+            window.location.href = '/';
         }, 600);
     },
 
     toggleRoleMenu() {
         const menu = document.getElementById('role-dropdown-menu');
-        if (menu) {
-            menu.classList.toggle('hidden');
-        }
+        if (menu) menu.classList.toggle('hidden');
     },
 
     closeRoleMenu() {
         const menu = document.getElementById('role-dropdown-menu');
-        if (menu) {
-            menu.classList.add('hidden');
-        }
+        if (menu) menu.classList.add('hidden');
     },
 
     updateNavUI() {
         const badge = document.getElementById('current-role-badge');
         const roleName = document.getElementById('current-user-name');
-        
-        let customer = (typeof CoopSync !== 'undefined') ? CoopSync.getCustomer() : null;
-        let worker = (typeof CoopSync !== 'undefined') ? CoopSync.getWorker() : null;
-        const activeRole = localStorage.getItem('cowork_active_role') || localStorage.getItem('sahideal_active_role');
+        const userPhone = document.getElementById('dropdown-user-phone');
 
-        const isWorkerPage = window.location.href.includes('worker');
+        if (this.activeUser) {
+            if (roleName) roleName.textContent = this.activeUser.name;
+            if (userPhone) userPhone.textContent = this.activeUser.phone;
 
-        if (activeRole === 'worker' || (isWorkerPage && activeRole !== 'customer')) {
-            if (badge) badge.innerHTML = '<i class="fa-solid fa-screwdriver-wrench text-amber-400 mr-1.5"></i> Worker Mode';
-            if (roleName) roleName.textContent = worker ? worker.name : "Worker-Owner";
-        } else if (activeRole === 'customer' || (!isWorkerPage && customer)) {
-            if (badge) badge.innerHTML = '<i class="fa-solid fa-user-check text-emerald-400 mr-1.5"></i> Customer Mode';
-            if (roleName) roleName.textContent = customer ? customer.name : "Customer";
+            if (this.activeUser.role === 'worker') {
+                if (badge) badge.innerHTML = '<i class="fa-solid fa-screwdriver-wrench text-amber-500 mr-1.5"></i> Worker Mode';
+            } else {
+                if (badge) badge.innerHTML = '<i class="fa-solid fa-user-check text-emerald-600 mr-1.5"></i> Customer Mode';
+            }
         } else {
-            if (badge) badge.innerHTML = '<i class="fa-solid fa-arrow-right-to-bracket text-emerald-400 mr-1.5"></i> Login / Role';
-            if (roleName) roleName.textContent = "Guest";
+            if (badge) badge.innerHTML = '<i class="fa-solid fa-arrow-right-to-bracket text-emerald-600 mr-1.5"></i> Login / Register';
+            if (roleName) roleName.textContent = "Auth";
+            if (userPhone) userPhone.textContent = "Not Authenticated";
         }
     }
 };
 
-// Multilingual Translation Dictionary
-const TRANSLATIONS = {
-    en: {
-        nav_services: "Customer Portal",
-        nav_worker_hub: "Worker-Owner Hub",
-        nav_governance: "Co-op Council (Voting)",
-        nav_community: "RWA Bulk Hub",
-        hero_title_1: "Fair Work.",
-        hero_title_2: "Community Trust.",
-        hero_title_3: "Zero Exploitation.",
-        hero_sub: "India's first 100% worker-owned cooperative for household & community services. 92% direct worker take-home, transparent 8% co-op fee, 7-checkpoint escrow, and democratic governance."
+// Notification Engine
+const NotificationEngine = {
+    isOpen: false,
+
+    async toggleDrawer() {
+        const drawer = document.getElementById('notification-drawer');
+        if (!drawer) return;
+
+        this.isOpen = !this.isOpen;
+        if (this.isOpen) {
+            drawer.classList.remove('translate-x-full');
+            await this.loadNotifications();
+        } else {
+            drawer.classList.add('translate-x-full');
+        }
     },
-    hi: {
-        nav_services: "ग्राहक पोर्टल",
-        nav_worker_hub: "श्रमिक-मालिक हब",
-        nav_governance: "सहकारी परिषद (मतदान)",
-        nav_community: "सोसायटी सामूहिक हब",
-        hero_title_1: "उचित काम।",
-        hero_title_2: "सामुदायिक विश्वास।",
-        hero_title_3: "शून्य शोषण।",
-        hero_sub: "भारत का पहला 100% श्रमिक-स्वामित्व वाला सहकारी मंच। 92% सीधी श्रमिक कमाई, पारदर्शी 8% सहकारी शुल्क, 7-चेकपॉइंट एस्क्रो और लोकतांत्रिक शासन।"
-    },
-    kn: {
-        nav_services: "ಗ್ರಾಹಕ ಪೋರ್ಟಲ್",
-        nav_worker_hub: "ಕಾರ್ಮಿಕ ಮಾಲೀಕ ಪೋರ್ಟಲ್",
-        nav_governance: "ಸಹಕಾರಿ ಮಂಡಳಿ",
-        nav_community: "ಸೊಸೈಟಿ ಹಬ್",
-        hero_title_1: "ನ್ಯಾಯಯುತ ಕೆಲಸ.",
-        hero_title_2: "ಸಮುದಾಯ ನಂಬಿಕೆ.",
-        hero_title_3: "ಶೂನ್ಯ ಶೋಷಣೆ.",
-        hero_sub: "ಭಾರತದ ಮೊದಲ 100% ಕಾರ್ಮಿಕರ ಒಡೆತನದ ಸಹಕಾರಿ ಸೇವಾ ವೇದಿಕೆ. 92% ನೇರ ಆದಾಯ ಮತ್ತು 8% ಸಹಕಾರಿ ಶುಲ್ಕ."
-    },
-    ta: {
-        nav_services: "வாடிக்கையாளர் போர்டல்",
-        nav_worker_hub: "தொழிலாளர் போர்டல்",
-        nav_governance: "கூட்டுறவு சபை",
-        nav_community: "குடியிருப்பு சங்கம்",
-        hero_title_1: "நியாயமான வேலை.",
-        hero_title_2: "சமூக நம்பிக்கை.",
-        hero_title_3: "சுரண்டலற்ற தளம்.",
-        hero_sub: "இந்தியாவின் முதல் தொழிலாளர் உரிமையாளர் கூட்டுறவு தளம். 92% நேரடி வருவாய், 8% எளிய கூட்டுறவு கட்டணம்."
+
+    async loadNotifications() {
+        const list = document.getElementById('notification-list');
+        const badge = document.getElementById('notif-badge');
+        if (!list) return;
+
+        try {
+            const res = await fetch('/api/notifications');
+            if (!res.ok) return;
+            const data = await res.json();
+
+            if (data.success && data.notifications.length > 0) {
+                if (badge) {
+                    badge.textContent = data.notifications.length;
+                    badge.classList.remove('hidden');
+                }
+                list.innerHTML = data.notifications.map(n => {
+                    let color = 'border-slate-200 bg-slate-50 dark:bg-slate-800';
+                    let icon = 'fa-bell text-slate-500';
+                    if (n.type === 'sos') {
+                        color = 'border-rose-300 bg-rose-50 dark:bg-rose-950/40 text-rose-900 dark:text-rose-200';
+                        icon = 'fa-shield-heart text-rose-600 animate-pulse';
+                    } else if (n.type === 'success') {
+                        color = 'border-emerald-300 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-900 dark:text-emerald-200';
+                        icon = 'fa-circle-check text-emerald-600';
+                    } else if (n.type === 'warning') {
+                        color = 'border-amber-300 bg-amber-50 dark:bg-amber-950/40 text-amber-900 dark:text-amber-200';
+                        icon = 'fa-triangle-exclamation text-amber-600';
+                    }
+
+                    return `
+                        <div class="p-3.5 rounded-2xl border ${color} space-y-1">
+                            <div class="flex items-center justify-between font-bold text-xs">
+                                <span class="flex items-center gap-1.5"><i class="fa-solid ${icon}"></i> ${n.title}</span>
+                                <span class="text-[10px] font-mono opacity-70">${n.created_at.split(' ')[1] || 'Just now'}</span>
+                            </div>
+                            <p class="text-[11px] leading-relaxed opacity-90">${n.message}</p>
+                        </div>
+                    `;
+                }).join('');
+            } else {
+                if (badge) badge.classList.add('hidden');
+                list.innerHTML = '<div class="text-center py-10 text-slate-400"><i class="fa-solid fa-bell-slash text-2xl mb-2"></i><p>No new notifications.</p></div>';
+            }
+        } catch (e) {
+            list.innerHTML = '<div class="text-center py-6 text-rose-500">Error loading notifications.</div>';
+        }
     }
 };
 
-function changeLanguage(lang) {
-    const dict = TRANSLATIONS[lang] || TRANSLATIONS.en;
-    document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        if (dict[key]) {
-            el.textContent = dict[key];
+// e-KYC Modal Controller
+function openEkycModal() {
+    const modal = document.getElementById('ekyc-modal');
+    if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        SoundFX.pop();
+    }
+}
+
+function closeEkycModal() {
+    const modal = document.getElementById('ekyc-modal');
+    if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+    }
+}
+
+async function submitEkyc() {
+    const aadhaar = document.getElementById('ekyc-aadhaar-input').value.trim();
+    const name = document.getElementById('ekyc-name-input').value.trim();
+
+    const btn = document.getElementById('ekyc-submit-btn');
+    if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1"></i> Verifying UIDAI...';
+    }
+
+    try {
+        const res = await fetch('/api/ekyc/submit', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ aadhaar, name })
+        });
+        const data = await res.json();
+
+        if (data.success) {
+            closeEkycModal();
+            Toast.show(`✅ Aadhaar e-KYC Verified for ${name}! Ref: ${data.ekyc_ref}`, 'success');
+            SoundFX.success();
+            await RoleGateway.fetchCurrentUser();
+            RoleGateway.updateNavUI();
+        } else {
+            Toast.show(data.error || "Aadhaar verification failed.", "error");
         }
-    });
-    Toast.show(`Language switched to ${lang.toUpperCase()}`, 'info');
+    } catch (e) {
+        Toast.show("Failed to connect to e-KYC gateway.", "error");
+    } finally {
+        if (btn) {
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fa-solid fa-circle-check"></i> Authorize e-KYC';
+        }
+    }
 }
 
-// Fair Calculator Controller (8% Co-op fee vs 28% Corporate cut)
-function updateFairCalculator(val) {
-    const amount = parseFloat(val);
-    const label = document.getElementById('calc-amount-label');
-    if (label) label.textContent = `₹${amount.toLocaleString('en-IN')}`;
+// Emergency SOS Modal Controller
+function openSosModal() {
+    const modal = document.getElementById('sos-modal');
+    if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        SoundFX.sos();
 
-    const corpMiddleman = Math.round(amount * 0.28);
-    const corpWorker = amount - corpMiddleman;
-
-    const coopReserve = Math.round(amount * 0.08);
-    const coopWorker = amount - coopReserve;
-    const extraInPocket = coopWorker - corpWorker;
-    const percentGain = Math.round((extraInPocket / corpWorker) * 100);
-
-    const elCorpWorker = document.getElementById('calc-corp-worker');
-    const elCorpCut = document.getElementById('calc-corp-cut');
-    const elCoopWorker = document.getElementById('calc-coop-worker');
-    const elCoopReserve = document.getElementById('calc-coop-reserve');
-    const elExtra = document.getElementById('calc-extra-gain');
-    const elGainPct = document.getElementById('calc-gain-pct');
-
-    if (elCorpWorker) elCorpWorker.textContent = `₹${corpWorker.toLocaleString('en-IN')}`;
-    if (elCorpCut) elCorpCut.textContent = `₹${corpMiddleman.toLocaleString('en-IN')} (28% Middleman Cut)`;
-    if (elCoopWorker) elCoopWorker.textContent = `₹${coopWorker.toLocaleString('en-IN')}`;
-    if (elCoopReserve) elCoopReserve.textContent = `₹${coopReserve.toLocaleString('en-IN')} (8% Co-op Reserve & Dividend)`;
-    if (elExtra) elExtra.textContent = `+₹${extraInPocket.toLocaleString('en-IN')}`;
-    if (elGainPct) elGainPct.textContent = `(+${percentGain}% higher take-home)`;
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(pos => {
+                const gpsEl = document.getElementById('sos-gps-display');
+                if (gpsEl) gpsEl.textContent = `${pos.coords.latitude.toFixed(4)}° N, ${pos.coords.longitude.toFixed(4)}° E`;
+            }, () => {});
+        }
+    }
 }
 
-// Initialize on DOM Ready
+function closeSosModal() {
+    const modal = document.getElementById('sos-modal');
+    if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+    }
+}
+
+async function triggerEmergencySos() {
+    const typeSelect = document.getElementById('sos-type-select');
+    const emergencyType = typeSelect ? typeSelect.value : "Critical Safety & Medical Emergency";
+
+    closeSosModal();
+    Toast.show(`🚨 Broadcasting Priority Emergency SOS Alert...`, 'sos', 6000);
+    SoundFX.alarm();
+
+    try {
+        const res = await fetch('/api/sos', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                emergency_type: emergencyType,
+                location: "Indiranagar 100ft Road, Bangalore",
+                lat: 12.9716,
+                lng: 77.5946
+            })
+        });
+        const data = await res.json();
+
+        if (data.success) {
+            Toast.show(`🚨 SOS Dispatched! Responder ${data.assigned_responder.name} is en route (ETA: 9 Mins).`, 'sos', 10000);
+        }
+    } catch (e) {
+        Toast.show("Emergency SOS broadcast recorded.", 'sos');
+    }
+}
+
+// Global Initialization
 document.addEventListener('DOMContentLoaded', () => {
+    ThemeEngine.init();
+    LanguageEngine.init();
     RoleGateway.init();
-    updateFairCalculator(1500);
 });
